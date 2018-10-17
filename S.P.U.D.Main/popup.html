@@ -32,27 +32,28 @@ div {
  
 <h1>Welcome to S.P.U.D.!</h1>
 <p>Special Productivity Utility Directive</p>
-
-<script src="popup.js"></script>
-
-<h2>Commands</h2>
-<!-- <button class="btn add">Add</button>
-<button class="btn remove">Remove</button>
-<button class="btn data">Data</button> -->
-
+<img src='./icon_128.png'id='potato image'>
 <button onclick="addWebsite()">Add</button>
 <button onclick="removeWebsite()">Remove</button>
 <button onclick="displayData()">Data</button>
 <button onclick="openOptions()">Options</button>
 <button onclick="getElementById('demo').innerHTML=Date()">What is the time?</button>
+<script src="popup.js"></script>
+
+<h2>Commands</h2>
+<button class="btn add">Add</button>
+<button class="btn remove">Remove</button>
+<button class="btn data">Data</button>
+
+<!-- var newheight = window.height * (5/10);
+var newwidth = window.width * (7/10);
+window.resizeTo(newheight, newwidth); -->
 
 <p id="demo"></p>
 
 <script>
 
-// var newheight = window.height * (5/10);
-// var newwidth = window.width * (7/10);
-// window.resizeTo(newheight, newwidth);
+
 
 function addWebsite() {
     document.getElementById("demo").innerHTML="We will write js code to add a website";
