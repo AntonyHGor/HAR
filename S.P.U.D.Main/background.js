@@ -18,6 +18,22 @@ function checkVisited() {//checks youtube only currently
         }
     }); 
 }
+// formats timer
+function formatBadge(count){
+    var sec = count;
+    var min = Math.floor(count/60);
+    var hr = Math.floor(count/60/60);
+
+    if (count < 60){
+        setBadge(String(sec) + "s", grey);
+    }
+    if (count >= 60) {
+        setBadge(String(min) + "m", grey);
+    }
+    if (count >= 3600) {
+        setBadge(String(hr) + "h", grey);
+    }
+}
 
 // Creates notification settings, in future we could have a random generator that points to
 // title/message combination ie. num[0] = title and num[0[0]] = message or something like that
@@ -27,20 +43,34 @@ var note = {
     message: "Why you no listen?",
     iconUrl: "icon_128.png"
   }
-function notify(){
-    chrome.notifications.create(null, note, null)
+function notify(message){
+    chrome.notifications.create(null, message, null)
 }
 //
 
-// ---------------------- END OF FUNCTIONS ---------------------
+//roasts user, int is the number of seconds on site before roasting them
+function roast(count, int, message){
+    if (count == int){
+        notify(message);
+    }
+}
 
-chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab ) {
-    chrome.tabs.query({'active': true, 'windowId': chrome.windows.WINDOW_ID_CURRENT},
-   function(tabs){
-    var url = tabs[0].url;
-    if (url == "https://www.youtube.com/"){
-        //alert("bonk")
-      }
-   }
-);
-});
+// ---------------------- END OF FUNCTIONS ---------------------
+count = 0;
+function update () {
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+    function(tabs){
+        var url = tabs[0].url;
+        if (url == "https://waitbutwhy.com/"){
+            count = count + 1;
+            formatBadge(count);
+        }else{
+            setBadge("", grey)
+        }
+    }
+    );
+}
+setInterval(update, 1000);
+
+
+
