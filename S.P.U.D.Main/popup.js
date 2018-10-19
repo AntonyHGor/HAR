@@ -2,7 +2,6 @@
 
 function addWebsite() {
     // alert("website added");
-    // swal("hello world");
     var txt;
     if (confirm("add this website?")){
         txt = "Website Added"
@@ -18,4 +17,4 @@ function closeAlert(){
     document.getElementsByClassName('green alert').this.parentElement.style.display='none';
 }
 document.getElementById('add').addEventListener('click', addWebsite);
-document.getElementsByClassName('green alert').addEventListener('click', closeAlert)
+//document.getElementsByClassName('green alert').addEventListener('click', closeAlert)
