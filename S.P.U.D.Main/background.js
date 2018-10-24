@@ -55,16 +55,28 @@ function roast(count, int, message){
     }
 }
 
+
+
 // ---------------------- END OF FUNCTIONS ---------------------
 count = 0;
+count1 = 0;
+
+
+
+
 function update () {
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
         var url = tabs[0].url;
-        if (url == "https://waitbutwhy.com/"){
+        if (url ){
             count = count + 1;
             formatBadge(count);
-        }else{
+        }
+        else if (url=="https://www.google.com/"){
+            count1=count1+1
+            formatBadge(count1)
+        }
+        else{
             setBadge("", grey)
         }
     }
