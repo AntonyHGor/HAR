@@ -19,7 +19,7 @@ function setBadge(str, color) {
 
 // listens to see if a certain url appears in the history 
 var visited = 0;
-function checkVisited(num) {//checks youtube only currently
+function checkVisited(num) {//checks youtube only currently, need to add another element to dict for times visited
     chrome.history.onVisited.addListener(function(result) {
         if (result.url == "https://www.youtube.com/") {
             visited = visited + 1;
@@ -28,7 +28,7 @@ function checkVisited(num) {//checks youtube only currently
     }); 
 }
 
-function roastVisited(num){
+function roastVisited(num, site){
     if(visited == num){
         var defaultVisitedNote = {
             type: "basic",
@@ -67,12 +67,12 @@ function notify(message){
 //
 
 //roasts user, int is the number of seconds on site before roasting them
-function roast(count, int){
+function roast(count, int, site){
     if (count == int){
         var defaultTimeNote = {
             type: "basic",
             title: "Wow. ",
-            message: "You've spent " + count +  " seconds on Youtube. Your grandma would be proud.",
+            message: "You've spent " + count +  " seconds on " + site + ". Your grandma would be proud.",
             iconUrl: "icon_128.png"
           }
         notify(defaultTimeNote);
@@ -80,10 +80,12 @@ function roast(count, int){
 }
 function formatUrl(url){
     
-
-
 }
-var urlList = ['www.youtube.com'];
+
+
+
+var urlList = {'www.youtube.com': 0, 'waitbutwhy.com': 0};
+
 
 // ---------------------- END OF FUNCTIONS ---------------------
 var count = 0;
@@ -94,7 +96,9 @@ function update () {
         // checks and resets variables at each new day
         var currDay = new Date().getDay();
         if(orinDay != currDay){
-            count = 0;
+            for(key in urlList){
+                urlList[key] = 0;
+            }
             visited = 0;
             orinDay = currDay;
         }
@@ -102,11 +106,12 @@ function update () {
         // checks if url is in list of added urls
         var url = tabs[0].url;
         var strArray = url.split('/'); // formats url into prefix
-        var newUrl = strArray[2];
-        if (urlList.includes(newUrl)){
-            count = count + 1;
-            formatBadge(count); // formats and displays badge 
-            roast(count, 30); // checks number of seconds on site = 30
+        var finUrl = strArray[2];
+        if (finUrl in urlList){
+            count = urlList[finUrl];
+            urlList[finUrl] = count + 1;
+            formatBadge(urlList[finUrl]); // formats and displays badge 
+            roast(urlList[finUrl], 3600, finUrl); // checks number of seconds on site = 30
         }else{
             setBadge("", grey) // if url doesn't match, remove badge
         }
@@ -115,14 +120,18 @@ function update () {
 }
 
 setInterval(update, 1000); // update every 1 second
-checkVisited(3); // checks number of times visited = 3
+checkVisited(5); // checks number of times visited = 3
 
 
 // need to add:
-// prefix recognizer
-// storage saving and pulling for each site
+// storage saving and pulling for each site (currently working with hardcoded sites. Need a function to add sites to dict.)
 // ability to add and remove sites
 // do all current functions with new storage
 // domain and favicon pushing to popup (top three sites)
+
+// there is a minor display lag if user swtiches tab shortly after second has passed, program has to wait the --
+// -- rest of the second to change badge. Could be a solution where the tab checker is updated more often to get--
+// -- the url and switch off the badge but will still only update the timer badge every second if the tab is unchanged.
+
 
 
