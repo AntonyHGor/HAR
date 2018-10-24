@@ -3,67 +3,108 @@
 
 <head>
 
-<style>
-div {
-    height: 200px;
-    width: 50%;
-    background-color: powderblue;
-    border: 1px solid #4CAF50;
+<!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
+
+<style type="text/css">
+body {
+  min-width: 245px; /* your desired width */
+  max-width: 100%;
+  position: relative;
+  vertical-align:middle;
+
+  overflow-x: hidden;
+    background-color: rgb(255, 255, 255);
 }
-.btn {
-    border: #000000;
-    border-style: solid;
-    border-width: 2px;
-    background-color: whitesmoke;
-    padding: 14px 28px;
-    font-size: 16px;
+
+.marginauto {
+    margin: 10px auto 20px;
+    display: block;
+}
+
+p {
+    text-align: center;
+    font-family: Impact, Charcoal, sans-serif;
+    font-size: 25px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    color: #000000;
+    font-weight: 400;
+    text-decoration: none solid rgb(68, 68, 68);
+    font-style: normal;
+    font-variant: small-caps;
+    text-transform: none;
+}
+
+h1 {
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+
+
+/* .alert {
+    padding: 20px;
+    background-color: #36f465;
+    color: white;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
     cursor: pointer;
-    display: inline-block;
+    transition: 0.3s;
 }
-.btn:hover {background: #eee;}
-/* .Add {color: green;}
-.Remove {color: red;}
-.Data {color: blue;} */
+
+.closebtn:hover {
+    color: black;
+} */
 </style>
+
 <title>S.P.U.D</title>
+
 </head>
- 
+
 <body>
- 
+
 <h1>Welcome to S.P.U.D.!</h1>
+
+
 <p>Special Productivity Utility Directive</p>
-<img src='./icon_128.png'id='potato image'>
-<button onclick="addWebsite()">Add</button>
-<button onclick="removeWebsite()">Remove</button>
-<button onclick="displayData()">Data</button>
-<button onclick="openOptions()">Options</button>
-<button onclick="getElementById('demo').innerHTML=Date()">What is the time?</button>
-<script src="popup.js"></script>
+
+<div>
+    <img class=marginauto src='./icon_128.png' id='potato image'>
+</div>
+
 
 <h2>Commands</h2>
-<button class="btn add">Add</button>
-<button class="btn remove">Remove</button>
-<button class="btn data">Data</button>
 
-<!-- var newheight = window.height * (5/10);
-var newwidth = window.width * (7/10);
-window.resizeTo(newheight, newwidth); -->
+<!-- buttons  -->
+<button id="add" style="background-color:rgb(212, 222, 233)">Add Website</button>
+
+<button id="delete" style="background-color:rgb(212, 222, 233)" >Delete Website</button>
+
+<!-- <button id="data" style="background-color:rgb(212, 222, 233)">Data</button> -->
 
 <p id="demo"></p>
 
-<script>
 
 
+<!-- <div class="green alert">
+        <span class="closebtn">&times;</span>
+        Website Added.
+      </div> -->
 
-function addWebsite() {
-    document.getElementById("demo").innerHTML="We will write js code to add a website";
-}
-
-</script>
+<script type="text/javascript" src="popup.js"></script>
 
 <p><i></i></p>
- 
+
 <h2></h2>
 </body>
 </html>
-

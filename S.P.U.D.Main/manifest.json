@@ -15,9 +15,10 @@
     "scripts": ["background.js"]
   },
   "permissions": [
-    "activeTab", 
+    "activeTab",
     "history",
     "tabs",
     "notifications"
   ]
+
 }
