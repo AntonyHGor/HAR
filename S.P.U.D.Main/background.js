@@ -90,12 +90,12 @@ var orinDay = new Date().getDay();
 function checkUpdate() {
     var currDay = new Date().getDay();
     if (orinDay != currDay) {
-        chrome.storage.sync.get(['urlList'], function(result) {
+        chrome.storage.local.get(['urlList'], function(result) {
         var urlList = result.urlList
         for (key in urlList) {
             urlList[key] = 0;
         }
-        chrome.storage.sync.set({"urlList": urlList}, function() {});
+        chrome.storage.local.set({"urlList": urlList}, function() {});
         orinDay = currDay;
         });
     }   
@@ -103,7 +103,7 @@ function checkUpdate() {
 
 // Initializes the dictionary and saves it
 var urlList = {};
-chrome.storage.sync.set({"urlList": urlList}, function() {});
+chrome.storage.local.set({"urlList": urlList}, function() {});
 //
 
 // Does the work for counting and updating the dictionary between files
@@ -114,9 +114,10 @@ function checkUrlInList(tabs, result) {
     if (site in urlList) {
         count = urlList[site]; // getting count
         urlList[site] = count + 1; //updates
-        chrome.storage.sync.set({"urlList": urlList}, function() {}); //overwriting the list
+        chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
         formatBadge(urlList[site]); // formats and displays badge 
-        roast(urlList[site], 3600, site); // checks number of seconds on site = 30
+        //roast(urlList[site], 3600, site); // checks number of seconds on site = 30
+        checkMinute(count, site);
         
     }
     else {
@@ -145,7 +146,7 @@ function checkUrlInList(tabs, result) {
 function update () {
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
-        chrome.storage.sync.get(['urlList'], function(result) {
+        chrome.storage.local.get(['urlList'], function(result) {
         checkUpdate();  // checks and resets variables at each new day (a setting to change?)
         checkUrlInList(tabs, result);
           });

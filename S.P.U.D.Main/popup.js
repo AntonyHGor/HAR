@@ -2,8 +2,6 @@ function changeImage(){
     document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
 }
 
-//var urlList = {'www.youtube.com': 0, 'waitbutwhy.com': 0};
-
 
 function formatUrl(url){
     var strArray = url.split('/'); // formats url into prefix
@@ -13,16 +11,39 @@ function formatUrl(url){
 
 
 function addWebsite() {
+
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+    function(tabs){
+        chrome.storage.local.get(['urlList'], function(result) {
+            var url = tabs[0].url;
+            var site = formatUrl(url);
+            var urlList = result.urlList;
+            urlList[site] = 0;
+            chrome.storage.local.set({"urlList": urlList}, function() {});
+    
+         });
+    });
     swal({
         position: 'top-end',
         type: 'success',
         title: 'Website Added',
-        showConfirmButton: true,
+        timer: 1000,
       })
       document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
 }
- 
+
 function removeWebsite(){
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+    function(tabs){
+        chrome.storage.local.get(['urlList'], function(result) {
+            var url = tabs[0].url;
+            var site = formatUrl(url);
+            var urlList = result.urlList;
+            delete urlList[site];
+            chrome.storage.local.set({"urlList": urlList}, function() {});
+    
+         });
+    });
     swal({
         title: 'Are you sure you want to remove this site?',
         text: "Your procrastinating may go unchecked!",
@@ -48,7 +69,7 @@ function removeWebsite(){
 
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
-document.getElementById('change image').addEventListener('click', changeImage);
+//document.getElementById('change image').addEventListener('click', changeImage);
   // "content_scripts": 
   //   {
   //     "js":["sweetalert2.all.min.js"]
