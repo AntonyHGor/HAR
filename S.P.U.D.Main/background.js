@@ -63,6 +63,7 @@ function formatBadge(count){
 
 function notify(message){
     chrome.notifications.create(null, message, null)
+    
 }
 //
 
@@ -78,54 +79,82 @@ function roast(count, int, site){
         notify(defaultTimeNote);
     }
 }
+
 function formatUrl(url){
+    var strArray = url.split('/'); // formats url into prefix
+    var finUrl = strArray[2];
+    return finUrl
+}
+
+var orinDay = new Date().getDay();
+function checkUpdate() {
+    var currDay = new Date().getDay();
+    if (orinDay != currDay) {
+        chrome.storage.sync.get(['urlList'], function(result) {
+        var urlList = result.urlList
+        for (key in urlList) {
+            urlList[key] = 0;
+        }
+        chrome.storage.sync.set({"urlList": urlList}, function() {});
+        orinDay = currDay;
+        });
+    }   
+}
+
+// Initializes the dictionary and saves it
+var urlList = {};
+chrome.storage.sync.set({"urlList": urlList}, function() {});
+//
+
+// Does the work for counting and updating the dictionary between files
+function checkUrlInList(tabs, result) {
+    var url = tabs[0].url; // pulled url
+    site = formatUrl(url); // removed https://
+    var urlList = result.urlList; // list = saved list
+    if (site in urlList) {
+        count = urlList[site]; // getting count
+        urlList[site] = count + 1; //updates
+        chrome.storage.sync.set({"urlList": urlList}, function() {}); //overwriting the list
+        formatBadge(urlList[site]); // formats and displays badge 
+        roast(urlList[site], 3600, site); // checks number of seconds on site = 30
+        
+    }
+    else {
+        setBadge("", grey);
+    }
     
 }
 
 
+// function getUrlList(){
+//     chrome.storage.sync.get(['urlList'], function(result) {
+//         //alert(result.urlList);
+//       });
+// }
 
-var urlList = {'www.youtube.com': 0, 'waitbutwhy.com': 0};
 
+// chrome.storage.sync.get(['urlList'], function(result) {
+//     sites = result.urlList;
+//   });
 
 // ---------------------- END OF FUNCTIONS ---------------------
-var count = 0;
-var orinDay = new Date().getDay();
+
+// MAIN 
 function update () {
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
-        // checks and resets variables at each new day
-        var currDay = new Date().getDay();
-        if(orinDay != currDay){
-            for(key in urlList){
-                urlList[key] = 0;
-            }
-            visited = 0;
-            orinDay = currDay;
-        }
-        //---------------
-        // checks if url is in list of added urls
-        var url = tabs[0].url;
-        var strArray = url.split('/'); // formats url into prefix
-        var finUrl = strArray[2];
-        if (finUrl in urlList){
-            count = urlList[finUrl];
-            urlList[finUrl] = count + 1;
-            formatBadge(urlList[finUrl]); // formats and displays badge 
-            roast(urlList[finUrl], 3600, finUrl); // checks number of seconds on site = 30
-        }else{
-            setBadge("", grey) // if url doesn't match, remove badge
-        }
+        chrome.storage.sync.get(['urlList'], function(result) {
+        checkUpdate();  // checks and resets variables at each new day (a setting to change?)
+        checkUrlInList(tabs, result);
+          });
     }
     );
 }
 
 setInterval(update, 1000); // update every 1 second
-checkVisited(5); // checks number of times visited = 3
-
+//checkVisited(5); NOT COMPLETE, NEED TO ADAPT FOR DICTIONARY USAGE 
 
 // need to add:
-// storage saving and pulling for each site (currently working with hardcoded sites. Need a function to add sites to dict.)
-// ability to add and remove sites
 // do all current functions with new storage
 // domain and favicon pushing to popup (top three sites)
 
@@ -133,5 +162,5 @@ checkVisited(5); // checks number of times visited = 3
 // -- rest of the second to change badge. Could be a solution where the tab checker is updated more often to get--
 // -- the url and switch off the badge but will still only update the timer badge every second if the tab is unchanged.
 
-
+// there is also a display lag when badge switches from 60 minutes to one hour, probably due to above reason
 
