@@ -2,6 +2,16 @@ function changeImage(){
     document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
 }
 
+//var urlList = {'www.youtube.com': 0, 'waitbutwhy.com': 0};
+
+
+function formatUrl(url){
+    var strArray = url.split('/'); // formats url into prefix
+    var finUrl = strArray[2];
+    return finUrl
+}
+
+
 function addWebsite() {
     swal({
         position: 'top-end',
