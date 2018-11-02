@@ -1,19 +1,3 @@
-list1={defaultTimeNote = {
-    type: "basic",
-    title: "Wow. ",
-    message: "You've spent " + count +  " seconds on " + site + ". Your grandma would be proud.",
-    iconUrl: "icon_128.png"
-  }, 
-  
-  defaultTimeNote2 = {
-    type: "basic",
-    title: "OMG. ",
-    message: "You've spent " + count +  " seconds on " + site + ". Your grandma would be proud.",
-    iconUrl: "icon_128.png"
-  }, 
-
-}
-
 
 function notify(message){
     chrome.notifications.create(null, message, null)
@@ -21,13 +5,13 @@ function notify(message){
 
 
 
-defaultTimeNote2 = {
-    type: "basic",
-    title: "OMG. ",
-    message: "You've spent " + count +  " seconds on " + site + ". Your grandma would be proud.",
-    iconUrl: "icon_128.png"
+// defaultTimeNote2 = {
+//     type: "basic",
+//     title: "OMG. ",
+//     message: "You've spent " + count +  " seconds on " + site + ". Your grandma would be proud.",
+//     iconUrl: "icon_128.png"
 
-}
+// }
 
 // Generates random number
 
