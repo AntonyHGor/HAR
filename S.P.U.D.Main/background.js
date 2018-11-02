@@ -2,7 +2,7 @@
 
 // ---------------------- START OF FUNCTIONS ---------------------
 function checkReset(){
-    
+
 }
 function setDefaults(count, visited){
     var visited = 0;
@@ -17,7 +17,7 @@ function setBadge(str, color) {
     chrome.browserAction.setBadgeText({'text': str});
 }
 
-// listens to see if a certain url appears in the history 
+// listens to see if a certain url appears in the history
 var visited = 0;
 function checkVisited(num) {//checks youtube only currently, need to add another element to dict for times visited
     chrome.history.onVisited.addListener(function(result) {
@@ -25,7 +25,7 @@ function checkVisited(num) {//checks youtube only currently, need to add another
             visited = visited + 1;
             roastVisited(num);
         }
-    }); 
+    });
 }
 
 function roastVisited(num, site){
@@ -35,7 +35,7 @@ function roastVisited(num, site){
             title: "Really?",
             message: "You have opened Youtube " + String(num) + " times today.",
             iconUrl: "icon_128.png"
-          } 
+          }
         notify(defaultVisitedNote);
     }
 }
@@ -136,6 +136,8 @@ function checkUrlInList(tabs, result) {
 // chrome.storage.sync.get(['urlList'], function(result) {
 //     sites = result.urlList;
 //   });
+
+
 
 // ---------------------- END OF FUNCTIONS ---------------------
 

@@ -12,13 +12,13 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["notifications.js","background.js"]
   },
   "permissions": [
-    "activeTab", 
+    "activeTab",
     "history",
     "tabs",
     "notifications"
   ]
-  
+
 }
