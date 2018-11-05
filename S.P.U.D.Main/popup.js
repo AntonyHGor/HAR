@@ -25,6 +25,7 @@ function addWebsite() {
     });
     swal({
         position: 'top-end',
+        showConfirmButton: false, // There won't be any confirm button
         type: 'success',
         title: 'Website Added',
         timer: 1000,
@@ -33,17 +34,6 @@ function addWebsite() {
 }
 
 function removeWebsite(){
-    chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
-    function(tabs){
-        chrome.storage.local.get(['urlList'], function(result) {
-            var url = tabs[0].url;
-            var site = formatUrl(url);
-            var urlList = result.urlList;
-            delete urlList[site];
-            chrome.storage.local.set({"urlList": urlList}, function() {});
-    
-         });
-    });
     swal({
         title: 'Are you sure you want to remove this site?',
         text: "Your procrastinating may go unchecked!",
@@ -54,6 +44,17 @@ function removeWebsite(){
         confirmButtonText: 'Yes, remove it!'
       }).then((result) => {
         if (result.value) {
+            chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+            function(tabs){
+                chrome.storage.local.get(['urlList'], function(result) {
+                var url = tabs[0].url;
+                var site = formatUrl(url);
+                var urlList = result.urlList;
+                delete urlList[site];
+                chrome.storage.local.set({"urlList": urlList}, function() {});
+    
+         });
+    });
             swal({
                 title: 'Tracking Disabled',
                 text: "You're a potato.",
