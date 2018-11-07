@@ -138,7 +138,7 @@ function update () {
 
 
 setInterval(update, 1000); // update every 1 second
-countVisited();
+countVisited(); // counts when url in list appears in history
 
 
 

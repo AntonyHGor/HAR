@@ -18,9 +18,11 @@ function addWebsite() {
             var url = tabs[0].url;
             var site = formatUrl(url);
             var urlList = result.urlList;
-            urlList[site] = attributeList;
-            chrome.storage.local.set({"urlList": urlList}, function() {});
-    
+            if(site in urlList){
+            }else{
+                urlList[site] = attributeList;
+                chrome.storage.local.set({"urlList": urlList}, function() {});
+            }
          });
     });
     swal({
