@@ -15,11 +15,10 @@ function formatUrl(url){
 function addWebsite() {
     swal({
         position: 'top-end',
-        type: 'success',
         title: 'Website Added',
-        showConfirmButton: true,
+        type: 'success',
+        timer: 2000,
       })
-      document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
 }
  
 function removeWebsite(){
