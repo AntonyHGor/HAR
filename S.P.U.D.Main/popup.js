@@ -11,14 +11,14 @@ function formatUrl(url){
 
 
 function addWebsite() {
-
+    var attributeList = [0,0] // first element is timer count, second is vister count
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
         chrome.storage.local.get(['urlList'], function(result) {
             var url = tabs[0].url;
             var site = formatUrl(url);
             var urlList = result.urlList;
-            urlList[site] = 0;
+            urlList[site] = attributeList;
             chrome.storage.local.set({"urlList": urlList}, function() {});
     
          });
@@ -44,6 +44,7 @@ function removeWebsite(){
         confirmButtonText: 'Yes, remove it!'
       }).then((result) => {
         if (result.value) {
+
             chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
             function(tabs){
                 chrome.storage.local.get(['urlList'], function(result) {
