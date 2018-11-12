@@ -1,5 +1,8 @@
 // things that run in background
 
+var TIMER_COUNT = 0;
+var VISITED_COUNT = 1;
+
 // ---------------------- START OF FUNCTIONS ---------------------
 function checkReset(){
 
@@ -18,27 +21,21 @@ function setBadge(str, color) {
 }
 
 // listens to see if a certain url appears in the history
-var visited = 0;
-function checkVisited(num) {//checks youtube only currently, need to add another element to dict for times visited
+function countVisited() {
     chrome.history.onVisited.addListener(function(result) {
-        if (result.url == "https://www.youtube.com/") {
-            visited = visited + 1;
-            roastVisited(num);
-        }
+        chrome.storage.local.get(['urlList'], function(callback){
+            var site = formatUrl(result.url);
+            var urlList = callback.urlList
+            if (site in urlList) {
+                    var count = urlList[site][VISITED_COUNT]; // getting count
+                    urlList[site][VISITED_COUNT] = count + 1; //updates
+                    chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
+                    checkVisited(urlList[site][VISITED_COUNT], site);    
+            }
+        });
     });
 }
 
-function roastVisited(num, site){
-    if(visited == num){
-        var defaultVisitedNote = {
-            type: "basic",
-            title: "Really?",
-            message: "You have opened Youtube " + String(num) + " times today.",
-            iconUrl: "icon_128.png"
-          }
-        notify(defaultVisitedNote);
-    }
-}
 // formats timer
 function formatBadge(count){
     var sec = count;
@@ -48,15 +45,13 @@ function formatBadge(count){
     if (count < 60){
         setBadge(String(sec) + "s", grey);
     }
-    if (count >= 60) {
+    if (count >= 60 && count < 3600) {
         setBadge(String(min) + "m", grey);
     }
     if (count >= 3600) {
         setBadge(String(hr) + "h", grey);
     }
 }
-
-
 
 // Creates notification settings, in future we could have a random generator that points to
 // title/message combination ie. num[0] = title and num[0[0]] = message or something like that
@@ -65,8 +60,6 @@ function notify(message){
     chrome.notifications.create(null, message, null)
     
 }
-//
-
 //roasts user, int is the number of seconds on site before roasting them
 function roast(count, int, site){
     if (count == int){
@@ -87,57 +80,48 @@ function formatUrl(url){
 }
 
 var orinDay = new Date().getDay();
-function checkUpdate() {
+function checkReset() {
     var currDay = new Date().getDay();
     if (orinDay != currDay) {
-        chrome.storage.sync.get(['urlList'], function(result) {
+        chrome.storage.local.get(['urlList'], function(result) {
         var urlList = result.urlList
         for (key in urlList) {
-            urlList[key] = 0;
+            urlList[key][TIMER_COUNT] = 0;
+            urlList[key][VISITED_COUNT] = 0;
         }
-        chrome.storage.sync.set({"urlList": urlList}, function() {});
+        chrome.storage.local.set({"urlList": urlList}, function() {});
         orinDay = currDay;
         });
     }   
 }
+function countSeconds(site, list){
+    if (site in list) {
+        count = list[site][TIMER_COUNT]; // getting count
+        list[site][TIMER_COUNT] = count + 1; //updates
+        chrome.storage.local.set({"urlList": list}, function() {}); //overwriting the list
+        formatBadge(list[site][TIMER_COUNT]); // formats and displays badge
+        //roast(urlList[site], 3600, site); // checks number of seconds on site = 30
+        checkMinute(count, site); // runs roast time algorithm
+    }else {
+        setBadge("", grey);
+        }
+}
 
 // Initializes the dictionary and saves it
 var urlList = {};
-chrome.storage.sync.set({"urlList": urlList}, function() {});
+chrome.storage.local.set({"urlList": urlList}, function() {});
 //
 
 // Does the work for counting and updating the dictionary between files
 function checkUrlInList(tabs, result) {
-    var url = tabs[0].url; // pulled url
-    site = formatUrl(url); // removed https://
-    var urlList = result.urlList; // list = saved list
-    if (site in urlList) {
-        count = urlList[site]; // getting count
-        urlList[site] = count + 1; //updates
-        chrome.storage.sync.set({"urlList": urlList}, function() {}); //overwriting the list
-        formatBadge(urlList[site]); // formats and displays badge 
-        roast(urlList[site], 3600, site); // checks number of seconds on site = 30
+    try {
+        var url = tabs[0].url; // pulled url
+        site = formatUrl(url); // removed https://
+        var urlList = result.urlList; // list = saved list
+        countSeconds(site, urlList);   
         
-    }
-    else {
-        setBadge("", grey);
-    }
-    
+    }catch{}
 }
-
-
-// function getUrlList(){
-//     chrome.storage.sync.get(['urlList'], function(result) {
-//         //alert(result.urlList);
-//       });
-// }
-
-
-// chrome.storage.sync.get(['urlList'], function(result) {
-//     sites = result.urlList;
-//   });
-
-
 
 // ---------------------- END OF FUNCTIONS ---------------------
 
@@ -145,24 +129,17 @@ function checkUrlInList(tabs, result) {
 function update () {
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
-        chrome.storage.sync.get(['urlList'], function(result) {
-        checkUpdate();  // checks and resets variables at each new day (a setting to change?)
+        chrome.storage.local.get(['urlList'], function(result) {
+        checkReset();  // checks and resets variables at each new day (a setting to change?)
         checkUrlInList(tabs, result);
-          });
-    }
-    );
+        });
+    });
 }
 
+
 setInterval(update, 1000); // update every 1 second
-//checkVisited(5); NOT COMPLETE, NEED TO ADAPT FOR DICTIONARY USAGE 
+countVisited(); // counts when url in list appears in history
 
-// need to add:
-// do all current functions with new storage
-// domain and favicon pushing to popup (top three sites)
 
-// there is a minor display lag if user swtiches tab shortly after second has passed, program has to wait the --
-// -- rest of the second to change badge. Could be a solution where the tab checker is updated more often to get--
-// -- the url and switch off the badge but will still only update the timer badge every second if the tab is unchanged.
 
-// there is also a display lag when badge switches from 60 minutes to one hour, probably due to above reason
 
