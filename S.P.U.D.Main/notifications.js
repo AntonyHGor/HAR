@@ -1,42 +1,84 @@
 
+var list45=[
+    note1={title: "NOTE 1", message: "FOR LIST45"},
+    note2={title: "NOTE 2", message: "FOR LIST45"},
+    note3={title: "NOTE 3", message: "FOR LIST45"},
+    note4={title: "NOTE 4", message: "FOR LIST45"} 
+    // note1={title: "Hello", message: "Just wanted to say hi."},
+    // note2={title: "What do you get when it rains potatoes?", message: "Spuddles."} 
+]
 
-
-var list45={note1={title: "Hello", message: "liste."},note2={title: "Attention", message: "sdascasc."} }
-var list85={}
-var list120={}
-var list175={}
-var list240={}
+var list85=[
+    note1={title: "NOTE 1", message: "FOR LIST85"},
+    note2={title: "NOTE 2", message: "FOR LIST85"},
+    note3={title: "NOTE 3", message: "FOR LIST85"},
+    note4={title: "NOTE 4", message: "FOR LIST85"} 
+    // note1={title: "Hi.", message: "You should stop."},
+    // note2={title: "Where are you?", message: "There you are."} 
+]
+var list120=[
+    note1={title: "NOTE 1", message: "FOR LIST120"},
+    note2={title: "NOTE 2", message: "FOR LIST120"},
+    note3={title: "NOTE 3", message: "FOR LIST120"},
+    note4={title: "NOTE 4", message: "FOR LIST120"}  
+]
+var list175=[
+    note1={title: "NOTE 1", message: "FOR LIST175"},
+    note2={title: "NOTE 2", message: "FOR LIST175"},
+    note3={title: "NOTE 3", message: "FOR LIST175"},
+    note4={title: "NOTE 4", message: "FOR LIST175"} 
+]
+var list240=[
+    note1={title: "NOTE 1", message: "FOR LIST240"},
+    note2={title: "NOTE 2", message: "FOR LIST240"},
+    note3={title: "NOTE 3", message: "FOR LIST240"},
+    note4={title: "NOTE 4", message: "FOR LIST240"} 
+]
+var listAfterFour=[
+    note1={title: "NOTE 1", message: "FOR LIST4HOURS"},
+    note2={title: "NOTE 2", message: "FOR LIST4HOURS"},
+    note3={title: "NOTE 3", message: "FOR LIST4HOURS"},
+    note4={title: "NOTE 4", message: "FOR LIST4HOURS"} 
+]
 
 
 function getList(num){
-    if(num==45){
+    var min = 60;
+    if(num==45*1){
         return list45
     }
-    // if(num==85){
-    //     return list85
-    // }
+    if(num==85*1){
+        return list85
+    }
+    if(num==120*1){
+        return list120
+    }
+    if(num==175*1){
+        return list175
+    }
+    if(num==240*1){
+        return list175
+    }
+    if(num>240 * 1){
+        return listAfterFour
+    }
 }
 
 
 function chooseNotification(list){
     var randomNum=generateRandomNumber(list.length)
     var randomKey=list[randomNum]
-
+    
     var notification=makeBasicNote(randomKey.title, randomKey.message)
-
+    
     notify(notification)
 }
-
-
 
 function notify(message){
     chrome.notifications.create(null, message, null)
 }
 
-
-
 // Generates random number
-
 function generateRandomNumber(max){
     return Math.floor(Math.random()*Math.floor(max)+1)
 }
@@ -51,50 +93,54 @@ function makeBasicNote(title, message){
     return note
 }
 
-
-
-function firstGreeting(count, site){
-    if(count==60){
-        timeNote = makeBasicNote("Welcome to SPUD", "You've spent " + count +  " seconds on " + site + ".");
-        notify(timeNote)
+function firstGreeting(count,site){
+    if(count < 30){
+        if(count==2){
+                var notification=makeBasicNote("S.P.U.D. enabled for " + site + ".", "Prepare to be productive!")
+                notify(notification)
+            }
+        }
     }
-}
 
+function afterFourHours(count){
+    if(count > 240){
+        var randomNum=generateRandomNumber(1500);
+            if(randomNum == 1500){
+                var listName=getList(241*1)
+                chooseNotification(listName)
+            }
+            
+        }
+    }
 
-function notificationAlert(count, site, highNum, lowNum){
-    // var notified = false
+function chooseInterval(count,highNum, lowNum){
 
-    
     if(count<=highNum && count>=lowNum){
         var randomNum=generateRandomNumber(highNum-lowNum);
             if(randomNum==highNum-lowNum){
                 var listName=getList(highNum)
                 chooseNotification(listName)
-                // notified=true;
             }
             
         }
-    
-    if(count== highNum){
-        var listName=getList(highNum)
-        chooseNotification(listName)
-    }
-        
-   
+    // if(count == highNum){
+    //     var listName=getList(highNum)
+    //     chooseNotification(listName)
+    // }
 }
 
 
-function mainNotification(count, site){
+function mainNotification(count,site){
     var min= 60
     var hour=3600
 
-
-
-    notificationAlert(count, site, 45*1, 15*1);
-    notificationAlert(count, site, 85*1, 60*1);
-    notificationAlert(count, site, 95*1, 120*1);
-    notificationAlert(count, site, 130*1, 175*1);
-    notificationAlert(count, site, 190*1, 240*1);
+    firstGreeting(count,site);
+    chooseInterval(count,45*1, 15*1);
+    chooseInterval(count,85*1, 60*1);
+    chooseInterval(count,95*1, 120*1);
+    chooseInterval(count,130*1, 175*1);
+    chooseInterval(count,190*1, 240*1);
+}
 
 
 // 1 minute into with first site

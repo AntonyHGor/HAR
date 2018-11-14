@@ -14,30 +14,18 @@ function formatBadge(count){
     var sec = count;
     var min = Math.floor(count/60);
     var hr = Math.floor(count/60/60);
-
     
-//     if (count < 60){
-//         setBadge(String(sec) + "s", grey);
-//     }
-//     if (count >= 60 && count < 3600) {
-//         setBadge(String(min) + "m" + String(Math.floor(sec%60)) + "s", grey);
-//     }
-//     if (count >= 3600) {
-//         setBadge(String(hr)+ "h" + String(Math.floor(min%60)) + "m", grey);
-//     }
-// }
-
-
-    if (count < 60){
-        setBadge(String(hr)+ ":" + String(min) + ":" + String(sec), grey);
-    }
-    if (count >= 60 && count < 3600) {
-        setBadge(String(hr)+ ":" + String(min) + ":" + String(Math.floor(sec%60)), grey);
-    }
-    if (count >= 3600) {
-        setBadge(String(hr)+ ":" + String(Math.floor(min%60)) + ":" + String(Math.floor(sec%60)) + "h", grey);
-    }
+    // if (count < 60){
+        setBadge(String(sec) + "s", grey);
+    // }
+    // if (count >= 60 && count < 3600) {
+    //     setBadge(String(min) + "m",grey);
+    // }
+    // if (count >= 3600) {
+    //     setBadge(String(hr)+ "h",grey);
+    // }
 }
+
 
 // Creates notification settings, in future we could have a random generator that points to
 // title/message combination ie. num[0] = title and num[0[0]] = message or something like that
@@ -60,9 +48,6 @@ function roast(count, int, site){
 }
 
 function formatUrl(url){
-    // var strArray = url.split('/'); // formats url into prefix
-    // var finUrl = strArray[2];
-    // return finUrl
     var finUrl = /:\/\/(www\.)?(.+?)\//;
     return url.match(finUrl)[2];
 }
