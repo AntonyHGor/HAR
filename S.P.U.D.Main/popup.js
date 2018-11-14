@@ -4,27 +4,49 @@ function changeImage(){
 
 
 function formatUrl(url){
-    var strArray = url.split('/'); // formats url into prefix
-    var finUrl = strArray[2];
-    return finUrl
+
+    var finUrl = /:\/\/(www\.)?(.+?)\//;
+    return url.match(finUrl)[2]; 
 }
 
+function updateList(){
+    // var attributeList = [0,0] // first element is timer count, second is vister count
+    
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+            function(tabs){
+                chrome.storage.local.get(['urlList'], function(result) {
+                    var url = tabs[0].url;
+                    var site = formatUrl(url);
+                    var favIcon = tabs[0].favIconUrl;
+                    var urlList = result.urlList;
+                    if(site in urlList){
+                    }else{
+                        urlList[site] = siteAttributes = {
+                            homeUrl: url,
+                            domain: site,
+                            favIcon: favIcon,
+                            intervalSeconds: 0,
+                            totalSeconds: 0,
+                            visited: 0
+                            }
+                        chrome.storage.local.set({"urlList": urlList}, function() {});
+                    }
+                });
+            });
+}
 
 function addWebsite() {
-    var attributeList = [0,0] // first element is timer count, second is vister count
-    chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
-    function(tabs){
-        chrome.storage.local.get(['urlList'], function(result) {
-            var url = tabs[0].url;
-            var site = formatUrl(url);
-            var urlList = result.urlList;
-            if(site in urlList){
-            }else{
-                urlList[site] = attributeList;
-                chrome.storage.local.set({"urlList": urlList}, function() {});
-            }
-         });
+    chrome.storage.local.get(['urlList'], function(result) {
+        if(typeof result.urlList === 'undefined'){ // Initializes the dictionary and saves it if no sites are in list
+            var urlList = {};
+            chrome.storage.local.set({"urlList": urlList}, function() {}); 
+            updateList();
+    
+        }else{
+            updateList();
+        }
     });
+
     swal({
         position: 'top-end',
         showConfirmButton: false, // There won't be any confirm button

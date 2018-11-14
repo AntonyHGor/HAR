@@ -35,7 +35,12 @@ function checkVisited(count, site){
 }
 
 function checkMinute(count, site){
-    var min= 60
+    
+
+}
+
+
+var min= 60
     if(count<=min){
         var num=generateRandomNumber(min)
         if(num==min){
@@ -44,7 +49,13 @@ function checkMinute(count, site){
         }
     }
 
-}
+// 1 minute into with first site
+// 15 - 45 goofs and jokes with some reminders 1 in the 30 period 
+// 60-85 minor roasts and reminders .75
+// 95-120 medium roasts .75 
+// 130 - 175 heavier roast more frequent, 2 in hour
+// 190 - 240 heavy roasts, 3 in hour
+// 240 - infinity, 1 every 15 minutes 
 
 /* A simple MVP times visited algorithm would be easy to implement
 asumming we track it
