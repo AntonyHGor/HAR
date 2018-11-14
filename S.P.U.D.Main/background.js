@@ -42,14 +42,27 @@ function formatBadge(count){
     var min = Math.floor(count/60);
     var hr = Math.floor(count/60/60);
 
+    
+//     if (count < 60){
+//         setBadge(String(sec) + "s", grey);
+//     }
+//     if (count >= 60 && count < 3600) {
+//         setBadge(String(min) + "m" + String(Math.floor(sec%60)) + "s", grey);
+//     }
+//     if (count >= 3600) {
+//         setBadge(String(hr)+ "h" + String(Math.floor(min%60)) + "m", grey);
+//     }
+// }
+
+
     if (count < 60){
-        setBadge(String(sec) + "s", grey);
+        setBadge(String(hr)+ ":" + String(min) + ":" + String(sec), grey);
     }
     if (count >= 60 && count < 3600) {
-        setBadge(String(min) + "m", grey);
+        setBadge(String(hr)+ ":" + String(min) + ":" + String(Math.floor(sec%60)), grey);
     }
     if (count >= 3600) {
-        setBadge(String(hr) + "h", grey);
+        setBadge(String(hr)+ ":" + String(Math.floor(min%60)) + ":" + String(Math.floor(sec%60)) + "h", grey);
     }
 }
 
@@ -101,7 +114,7 @@ function countSeconds(site, list){
         chrome.storage.local.set({"urlList": list}, function() {}); //overwriting the list
         formatBadge(list[site][TIMER_COUNT]); // formats and displays badge
         //roast(urlList[site], 3600, site); // checks number of seconds on site = 30
-        checkMinute(count, site); // runs roast time algorithm
+        mainNotification(count, site); // runs roast time algorithm
     }else {
         setBadge("", grey);
         }

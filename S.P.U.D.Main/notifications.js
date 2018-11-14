@@ -1,7 +1,39 @@
 
+
+
+var list45={note1={title: "Hello", message: "liste."},note2={title: "Attention", message: "sdascasc."} }
+var list85={}
+var list120={}
+var list175={}
+var list240={}
+
+
+function getList(num){
+    if(num==45){
+        return list45
+    }
+    // if(num==85){
+    //     return list85
+    // }
+}
+
+
+function chooseNotification(list){
+    var randomNum=generateRandomNumber(list.length)
+    var randomKey=list[randomNum]
+
+    var notification=makeBasicNote(randomKey.title, randomKey.message)
+
+    notify(notification)
+}
+
+
+
 function notify(message){
     chrome.notifications.create(null, message, null)
 }
+
+
 
 // Generates random number
 
@@ -19,30 +51,51 @@ function makeBasicNote(title, message){
     return note
 }
 
-function checkVisited(count, site){
-    if (count == 1){
-        visited1Note = makeBasicNote("Again?", "Back to " + site + " again are we?")
-        notify(visited1Note);
-    }
-    if (count == 2){
-        visited2Note = makeBasicNote("Wow.", "Just can't shake it huh?")
-        notify(visited2Note);
-    }
-    if (count == 3){
-        visited3Note = makeBasicNote("Come on now.", "You've been to " + site + " " + count + " times today.")
-        notify(visited3Note);
+
+
+function firstGreeting(count, site){
+    if(count==60){
+        timeNote = makeBasicNote("Welcome to SPUD", "You've spent " + count +  " seconds on " + site + ".");
+        notify(timeNote)
     }
 }
 
-function checkMinute(count, site){
-    var min= 60
-    if(count<=min){
-        var num=generateRandomNumber(min)
-        if(num==min){
-            timeNote = makeBasicNote("Listen.", "You've spent " + count +  " seconds on " + site + ".");
-            notify(timeNote)
+
+function notificationAlert(count, site, highNum, lowNum){
+    // var notified = false
+
+    
+    if(count<=highNum && count>=lowNum){
+        var randomNum=generateRandomNumber(highNum-lowNum);
+            if(randomNum==highNum-lowNum){
+                var listName=getList(highNum)
+                chooseNotification(listName)
+                // notified=true;
+            }
+            
         }
+    
+    if(count== highNum){
+        var listName=getList(highNum)
+        chooseNotification(listName)
     }
+        
+   
+}
+
+
+function mainNotification(count, site){
+    var min= 60
+    var hour=3600
+
+
+
+    notificationAlert(count, site, 45*1, 15*1);
+    notificationAlert(count, site, 85*1, 60*1);
+    notificationAlert(count, site, 95*1, 120*1);
+    notificationAlert(count, site, 130*1, 175*1);
+    notificationAlert(count, site, 190*1, 240*1);
+
 
 }
 
