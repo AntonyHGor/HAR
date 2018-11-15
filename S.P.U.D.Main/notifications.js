@@ -44,22 +44,22 @@ var listAfterFour=[
 
 function getList(num){
     var min = 60;
-    if(num==45*1){
+    if(num==45*min){
         return list45
     }
-    if(num==85*1){
+    if(num==85*min){
         return list85
     }
-    if(num==120*1){
+    if(num==120*min){
         return list120
     }
-    if(num==175*1){
+    if(num==175*min){
         return list175
     }
-    if(num==240*1){
+    if(num==240*min){
         return list175
     }
-    if(num>240 * 1){
+    if(num>240 * min){
         return listAfterFour
     }
 }
@@ -112,17 +112,31 @@ function afterFourHours(count){
             
         }
     }
-
+  
+var notified = false;
 function chooseInterval(count,highNum, lowNum){
-
-    if(count<=highNum && count>=lowNum){
-        var randomNum=generateRandomNumber(highNum-lowNum);
-            if(randomNum==highNum-lowNum){
-                var listName=getList(highNum)
-                chooseNotification(listName)
-            }
-            
+    if(count === lowNum){
+        notified = false;
+    }
+        if (notified == false){
+            if(count<=highNum && count>=lowNum){
+                var inter = highNum-count;
+                var randomNum=generateRandomNumber(inter);
+                console.log(randomNum);
+                    if(randomNum==inter){
+                        var listName=getList(highNum)
+                        chooseNotification(listName)
+                        notified = true;
+                    }else{
+                        inter -= 1;
+                        console.log(inter);
+                    }
+                    
+                }
         }
+    
+    
+    
     // if(count == highNum){
     //     var listName=getList(highNum)
     //     chooseNotification(listName)
@@ -134,12 +148,12 @@ function mainNotification(count,site){
     var min= 60
     var hour=3600
 
-    firstGreeting(count,site);
-    chooseInterval(count,45*1, 15*1);
-    chooseInterval(count,85*1, 60*1);
-    chooseInterval(count,95*1, 120*1);
-    chooseInterval(count,130*1, 175*1);
-    chooseInterval(count,190*1, 240*1);
+    // firstGreeting(count,site);
+    chooseInterval(count,45*min, 15*min);
+    chooseInterval(count,85*min, 60*min);
+    chooseInterval(count,120*min, 95*min);
+    chooseInterval(count,175*min, 130*min);
+    chooseInterval(count,240*min, 190*min);
 }
 
 

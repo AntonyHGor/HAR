@@ -15,15 +15,15 @@ function formatBadge(count){
     var min = Math.floor(count/60);
     var hr = Math.floor(count/60/60);
     
-    // if (count < 60){
+    if (count < 60){
         setBadge(String(sec) + "s", grey);
-    // }
-    // if (count >= 60 && count < 3600) {
-    //     setBadge(String(min) + "m",grey);
-    // }
-    // if (count >= 3600) {
-    //     setBadge(String(hr)+ "h",grey);
-    // }
+    }
+    if (count >= 60 && count < 3600) {
+        setBadge(String(min) + "m",grey);
+    }
+    if (count >= 3600) {
+        setBadge(String(hr)+ "h",grey);
+    }
 }
 
 
@@ -57,7 +57,9 @@ function getStartDay(){
         if(typeof result.startDay === 'undefined'){
             var startDay = new Date().getDay();
             chrome.storage.local.set({"startDay": startDay}, function() {});
-        }else{console.log(result.startDay)}
+        }else{
+            // console.log(result.startDay)
+        }
     });
 }
 
@@ -129,9 +131,9 @@ function checkIfCount () {
                     checkReset(1);  // checks and resets variables at each new day (a setting to change?)
                     checkUrlInList(tabs, result);
                     //for checking storage persistence 
-                    chrome.storage.local.get(['urlList'], function (data) { 
-                        sites = data.urlList
-                        console.log(sites) });
+                    // chrome.storage.local.get(['urlList'], function (data) { 
+                    //     sites = data.urlList
+                    //     console.log(sites) });
                     //----
                 });
             });
