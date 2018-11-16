@@ -16,6 +16,7 @@
   },
 
   "permissions": [
+    "idle",
     "storage",
     "activeTab",
     "history",
