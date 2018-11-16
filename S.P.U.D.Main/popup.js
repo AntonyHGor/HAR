@@ -93,10 +93,50 @@ function removeWebsite(){
     })
 }
 
+// function formatTimer(count){
+//     var sec;
+//     var min;
+//     var hr;
+    
+//     if (count < 60){
+//         sec = count;
+//     }
+//     if (count >= 60 && count < 3600) {
+//         min = Math.floor(count/60);
+//         sec = count%60;
+//     }
+//     if (count >= 3600) {
+//         hr = Math.floor(count/60/60);
+//         min = Math.floor(count%60);
+//         sec = count/60%60;
+//     }
+
+//     return h + ":" + min + ":" + sec;
+// }
+
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
-//document.getElementById('change image').addEventListener('click', changeImage);
-  // "content_scripts": 
-  //   {
-  //     "js":["sweetalert2.all.min.js"]
-  //   },
+chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+    function(tabs){
+        chrome.storage.local.get(['urlList'], function(result) {
+            var website = formatUrl(tabs[0].url);
+            var site = "you are on: " + website;
+            // var urlList = result.urlList;
+            // var s = urlList[website].intervalSeconds;
+            // var clock = formatTimer(s);
+            // document.getElementById("clock").innerHTML = clock;
+            document.getElementById("site").innerHTML = site;
+        });
+});
+
+            
+
+//   chrome.storage.local.get(['urlList'], function(result) {
+//     for (var key in result.urlList) {
+//         var siteIcon = key.favIcon;
+//         var siteName = key.domain;
+//     }
+//     document.getElementById('site-list').innerHTML += '<li>' + key + '</li>';
+// });
+
+    

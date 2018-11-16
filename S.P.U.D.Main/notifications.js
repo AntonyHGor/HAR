@@ -94,13 +94,15 @@ function makeBasicNote(title, message){
 }
 
 function firstGreeting(count,site){
-    if(count < 30){
-        if(count==2){
-                var notification=makeBasicNote("S.P.U.D. enabled for " + site + ".", "Prepare to be productive!")
-                notify(notification)
+    chrome.storage.local.get(['urlList'], function(result) {
+        if( result.urlList.length == 1){
+            if(count==4){
+                     var notification=makeBasicNote("This is a notification.", "This is how I will talk to you!")
+                    notify(notification)
             }
         }
-    }
+    });
+}
 
 function afterFourHours(count){
     if(count > 240){
