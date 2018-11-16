@@ -151,6 +151,7 @@ function mainNotification(count,site){
     var hour=3600
 
     // firstGreeting(count,site);
+    notify(makeBasicNote("You suck."))
     chooseInterval(count,45*min, 15*min);
     chooseInterval(count,85*min, 60*min);
     chooseInterval(count,120*min, 95*min);

@@ -1,7 +1,7 @@
 {
   "name": "S.P.U.D",
-  "version": "1.0",
-  "description": "Project for Software Development",
+  "version": "1.0.0",
+  "description": "Potato Battery that monitors your procrastination!",
   "manifest_version": 2,
   "web_accessible_resources": [
     "icon_128.png"

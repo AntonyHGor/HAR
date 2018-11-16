@@ -37,43 +37,44 @@ function updateList(){
 
 
 function addWebsite() {
-    var attributeList = [0,0] // first element is timer count, second is vister count
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
         chrome.storage.local.get(['urlList'], function(result) {
-            var url = tabs[0].url;
-            var site = formatUrl(url);
-            var urlList = result.urlList;
-            if(site in urlList){
-                swal({
-                    position: 'top-end',
-                    type: 'error',
-                    title: 'Dirt...',
-                    text: 'Looks like this site is already added',
-                    timer: 2000,
-                  })
+            if(typeof result.urlList === 'undefined'){ // Initializes the dictionary and saves it if no sites are in list
+                var urlList = {};
+                chrome.storage.local.set({"urlList": urlList}, function() {}); 
+                updateList();
+        
             }else{
-                urlList[site] = attributeList;
-                chrome.storage.local.set({"urlList": urlList}, function() {});
-                swal({
-                    position: 'top-end',
-                    type: 'success',
-                    title: 'Website Added',
-                    timer: 2000,
-                  })
+                updateList();
+                var url = tabs[0].url;
+                var site = formatUrl(url);
+                var urlList = result.urlList;
+                if(site in urlList){
+                    swal({
+                        position: 'top-end',
+                        type: 'error',
+                        title: 'Dirt...',
+                        text: 'Looks like this site is already added',
+                        timer: 2000,
+                        showConfirmButton: false // There won't be any confirm button
+                      })
+                }else{
+                    
+                       
+                    swal({
+                        position: 'top-end',
+                        type: 'success',
+                        title: 'Website Added',
+                        timer: 1000,
+                        showConfirmButton: false // There won't be any confirm button
+                      })
+                }
             }
+          
          });
     });
-    chrome.storage.local.get(['urlList'], function(result) {
-        if(typeof result.urlList === 'undefined'){ // Initializes the dictionary and saves it if no sites are in list
-            var urlList = {};
-            chrome.storage.local.set({"urlList": urlList}, function() {}); 
-            updateList();
     
-        }else{
-            updateList();
-        }
-    });
 
     swal({
         position: 'top-end',
@@ -82,7 +83,7 @@ function addWebsite() {
         title: 'Website Added',
         timer: 1000,
       })
-      document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
+    //   document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
 }
 
 function removeWebsite(){
@@ -120,9 +121,10 @@ function removeWebsite(){
                     swal({
                         position: 'top-end',
                         type: 'error',
-                        title: 'To Starch tracking...',
-                        text: 'first add this site',
-                        timer: 2500,
+                        title: 'To Starch Tracking...',
+                        text: 'First add this site',
+                        timer: 2000,
+                        showConfirmButton: false // There won't be any confirm button
                       })
                 }
                 }); 
@@ -152,6 +154,7 @@ function removeWebsite(){
 
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
+
 chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
         chrome.storage.local.get(['urlList'], function(result) {
@@ -166,21 +169,21 @@ chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
 });
 
             
-function displaySites(){
-    var sites = []; 
-    chrome.storage.local.get(['urlList'], function(result){
-        var urlList = result.urlList;
-        for(key in urlList){
-            // var siteFav = key.favIcon;
-            document.getElementById('listedSites').innerHTML += <li> + key </li>;
-            console.log(key);
-            // var urls = key.domain;
-            // sites.push(urls);
-        }      
-        // window.print(sites);
-        // document.getElementById('print_sites').innerHTML= sites; 
-    }); 
-}
+// function displaySites(){
+//     var sites = []; 
+//     chrome.storage.local.get(['urlList'], function(result){
+//         var urlList = result.urlList;
+//         for(key in urlList){
+//             // var siteFav = key.favIcon;
+//             document.getElementById('listedSites').innerHTML += <li> + key </li>;
+//             console.log(key);
+//             // var urls = key.domain;
+//             // sites.push(urls);
+//         }      
+//         // window.print(sites);
+//         // document.getElementById('print_sites').innerHTML= sites; 
+//     }); 
+// }
 
 // document.getElementById('displaySites').addEventListener('click', displaySites)
 // displaySites();
