@@ -9,7 +9,7 @@
   "icons": {"128": "icon_128.png"},
   "browser_action": {
     "default_icon": "icon.png",
-    "default_popup": "tabs.html"
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": ["notifications.js","background.js"]
