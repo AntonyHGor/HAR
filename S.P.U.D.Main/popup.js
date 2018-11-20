@@ -170,30 +170,18 @@ chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
 
             
 // function displaySites(){
-//     var sites = []; 
-//     chrome.storage.local.get(['urlList'], function(result){
-//         var urlList = result.urlList;
-//         for(key in urlList){
-//             // var siteFav = key.favIcon;
-//             document.getElementById('listedSites').innerHTML += <li> + key </li>;
-//             console.log(key);
-//             // var urls = key.domain;
-//             // sites.push(urls);
-//         }      
-//         // window.print(sites);
-//         // document.getElementById('print_sites').innerHTML= sites; 
-//     }); 
+//     window.location.href="siteList.html";
 // }
 
 // document.getElementById('displaySites').addEventListener('click', displaySites)
-// displaySites();
 
-//   chrome.storage.local.get(['urlList'], function(result) {
-//     for (var key in result.urlList) {
-//         var siteIcon = key.favIcon;
-//         var siteName = key.domain;
-//     }
-//     document.getElementById('site-list').innerHTML += '<li>' + key + '</li>';
-// });
+
+  chrome.storage.local.get(['urlList'], function(result) {
+    for (var key in result.urlList) {
+        var siteIcon = key.favIcon;
+        var siteName = key.domain;
+        document.getElementById('site-list').innerHTML += '<li>' + key + '</li>';
+    }
+});
 
     

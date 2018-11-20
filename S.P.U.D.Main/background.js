@@ -158,7 +158,7 @@ function countVisited() {
                     var count = urlList[site].visited; // getting count
                     urlList[site].visited = count + 1; //updates
                     chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
-                    checkVisited(urlList[site].visited, site);    
+                    // checkVisited(urlList[site].visited, site);    
                 }
             }
         });

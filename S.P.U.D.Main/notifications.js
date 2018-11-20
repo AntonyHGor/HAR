@@ -1,51 +1,76 @@
 
-var list45=[
-    note1={title: "NOTE 1", message: "FOR LIST45"},
-    note2={title: "NOTE 2", message: "FOR LIST45"},
-    note3={title: "NOTE 3", message: "FOR LIST45"},
-    note4={title: "NOTE 4", message: "FOR LIST45"} 
-    // note1={title: "Hello", message: "Just wanted to say hi."},
-    // note2={title: "What do you get when it rains potatoes?", message: "Spuddles."} 
+var list30=[
+    note1={title: "Hello", message: "Just wanted to say hi."},
+    note2={title: "Hi.", message: "Just checking in."},
+    note3={title: "S.P.U.D.", message: "That's my name."},
+    note4={title: "So...", message: "What's up with this weather huh?."},
+    note5={title: "So...", message: "I never know what to say in these situations."},
+    note6={title: "Howdy.", message: "That was me, as a cowboy."},
+    note7={title: "What do you get when it rains potatoes?", message: "Spuddles."}, 
+    note8={title: "Where are you?", message: "There you are."}
 ]
 
+var list50=[
+    note1={title: "Hi.", message: "You should stop."},
+    note2={title: "(looks at watch)", message: "Been awhile now, yeah?"},
+    note3={title: "Hey.", message: "Might be time for a break"},
+    note4={title: "Researchers say:", message: "Those who listen to S.P.U.D. are good people"},
+    note5={title: "Hi.", message: "You should stop."},
+    note6={title: "Hi.", message: "You should take a break."},
+    note7={title: "And the Lord said:", message: "'Listen to S.P.U.D.'"},
+     
+]
 var list85=[
-    note1={title: "NOTE 1", message: "FOR LIST85"},
-    note2={title: "NOTE 2", message: "FOR LIST85"},
-    note3={title: "NOTE 3", message: "FOR LIST85"},
-    note4={title: "NOTE 4", message: "FOR LIST85"} 
-    // note1={title: "Hi.", message: "You should stop."},
-    // note2={title: "Where are you?", message: "There you are."} 
+    note1={title: "Stop.", message: "STOP."},
+    note2={title: "(looks at watch)", message: "Please stop."},
+    note3={title: "Hey.", message: "It's time for a break."},
+    note4={title: ":(", message: "You really hate to listen don't you."},
+    note5={title: "Hm.", message: "You have trouble listening don't you?"},
+    note6={title: "Hellloooo.", message: "CAN YOU HEAR ME??"},
+    note7={title: "And the Lord said:", message: "'Listen to S.P.U.D.'"},
+     
 ]
 var list120=[
-    note1={title: "NOTE 1", message: "FOR LIST120"},
-    note2={title: "NOTE 2", message: "FOR LIST120"},
-    note3={title: "NOTE 3", message: "FOR LIST120"},
-    note4={title: "NOTE 4", message: "FOR LIST120"}  
+    note1={title: "Do me a favor?", message: "Knock it off."},
+    note2={title: "HEY!", message: "STOP!"},
+    note3={title: "(looks at watch)", message: ":("},
+    note4={title: "Wow.", message: "Your grandma would be proud."},
+    note5={title: "Wow.", message: "Your mom would be proud."},
+    note6={title: "Wow.", message: "I'm disapointed in you."},
+    note7={title: "Listen.", message: "You've been here too long."},
+    note8={title: "Listen", message: "You need to quit."},
+    note9={title: "Listen", message: "You have a problem"}   
 ]
 var list175=[
-    note1={title: "NOTE 1", message: "FOR LIST175"},
-    note2={title: "NOTE 2", message: "FOR LIST175"},
-    note3={title: "NOTE 3", message: "FOR LIST175"},
-    note4={title: "NOTE 4", message: "FOR LIST175"} 
+    note1={title: "(looks at watch)", message: "You're a bad person."},
+    note2={title: "Trust me.", message: "You will pay for this."},
+    note3={title: "You.", message: "Don't cross me."},
+    note4={title: "stopstopstopstopstop", message: "stopstopstopstopstopstopstop"},
+    note5={title: "Oh yeah.", message: "You're really going places huh?"},
+    
 ]
 var list240=[
-    note1={title: "NOTE 1", message: "FOR LIST240"},
-    note2={title: "NOTE 2", message: "FOR LIST240"},
-    note3={title: "NOTE 3", message: "FOR LIST240"},
-    note4={title: "NOTE 4", message: "FOR LIST240"} 
+    note1={title: "S.P.U.D.", message: "I will never forget this."},
+    note2={title: "AHHHHHH.", message: "AHHHHHHHHHHHH!"},
+    note3={title: "STOOOPPPPPP!.", message: "I HATE YOU! I HATE YOU!"},
+    note4={title: "You. Will. Not.", message: "PASSSS!!!"},
+    note5={title: "(maniacal laughter)", message: "(coughing) You're killing me."},
+    note6={title: "*The S.P.U.D. system is rebooting:*", message: "You suck."}  
 ]
 var listAfterFour=[
-    note1={title: "NOTE 1", message: "FOR LIST4HOURS"},
-    note2={title: "NOTE 2", message: "FOR LIST4HOURS"},
-    note3={title: "NOTE 3", message: "FOR LIST4HOURS"},
-    note4={title: "NOTE 4", message: "FOR LIST4HOURS"} 
+    note1={title: "Stop.", message: "Stop."},
+    note2={title: "This won't end.", message: "I will win."} 
+
 ]
 
 
 function getList(num){
     var min = 60;
-    if(num==45*min){
-        return list45
+    if(num==30*min){
+        return list30
+    }
+    if(num==50*min){
+        return list50
     }
     if(num==85*min){
         return list85
@@ -57,9 +82,9 @@ function getList(num){
         return list175
     }
     if(num==240*min){
-        return list175
+        return list240
     }
-    if(num>240 * min){
+    if(num>240*min){
         return listAfterFour
     }
 }
@@ -105,15 +130,12 @@ function firstGreeting(count,site){
 }
 
 function afterFourHours(count){
-    if(count > 240){
-        var randomNum=generateRandomNumber(1500);
-            if(randomNum == 1500){
-                var listName=getList(241*1)
+    if(count/60 == 240){
+                var listName=getList(240*1)
                 chooseNotification(listName)
             }
             
         }
-    }
   
 var notified = false;
 function chooseInterval(count,highNum, lowNum){
@@ -151,12 +173,13 @@ function mainNotification(count,site){
     var hour=3600
 
     // firstGreeting(count,site);
-    notify(makeBasicNote("You suck."))
-    chooseInterval(count,45*min, 15*min);
+    chooseInterval(count,30*min, 10*min);
+    chooseInterval(count,50*min, 35*min);
     chooseInterval(count,85*min, 60*min);
     chooseInterval(count,120*min, 95*min);
     chooseInterval(count,175*min, 130*min);
     chooseInterval(count,240*min, 190*min);
+    afterFourHours(count)
 }
 
 
