@@ -131,9 +131,9 @@ function checkIfCount () {
                     checkReset(1);  // checks and resets variables at each new day (a setting to change?)
                     checkUrlInList(tabs, result);
                     //for checking storage persistence 
-                    // chrome.storage.local.get(['urlList'], function (data) { 
-                    //     sites = data.urlList
-                    //     console.log(sites) });
+                    chrome.storage.local.get(['urlList'], function (data) { 
+                        sites = data.urlList
+                        console.log(sites) });
                     //----
                 });
             });
@@ -158,7 +158,7 @@ function countVisited() {
                     var count = urlList[site].visited; // getting count
                     urlList[site].visited = count + 1; //updates
                     chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
-                    checkVisited(urlList[site].visited, site);    
+                    // checkVisited(urlList[site].visited, site);    
                 }
             }
         });
