@@ -175,16 +175,17 @@ function removeWebsite(){
 // }
 
 function displaySites(){
-    var sites = []; 
+    var sites = ["potato", "potato", "potato"]; 
     chrome.storage.local.get(['urlList'], function(result){
         var urlList = result.urlList;
         for(key in urlList){
             // var siteFav = key.favIcon;
-            document.getElementById('listedSites').innerHTML += <li> + key </li>;
-            console.log(key);
-            // var urls = key.domain;
-            // sites.push(urls);
-        }      
+            var urls = key.domain;
+            sites.push(urls);
+        }    
+        window.alert(sites);
+        console.log(urls);
+        document.getElementById('listedSites').innerHTML = sites;
         // window.print(sites);
         // document.getElementById('print_sites').innerHTML= sites; 
     }); 
@@ -194,5 +195,4 @@ function displaySites(){
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
 document.getElementById('displaySites').addEventListener('click', displaySites)
-displaySites();
 //document.getElementById('change image').addEventListener('click', changeImage);
