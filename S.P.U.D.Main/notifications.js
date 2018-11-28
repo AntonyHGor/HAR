@@ -153,7 +153,7 @@ function chooseInterval(count,highNum, lowNum){
                         notified = true;
                     }else{
                         inter -= 1;
-                        console.log(inter);
+                        //console.log(inter);
                     }
                     
                 }

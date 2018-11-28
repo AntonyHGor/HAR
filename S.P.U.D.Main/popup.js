@@ -168,6 +168,39 @@ chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
         });
 });
 
+
+function formatClock(count){
+    var sec = count;
+    var min = Math.floor(count/60);
+    var hr = Math.floor(count/60/60);
+    
+    if (count < 60){
+        if(count<10){
+            String("00" + "h" + "00" + "m" + "0"+ String(sec) + "s");
+        }
+        else{
+            String("00" + "h" + "00" + "m" + String(sec) + "s");
+        }
+        
+
+    }
+
+    if (count >= 60 && count < 3600) {
+        if(count<600){
+            if(count<600%60<10){
+                String("00" + "h " + "0" + String(min) + "m " + "0" + String(sec%60) + "s");
+            }
+            else{
+                String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
+            }
+        }
+
+        
+    if (count >= 3600) {
+        String (String(hr)+ "h",grey);
+    }
+    
+}
             
 // function displaySites(){
 //     window.location.href="siteList.html";
