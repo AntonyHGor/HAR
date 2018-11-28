@@ -187,18 +187,49 @@ function formatClock(count){
 
     if (count >= 60 && count < 3600) {
         if(count<600){
-            if(count<600%60<10){
+            if((sec%60)<10){
                 String("00" + "h " + "0" + String(min) + "m " + "0" + String(sec%60) + "s");
             }
             else{
                 String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
             }
         }
+    }
 
         
-    if (count >= 3600) {
-        String (String(hr)+ "h",grey);
+    if (count >= 3600 && count< 36000) {
+
+        if((sec%60%60<10) && (min%60<10)){
+            String ("0"+ String(hr)+ "h" + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
+        if((sec%60%60<10) && (min%60>10)){
+            String ("0"+ String(hr)+ "h" + "0" + String(min%60) + "m " + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>10) && (min%60<10)){
+            String ("0"+ String(hr)+ "h" +  String(min%60) + "m " + "0" + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>10) && (min%60>10)){
+            String ("0"+ String(hr)+ "h" +  String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+
     }
+
+    if (count >= 36000){
+
+        if((sec%60%60<10) && (min%60<10)){
+            String ( String(hr)+ "h" + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
+        if((sec%60%60<10) && (min%60>10)){
+            String ( String(hr)+ "h" + "0" + String(min%60) + "m " + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>10) && (min%60<10)){
+            String ( String(hr)+ "h" +  String(min%60) + "m " + "0" + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>10) && (min%60>10)){
+            String ( String(hr)+ "h" +  String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+
+    }
+
+
     
 }
             
@@ -217,4 +248,3 @@ function formatClock(count){
     }
 });
 
-    
