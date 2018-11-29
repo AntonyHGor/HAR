@@ -147,57 +147,147 @@ function removeWebsite(){
     }); 
 }
 
-// function formatTimer(count){
-//     var sec;
-//     var min;
-//     var hr;
-    
-//     if (count < 60){
-//         sec = count;
-//     }
-//     if (count >= 60 && count < 3600) {
-//         min = Math.floor(count/60);
-//         sec = count%60;
-//     }
-//     if (count >= 3600) {
-//         hr = Math.floor(count/60/60);
-//         min = Math.floor(count%60);
-//         sec = count/60%60;
-//     }
-
-//     return h + ":" + min + ":" + sec;
-// }
-
+document.getElementById('displaySites').addEventListener('click', displaySites);
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
+setInterval(drawClock, 10);
 
-chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+function formatClock(count){
+    var clock;
+    var sec = count;
+    var min = Math.floor(count/60);
+    var hr = Math.floor(count/60/60);
+    
+    if (count < 60){
+        if(count<10){
+            clock = String("00" + "h " + "00" + "m " + "0"+ String(sec) + "s");
+        }
+        else{
+            clock = String("00" + "h " + "00" + "m " + String(sec) + "s");
+        }
+        
+
+    }
+
+    if (count >= 60 && count < 3600) {
+        if(count<600){
+            if((sec%60)<10){
+                clock = String("00" + "h " + "0" + String(min) + "m " + "0" + String(sec%60) + "s");
+            }
+            else{
+                clock = String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
+            }
+        }else{
+            if((sec%60)<10){
+                clock = String("00" + "h " + String(min) + "m " + "0" + String(sec%60) + "s");
+            }
+            else{
+                clock = String("00" + "h " + String(min) + "m " + String(sec%60) + "s");
+            }
+        }
+    }
+
+        
+    if (count >= 3600 && count< 36000) {
+
+        if((sec%60%60<10) && (min%60<10)){
+            clock = String ("0"+ String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
+
+        if((sec%60%60<10) && (min%60>=10)){
+            clock = String ("0"+ String(hr)+ "h " +  String(min%60) + "m " + "0" +String(sec%60%60) + "s");
+        }
+        if((sec%60%60>=10) && (min%60<10)){
+            clock = String ("0"+ String(hr)+ "h " +  "0" + String(min%60) + "m " + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>=10) && (min%60>=10)){
+            clock = String ("0"+ String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+
+    }
+
+    if (count >= 36000){
+
+        if((sec%60%60<10) && (min%60<10)){
+            clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
+        if((sec%60%60<10) && (min%60>=10)){
+            clock = String ( String(hr)+ "h " + String(min%60) + "m " + "0" + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>=10) && (min%60<10)){
+            clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+        if((sec%60%60>=10) && (min%60>=10)){
+            clock = String ( String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+
+    }
+
+    return clock;
+    
+}
+
+function drawSiteLabel(){
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
         chrome.storage.local.get(['urlList'], function(result) {
             var website = formatUrl(tabs[0].url);
             var site = "you are on: " + website;
-            // var urlList = result.urlList;
-            // var s = urlList[website].intervalSeconds;
-            // var clock = formatTimer(s);
-            // document.getElementById("clock").innerHTML = clock;
             document.getElementById("site").innerHTML = site;
+            
         });
-});
+    });
+}
+
+
+function drawClock(){
+        chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+    function(tabs){
+        chrome.storage.local.get(['urlList'], function(result) {
+            var website = formatUrl(tabs[0].url);
+            var urlList = result.urlList;
+            if(typeof urlList[website] === 'undefined'){
+                cleanClock();
+            }else{
+                var s = urlList[website].intervalSeconds;
+                var clock = formatClock(s);
+                document.getElementById("clock").innerHTML = clock;
+            }
+        });
+    });  
+}
+
+function cleanClock(){
+    clock = "00h 00m 00s"
+    clock1 = clock.fontcolor("lightgray")
+    document.getElementById('clock').innerHTML = clock1;
+}
+// function addDiv(siteObj){
+// var block_to_insert ;
+// var container_block ;
+ 
+// block_to_insert = document.createElement( 'div' );
+// block_to_insert.innerHTML = siteObj ;
+ 
+// container_block = document.getElementById( 'listContainer' );
+// container_block.appendChild( block_to_insert );
 
             
 // function displaySites(){
 //     window.location.href="siteList.html";
 // }
 
-// document.getElementById('displaySites').addEventListener('click', displaySites)
 
+cleanClock();
+drawSiteLabel();
+      
+function displaySites(){
+    window.location.href="siteList.html";
+}
 
-  chrome.storage.local.get(['urlList'], function(result) {
-    for (var key in result.urlList) {
-        var siteIcon = key.favIcon;
-        var siteName = key.domain;
-        document.getElementById('site-list').innerHTML += '<li>' + key + '</li>';
-    }
-});
+//   chrome.storage.local.get(['urlList'], function(result) {
+//     for (var key in result.urlList) {
+//         var siteIcon = key.favIcon;
+//         var siteName = key.domain;
+//         addDiv(key);
+//     }
+// });
 
-    
