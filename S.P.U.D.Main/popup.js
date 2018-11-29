@@ -52,6 +52,9 @@ function addWebsite() {
                 var urlList = result.urlList;
                 if(site in urlList){
                     swal({
+                        delay: .5,
+                        width: '85%',
+                        font: '9px',
                         position: 'top-end',
                         type: 'error',
                         title: 'Dirt...',
@@ -60,9 +63,10 @@ function addWebsite() {
                         showConfirmButton: false // There won't be any confirm button
                       })
                 }else{
-                    
-                       
                     swal({
+                        delay: .5,
+                        width: '85%',
+                        font: '9px',
                         position: 'top-end',
                         type: 'success',
                         title: 'Website Added',
@@ -77,6 +81,9 @@ function addWebsite() {
     
 
     swal({
+        delay: .5,
+        width: '85%',
+        font: '9px',
         position: 'top-end',
         showConfirmButton: false, // There won't be any confirm button
         type: 'success',
@@ -95,6 +102,9 @@ function removeWebsite(){
                 var urlList = result.urlList;
                 if(site in urlList){
                     swal({
+                        delay: .5,
+                        width: '85%',
+                        font: '9px', 
                         title: 'Are you sure you want to remove this site?',
                         text: "Your procrastinating may go unchecked!",
                         type: 'warning',
@@ -107,6 +117,9 @@ function removeWebsite(){
                             delete urlList[site];
                             chrome.storage.local.set({"urlList": urlList}, function() {});
                             swal({
+                                delay: .5,
+                                width: '85%',
+                                font: '9px',
                                 title: 'Tracking Disabled',
                                 text: "You're a potato.",
                                 imageUrl: './ezgif.com-video-to-gif.gif',
@@ -119,6 +132,9 @@ function removeWebsite(){
                 }
                 else{
                     swal({
+                        delay: .5,
+                        width: '85%',
+                        font: '9px',
                         position: 'top-end',
                         type: 'error',
                         title: 'To Starch Tracking...',
