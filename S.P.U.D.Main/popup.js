@@ -183,7 +183,7 @@ function formatClock(count){
         if((sec%60%60>=10) && (min%60<10)){
             clock = String ("0"+ String(hr)+ "h " +  "0" + String(min%60) + "m " + String(sec%60%60) + "s");
         }
-        if((sec%60%60>10) && (min%60>10)){
+        if((sec%60%60>=10) && (min%60>=10)){
             clock = String ("0"+ String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
         }
 
@@ -192,15 +192,15 @@ function formatClock(count){
     if (count >= 36000){
 
         if((sec%60%60<10) && (min%60<10)){
-            clock = String ( String(hr)+ "h" + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
+            clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
         if((sec%60%60<10) && (min%60>=10)){
-            clock = String ( String(hr)+ "h" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");
+            clock = String ( String(hr)+ "h " + String(min%60) + "m " + "0" + String(sec%60%60) + "s");
         }
         if((sec%60%60>=10) && (min%60<10)){
-            clock = String ( String(hr)+ "h" + "0" + String(min%60) + "m " +  String(sec%60%60) + "s");
+            clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " +  String(sec%60%60) + "s");
         }
-        if((sec%60%60>10) && (min%60>10)){
-            clock = String ( String(hr)+ "h" +  String(min%60) + "m " +  String(sec%60%60) + "s");
+        if((sec%60%60>=10) && (min%60>=10)){
+            clock = String ( String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
         }
 
     }
