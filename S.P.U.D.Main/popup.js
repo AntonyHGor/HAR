@@ -131,29 +131,44 @@ function removeWebsite(){
     }); 
 }
 
-// function formatTimer(count){
-//     var sec;
-//     var min;
-//     var hr;
-    
-//     if (count < 60){
-//         sec = count;
-//     }
-//     if (count >= 60 && count < 3600) {
-//         min = Math.floor(count/60);
-//         sec = count%60;
-//     }
-//     if (count >= 3600) {
-//         hr = Math.floor(count/60/60);
-//         min = Math.floor(count%60);
-//         sec = count/60%60;
-//     }
-
-//     return h + ":" + min + ":" + sec;
-// }
-
+document.getElementById('displaySites').addEventListener('click', displaySites);
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
+
+function formatClock(count){
+    // COULD MAKE IT SO IT STARTS 1s, THEN GOES TO 1m12s...
+    var clock;
+    var sec = count;
+    var min = Math.floor(count/60);
+    var hr = Math.floor(count/60/60);
+    
+    if (count < 60){
+        if(count<10){
+            clock = String("00" + "h" + "00" + "m" + "0"+ String(sec) + "s");
+        }
+        else{
+            clock = String("00" + "h" + "00" + "m" + String(sec) + "s");
+        }
+        
+    }
+
+    if (count >= 60 && count < 3600) {
+        if(count<600){
+            if(count<600%60<10){
+                clock = String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
+            }
+            else{
+                clock = String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
+            }
+        }
+    }
+
+        
+    if (count >= 3600) {
+        clock = String (String(hr)+ "h",grey);
+    }
+    return clock;
+}
 
 function drawSiteLabel(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
@@ -169,65 +184,51 @@ function drawSiteLabel(){
 
 
 function drawClock(){
-chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
-function(tabs){
-    chrome.storage.local.get(['urlList'], function(result) {
-        var urlList = result.urlList;
-        var s = urlList[website].intervalSeconds;
-        var clock = formatTimer(s);
-        // document.getElementById("clock").innerHTML = clock;
-        
-    });
-});
-}
-setInterval(drawClock, 1000);
-drawSiteLabel();
-
-
-
-function formatClock(count){
-    var sec = count;
-    var min = Math.floor(count/60);
-    var hr = Math.floor(count/60/60);
-    
-    if (count < 60){
-        if(count<10){
-            String("00" + "h" + "00" + "m" + "0"+ String(sec) + "s");
-        }
-        else{
-            String("00" + "h" + "00" + "m" + String(sec) + "s");
-        }
-        
-
-    }
-
-    if (count >= 60 && count < 3600) {
-        if(count<600){
-            if(count<600%60<10){
-                String("00" + "h " + "0" + String(min) + "m " + "0" + String(sec%60) + "s");
+        chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+    function(tabs){
+        chrome.storage.local.get(['urlList'], function(result) {
+            var website = formatUrl(tabs[0].url);
+            var urlList = result.urlList;
+            if(typeof urlList[website] === 'undefined'){
+                cleanClock();
+            }else{
+                var s = urlList[website].intervalSeconds;
+                var clock = formatClock(s);
+                document.getElementById("clock").innerHTML = clock;
             }
-            else{
-                String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
-            }
-        }
-
-        
-    if (count >= 3600) {
-        String (String(hr)+ "h",grey);
-    }
-    
+        });
+    });  
 }
-            
-// function displaySites(){
-//     window.location.href="siteList.html";
+
+function cleanClock(){
+    clock = "00h00m00s"
+    clock1 = clock.fontcolor("lightgray")
+    document.getElementById('clock').innerHTML = clock1;
+}
+// function addDiv(siteObj){
+// var block_to_insert ;
+// var container_block ;
+ 
+// block_to_insert = document.createElement( 'div' );
+// block_to_insert.innerHTML = siteObj ;
+ 
+// container_block = document.getElementById( 'listContainer' );
+// container_block.appendChild( block_to_insert );
 // }
-// document.getElementById('displaySites').addEventListener('click', displaySites)
+
+
+setInterval(drawClock, 10);
+drawSiteLabel();
+      
+function displaySites(){
+    window.location.href="siteList.html";
+}
 
 //   chrome.storage.local.get(['urlList'], function(result) {
 //     for (var key in result.urlList) {
 //         var siteIcon = key.favIcon;
 //         var siteName = key.domain;
-//         document.getElementById('site-list').innerHTML += '<li>' + key + '</li>';
+//         addDiv(key);
 //     }
 // });
 
