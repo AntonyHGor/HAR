@@ -134,9 +134,9 @@ function removeWebsite(){
 document.getElementById('displaySites').addEventListener('click', displaySites);
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
+setInterval(drawClock, 10);
 
 function formatClock(count){
-    // COULD MAKE IT SO IT STARTS 1s, THEN GOES TO 1m12s...
     var clock;
     var sec = count;
     var min = Math.floor(count/60);
@@ -144,30 +144,68 @@ function formatClock(count){
     
     if (count < 60){
         if(count<10){
-            clock = String("00" + "h" + "00" + "m" + "0"+ String(sec) + "s");
+            clock = String("00" + "h " + "00" + "m " + "0"+ String(sec) + "s");
         }
         else{
-            clock = String("00" + "h" + "00" + "m" + String(sec) + "s");
+            clock = String("00" + "h " + "00" + "m " + String(sec) + "s");
         }
         
+
     }
 
     if (count >= 60 && count < 3600) {
         if(count<600){
-            if(count<600%60<10){
-                clock = String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
+            if((sec%60)<10){
+                clock = String("00" + "h " + "0" + String(min) + "m " + "0" + String(sec%60) + "s");
             }
             else{
                 clock = String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
+            }
+        }else{
+            if((sec%60)<10){
+                clock = String("00" + "h " + String(min) + "m " + "0" + String(sec%60) + "s");
+            }
+            else{
+                clock = String("00" + "h " + String(min) + "m " + String(sec%60) + "s");
             }
         }
     }
 
         
-    if (count >= 3600) {
-        clock = String (String(hr)+ "h",grey);
+    if (count >= 3600 && count< 36000) {
+
+        if((sec%60%60<10) && (min%60<10)){
+            clock = String ("0"+ String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
+        if((sec%60%60<10) && (min%60>10)){
+            clock = String ("0"+ String(hr)+ "h " + "0" + String(min%60) + "m " + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>10) && (min%60<10)){
+            clock = String ("0"+ String(hr)+ "h " +  "0" + String(min%60) + "m " + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>10) && (min%60>10)){
+            clock = String ("0"+ String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+
     }
+
+    if (count >= 36000){
+
+        if((sec%60%60<10) && (min%60<10)){
+            clock = String ( String(hr)+ "h" + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
+        if((sec%60%60<10) && (min%60>10)){
+            clock = String ( String(hr)+ "h" + "0" + String(min%60) + "m " + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>10) && (min%60<10)){
+            clock = String ( String(hr)+ "h" +  String(min%60) + "m " + "0" + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>10) && (min%60>10)){
+            clock = String ( String(hr)+ "h" +  String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+
+    }
+
     return clock;
+    
 }
 
 function drawSiteLabel(){
@@ -201,7 +239,7 @@ function drawClock(){
 }
 
 function cleanClock(){
-    clock = "00h00m00s"
+    clock = "00h 00m 00s"
     clock1 = clock.fontcolor("lightgray")
     document.getElementById('clock').innerHTML = clock1;
 }
@@ -214,76 +252,14 @@ function cleanClock(){
  
 // container_block = document.getElementById( 'listContainer' );
 // container_block.appendChild( block_to_insert );
-function formatClock(count){
-    var sec = count;
-    var min = Math.floor(count/60);
-    var hr = Math.floor(count/60/60);
-    
-    if (count < 60){
-        if(count<10){
-            String("00" + "h" + "00" + "m" + "0"+ String(sec) + "s");
-        }
-        else{
-            String("00" + "h" + "00" + "m" + String(sec) + "s");
-        }
-        
 
-    }
-
-    if (count >= 60 && count < 3600) {
-        if(count<600){
-            if((sec%60)<10){
-                String("00" + "h " + "0" + String(min) + "m " + "0" + String(sec%60) + "s");
-            }
-            else{
-                String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
-            }
-        }
-    }
-
-        
-    if (count >= 3600 && count< 36000) {
-
-        if((sec%60%60<10) && (min%60<10)){
-            String ("0"+ String(hr)+ "h" + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
-        if((sec%60%60<10) && (min%60>10)){
-            String ("0"+ String(hr)+ "h" + "0" + String(min%60) + "m " + String(sec%60%60) + "s");
-        }
-        if((sec%60%60>10) && (min%60<10)){
-            String ("0"+ String(hr)+ "h" +  String(min%60) + "m " + "0" + String(sec%60%60) + "s");
-        }
-        if((sec%60%60>10) && (min%60>10)){
-            String ("0"+ String(hr)+ "h" +  String(min%60) + "m " +  String(sec%60%60) + "s");
-        }
-
-    }
-
-    if (count >= 36000){
-
-        if((sec%60%60<10) && (min%60<10)){
-            String ( String(hr)+ "h" + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
-        if((sec%60%60<10) && (min%60>10)){
-            String ( String(hr)+ "h" + "0" + String(min%60) + "m " + String(sec%60%60) + "s");
-        }
-        if((sec%60%60>10) && (min%60<10)){
-            String ( String(hr)+ "h" +  String(min%60) + "m " + "0" + String(sec%60%60) + "s");
-        }
-        if((sec%60%60>10) && (min%60>10)){
-            String ( String(hr)+ "h" +  String(min%60) + "m " +  String(sec%60%60) + "s");
-        }
-
-    }
-
-
-    
-}
             
 // function displaySites(){
 //     window.location.href="siteList.html";
 // }
 
 
-setInterval(drawClock, 10);
+cleanClock();
 drawSiteLabel();
       
 function displaySites(){

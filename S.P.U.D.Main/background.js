@@ -123,7 +123,7 @@ chrome.windows.onFocusChanged.addListener(function(window) {
 // Checks to see if the program should count, if yes, it counts, saves, and updates the count using linked functions
 function checkIfCount () {
     if(focus == true){
-        chrome.idle.queryState(600, function (state) {
+        chrome.idle.queryState(100000, function (state) {
         if(state === 'active'){
                 chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
         function(tabs){
