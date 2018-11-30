@@ -13,26 +13,29 @@ function addDiv(siteObj){
     var containerBlock;
     var iconBlock;
     var timeBlock;
-     
+ 
     siteBlock = document.createElement('div');
     siteBlock.innerHTML = siteObj.domain;
     siteBlock.classList.add("siteBlock");
-
-    iconBlock = document.createElement('div');
-    iconBlock.innerHTML = siteObj.favIcon;
+ 
+    iconBlock = document.createElement('IMG');
+    var favIconUrl = siteObj.favIcon;
+    iconBlock.setAttribute("src", favIconUrl);
+    iconBlock.setAttribute("width", "25");
+    iconBlock.setAttribute("height", "25");
     iconBlock.classList.add("iconBlock");
-
-    
+ 
+ 
     timeBlock = document.createElement('div');
     var s = siteObj.intervalSeconds;
     timeBlock.innerHTML = formatClock(s);
     timeBlock.classList.add("timeBlock");
-     
+ 
     containerBlock = document.getElementById( 'listContainer' );
     containerBlock.appendChild(siteBlock);
     siteBlock.appendChild(iconBlock);
     siteBlock.appendChild(timeBlock);
-    
+ 
     }
     function formatClock(count){
         var clock;

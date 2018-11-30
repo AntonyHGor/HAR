@@ -10,8 +10,7 @@ function formatUrl(url){
 }
 
 function updateList(){
-    // var attributeList = [0,0] // first element is timer count, second is vister count
-    
+    // var attributeList = [0,0] // first element is timer count, second is vister count  
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
             function(tabs){
                 chrome.storage.local.get(['urlList'], function(result) {
@@ -53,7 +52,7 @@ function addWebsite() {
                 if(site in urlList){
                     swal({
                         delay: .5,
-                        width: '85%',
+                        width: '95%',
                         font: '9px',
                         position: 'top-end',
                         type: 'error',
@@ -65,7 +64,7 @@ function addWebsite() {
                 }else{
                     swal({
                         delay: .5,
-                        width: '85%',
+                        width: '95%',
                         font: '9px',
                         position: 'top-end',
                         type: 'success',
@@ -78,11 +77,9 @@ function addWebsite() {
           
          });
     });
-    
-
     swal({
         delay: .5,
-        width: '85%',
+        width: '95%',
         font: '9px',
         position: 'top-end',
         showConfirmButton: false, // There won't be any confirm button
@@ -103,14 +100,14 @@ function removeWebsite(){
                 if(site in urlList){
                     swal({
                         delay: .5,
-                        width: '85%',
+                        width: '95%',
                         font: '9px', 
                         title: 'Are you sure you want to remove this site?',
                         text: "Your procrastinating may go unchecked!",
                         type: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
+                        confirmButtonColor: 'lightgreen',
+                        cancelButtonColor: 'lightcoral',
                         confirmButtonText: 'Yes, remove it!'
                     }).then((result) => {
                         if (result.value) {
@@ -118,7 +115,7 @@ function removeWebsite(){
                             chrome.storage.local.set({"urlList": urlList}, function() {});
                             swal({
                                 delay: .5,
-                                width: '85%',
+                                width: '95%',
                                 font: '9px',
                                 title: 'Tracking Disabled',
                                 text: "You're a potato.",
@@ -126,6 +123,8 @@ function removeWebsite(){
                                 imageWidth: 350,
                                 imageHeight: 200,
                                 imageAlt: 'Custom image',
+                                timer: 2500,
+                                showConfirmButton: false, 
                             })
                         }
                     })
@@ -133,7 +132,7 @@ function removeWebsite(){
                 else{
                     swal({
                         delay: .5,
-                        width: '85%',
+                        width: '95%',
                         font: '9px',
                         position: 'top-end',
                         type: 'error',
