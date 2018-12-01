@@ -1,24 +1,78 @@
 <!DOCTYPE html>
 <style type= "text/css">
 
-body{margin:0px !important;}
+body{
+    margin:0px !important;
+    width:360px;
+    }
 
 .siteBlock {
     border-bottom:1px solid rgb(225,225,225);
-    padding-bottom:15px;
-    padding-top:15px;
-    padding: 28px 28px;
-    text-align: center;
+    height: 90px;
+    /* padding: 25px 25px; */
+    
+    
+    
 }
 
 .iconBlock {
-    float: left;
+    display: inline-flex;
+    width: 90px;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    /* vertical-align: middle;
+    display: inline-block; */
+    
+
     
 }
 
 .timeBlock {
-    float: right;
+    display: inline-block;
+    width: 110px;
+    vertical-align: top;
+    padding: 39.4px 0px;
+}
+
+.time{
+    text-align: center;
+}
+.nameBlock {
+    display: inline-block;
+    width: 160px;
+    vertical-align: top;
+    padding: 37.5px 0px;
     
+}
+.name {
+    text-align: center
+}
+
+.block {
+    display: block;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    background-color: lightgray;
+    color: black;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.block:focus {outline:0;}
+
+.block1:hover {
+    background-color: rgb(105, 218, 114);
+    color: white;
+}
+.block2:hover {
+    background-color: red;
+    color: white;
 }
 
 
@@ -28,7 +82,7 @@ body{margin:0px !important;}
 <body>
 
 <div id="listContainer"></div>
-
+<button id="goHome" class="block block2">goHome</button>
 <script type="text/javascript" src="siteList.js"></script>
 
 </body>
