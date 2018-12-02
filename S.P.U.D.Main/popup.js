@@ -1,10 +1,12 @@
 function changeImage(){
-    document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
+    document.getElementById("x").src='ezgif.com-vieo-to-gif.gif';
 }
 
+function randomGif(){
+    var gifList = [];
+}
 
 function formatUrl(url){
-
     var finUrl = /:\/\/(www\.)?(.+?)\//;
     return url.match(finUrl)[2]; 
 }
@@ -149,6 +151,7 @@ function removeWebsite(){
 document.getElementById('displaySites').addEventListener('click', displaySites);
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
+document.getElementById('closeButton').addEventListener('click', closeWindow);
 setInterval(drawClock, 10);
 
 function formatClock(count){
@@ -164,8 +167,6 @@ function formatClock(count){
         else{
             clock = String("00" + "h " + "00" + "m " + String(sec) + "s");
         }
-        
-
     }
 
     if (count >= 60 && count < 3600) {
@@ -185,13 +186,11 @@ function formatClock(count){
             }
         }
     }
-
         
     if (count >= 3600 && count< 36000) {
-
         if((sec%60%60<10) && (min%60<10)){
-            clock = String ("0"+ String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
-
+            clock = String ("0"+ String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");
+        }
         if((sec%60%60<10) && (min%60>=10)){
             clock = String ("0"+ String(hr)+ "h " +  String(min%60) + "m " + "0" +String(sec%60%60) + "s");
         }
@@ -201,11 +200,9 @@ function formatClock(count){
         if((sec%60%60>=10) && (min%60>=10)){
             clock = String ("0"+ String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
         }
-
     }
 
     if (count >= 36000){
-
         if((sec%60%60<10) && (min%60<10)){
             clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
         if((sec%60%60<10) && (min%60>=10)){
@@ -217,11 +214,8 @@ function formatClock(count){
         if((sec%60%60>=10) && (min%60>=10)){
             clock = String ( String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
         }
-
     }
-
-    return clock;
-    
+    return clock;  
 }
 
 function drawSiteLabel(){
@@ -235,7 +229,6 @@ function drawSiteLabel(){
         });
     });
 }
-
 
 function drawClock(){
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
@@ -290,3 +283,6 @@ function displaySites(){
 //     }
 // });
 
+function closeWindow(){
+    window.close(); 
+}

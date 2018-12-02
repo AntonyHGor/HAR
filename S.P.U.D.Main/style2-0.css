@@ -101,3 +101,10 @@ h2{
 .bottomnav a.active{
     border-bottom: 3px solid orange;
 }
+
+.cButton{
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    cursor: pointer;
+}

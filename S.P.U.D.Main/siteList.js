@@ -112,4 +112,8 @@ function addDiv(siteObj){
     
 }
 
+function closeWindow(){
+    window.close(); 
+}
+document.getElementById('closeButton').addEventListener('click', closeWindow);
 popList();
