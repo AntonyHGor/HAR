@@ -134,6 +134,7 @@ function removeWebsite(){
 document.getElementById('displaySites').addEventListener('click', displaySites);
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
+document.getElementById('close').addEventListener('click', closePopup);
 setInterval(drawClock, 10);
 
 function formatClock(count){
@@ -299,6 +300,9 @@ drawSiteLabel();
       
 function displaySites(){
     window.location.href="siteList.html";
+}
+function closePopup(){
+    window.close();
 }
 
 //   chrome.storage.local.get(['urlList'], function(result) {

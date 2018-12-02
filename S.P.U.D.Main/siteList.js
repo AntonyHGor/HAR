@@ -196,9 +196,13 @@ function addDiv(siteObj){
         
     }
 document.getElementById('goHome').addEventListener('click', goHome);
+document.getElementById('close').addEventListener('click', closePopup);
 popList();
 getTimer();
 
 function goHome(){
     window.location.href="popup.html";
+}
+function closePopup(){
+    window.close();
 }
