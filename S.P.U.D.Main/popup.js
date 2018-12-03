@@ -1,18 +1,17 @@
 function changeImage(){
-    document.getElementById("x").src='ezgif.com-vieo-to-gif.gif';
+    document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
 }
 
-function randomGif(){
-    var gifList = [];
-}
 
 function formatUrl(url){
+
     var finUrl = /:\/\/(www\.)?(.+?)\//;
     return url.match(finUrl)[2]; 
 }
 
 function updateList(){
-    // var attributeList = [0,0] // first element is timer count, second is vister count  
+    // var attributeList = [0,0] // first element is timer count, second is vister count
+    
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
             function(tabs){
                 chrome.storage.local.get(['urlList'], function(result) {
@@ -53,9 +52,6 @@ function addWebsite() {
                 var urlList = result.urlList;
                 if(site in urlList){
                     swal({
-                        delay: .5,
-                        width: '95%',
-                        font: '9px',
                         position: 'top-end',
                         type: 'error',
                         title: 'Dirt...',
@@ -64,10 +60,9 @@ function addWebsite() {
                         showConfirmButton: false // There won't be any confirm button
                       })
                 }else{
+                    
+                       
                     swal({
-                        delay: .5,
-                        width: '95%',
-                        font: '9px',
                         position: 'top-end',
                         type: 'success',
                         title: 'Website Added',
@@ -79,10 +74,9 @@ function addWebsite() {
           
          });
     });
+    
+
     swal({
-        delay: .5,
-        width: '95%',
-        font: '9px',
         position: 'top-end',
         showConfirmButton: false, // There won't be any confirm button
         type: 'success',
@@ -101,41 +95,30 @@ function removeWebsite(){
                 var urlList = result.urlList;
                 if(site in urlList){
                     swal({
-                        delay: .5,
-                        width: '95%',
-                        font: '9px', 
                         title: 'Are you sure you want to remove this site?',
                         text: "Your procrastinating may go unchecked!",
                         type: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: 'lightgreen',
-                        cancelButtonColor: 'lightcoral',
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
                         confirmButtonText: 'Yes, remove it!'
                     }).then((result) => {
                         if (result.value) {
                             delete urlList[site];
                             chrome.storage.local.set({"urlList": urlList}, function() {});
                             swal({
-                                delay: .5,
-                                width: '95%',
-                                font: '9px',
                                 title: 'Tracking Disabled',
                                 text: "You're a potato.",
                                 imageUrl: './ezgif.com-video-to-gif.gif',
                                 imageWidth: 350,
                                 imageHeight: 200,
                                 imageAlt: 'Custom image',
-                                timer: 2500,
-                                showConfirmButton: false, 
                             })
                         }
                     })
                 }
                 else{
                     swal({
-                        delay: .5,
-                        width: '95%',
-                        font: '9px',
                         position: 'top-end',
                         type: 'error',
                         title: 'To Starch Tracking...',
@@ -148,61 +131,101 @@ function removeWebsite(){
     }); 
 }
 
-document.getElementById('displaySites').addEventListener('click', displaySites);
+document.getElementById('goSites').addEventListener('click', displaySites);
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
-document.getElementById('closeButton').addEventListener('click', closeWindow);
+document.getElementById('close').addEventListener('click', closePopup);
 setInterval(drawClock, 10);
 
 function formatClock(count){
     var clock;
+    var clock1;
+    var clock2;
     var sec = count;
     var min = Math.floor(count/60);
     var hr = Math.floor(count/60/60);
     
     if (count < 60){
         if(count<10){
-            clock = String("00" + "h " + "00" + "m " + "0"+ String(sec) + "s");
+            clock1 = String("00" + "h " + "00" + "m " + "0");
+            clock2 = String(sec) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+            
         }
         else{
-            clock = String("00" + "h " + "00" + "m " + String(sec) + "s");
+            clock1 = String("00" + "h " + "00" + "m ");
+            clock2 = String(sec) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
         }
+        
+
     }
 
     if (count >= 60 && count < 3600) {
         if(count<600){
             if((sec%60)<10){
-                clock = String("00" + "h " + "0" + String(min) + "m " + "0" + String(sec%60) + "s");
+                clock1 = String("00" + "h " + "0")
+                clock2 =String(min) + "m " + "0" + String(sec%60) + "s";
+                clock1 = clock1.fontcolor("lightgray")
+                clock = clock1+clock2;
             }
             else{
-                clock = String("00" + "h " + "0" + String(min) + "m " + String(sec%60) + "s");
+                clock1 = String("00" + "h " + "0")
+                clock2 =String(min) + "m " + String(sec%60) + "s";
+                clock1 = clock1.fontcolor("lightgray")
+                clock = clock1+clock2;
             }
         }else{
             if((sec%60)<10){
-                clock = String("00" + "h " + String(min) + "m " + "0" + String(sec%60) + "s");
+                clock1 = String("00" + "h ")
+                clock2 =String(min) + "m " + "0" + String(sec%60) + "s";
+                clock1 = clock1.fontcolor("lightgray")
+                clock = clock1+clock2;
             }
             else{
-                clock = String("00" + "h " + String(min) + "m " + String(sec%60) + "s");
+                clock1 = String("00" + "h ")
+                clock2 =String(min) + "m " + String(sec%60) + "s";
+                clock1 = clock1.fontcolor("lightgray")
+                clock = clock1+clock2;
             }
-        }
-    }
-        
-    if (count >= 3600 && count< 36000) {
-        if((sec%60%60<10) && (min%60<10)){
-            clock = String ("0"+ String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");
-        }
-        if((sec%60%60<10) && (min%60>=10)){
-            clock = String ("0"+ String(hr)+ "h " +  String(min%60) + "m " + "0" +String(sec%60%60) + "s");
-        }
-        if((sec%60%60>=10) && (min%60<10)){
-            clock = String ("0"+ String(hr)+ "h " +  "0" + String(min%60) + "m " + String(sec%60%60) + "s");
-        }
-        if((sec%60%60>=10) && (min%60>=10)){
-            clock = String ("0"+ String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
         }
     }
 
+        
+    if (count >= 3600 && count< 36000) {
+
+        if((sec%60%60<10) && (min%60<10)){
+            clock1 = String("0")
+            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+        }
+
+        if((sec%60%60<10) && (min%60>=10)){
+            clock1 = String("0")
+            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+        }
+        if((sec%60%60>=10) && (min%60<10)){
+            clock1 = String("0")
+            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+        }
+        if((sec%60%60>=10) && (min%60>=10)){
+            clock1 = String("0")
+            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+        }
+
+    }
+
     if (count >= 36000){
+
         if((sec%60%60<10) && (min%60<10)){
             clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
         if((sec%60%60<10) && (min%60>=10)){
@@ -214,8 +237,11 @@ function formatClock(count){
         if((sec%60%60>=10) && (min%60>=10)){
             clock = String ( String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
         }
+
     }
-    return clock;  
+
+    return clock;
+    
 }
 
 function drawSiteLabel(){
@@ -229,6 +255,7 @@ function drawSiteLabel(){
         });
     });
 }
+
 
 function drawClock(){
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
@@ -274,6 +301,9 @@ drawSiteLabel();
 function displaySites(){
     window.location.href="siteList.html";
 }
+function closePopup(){
+    window.close();
+}
 
 //   chrome.storage.local.get(['urlList'], function(result) {
 //     for (var key in result.urlList) {
@@ -283,6 +313,4 @@ function displaySites(){
 //     }
 // });
 
-function closeWindow(){
-    window.close(); 
-}
+

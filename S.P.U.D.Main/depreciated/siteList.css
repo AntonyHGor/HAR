@@ -1,0 +1,142 @@
+
+body{
+    margin:0px !important;
+    width:360px;
+    }
+
+.siteBlock {
+    border-bottom:1px solid rgb(225,225,225);
+    height: 90px;
+    /* padding: 25px 25px; */
+    
+    
+    
+}
+
+.iconBlock {
+    display: inline-flex;
+    width: 90px;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    /* vertical-align: middle;
+    display: inline-block; */
+    
+
+    
+}
+
+.timeBlock {
+    display: inline-block;
+    width: 110px;
+    vertical-align: top;
+    padding: 39.4px 0px;
+}
+
+.time{
+    text-align: center;
+}
+.nameBlock {
+    display: inline-block;
+    width: 160px;
+    vertical-align: top;
+    padding: 37.5px 0px;
+    
+}
+.name {
+    text-align: center
+}
+
+.block {
+    display: block;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    background-color: lightgray;
+    color: black;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.block:focus {outline:0;}
+
+.block1:hover {
+    background-color: rgb(105, 218, 114);
+    color: white;
+}
+.block2:hover {
+    background-color: red;
+    color: white;
+}
+
+.header {
+    /* font-family: 'california'; */
+    font-size: 40px;
+    font-family: 'Monoton',cursive;
+    /* font-family: 'Orbitron-Medium'; */
+
+    height: 60px;
+    display: flex;
+    position: relative;
+    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.02);
+    align-items: center;
+    border-bottom: 1px solid #eeeeee;
+    vertical-align: middle;
+    justify-content: center;
+    /* padding-left:13px; */
+    background-color: #feffff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.closeButton{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+}
+.x{
+    color: rgb(218, 218, 218);
+    font-size: 22px;
+    margin-top: -6px;
+}
+
+
+/* body{margin:0px !important;}
+
+h1{
+    text-align: center;
+    border-bottom: 1px solid black; 
+    padding-bottom: 4%;
+    width: 100%;
+    box-shadow: 0 2px 0 rgba(0,0,0,0.12), 0 2px 3px rgba(0,0,0,0); 
+    transition: all 0.3s cubic-bezier(.25,.8,.25,1);  
+}
+.siteBlock {
+    min-width: 300px; 
+    border-bottom:1px solid rgb(225,225,225);
+    padding-bottom:15px;
+    padding-top:15px;
+    padding: 28px 28px;
+    text-align: center;
+}
+
+.iconBlock {
+    float: left;
+    
+}
+
+.timeBlock {
+    float: right;
+    
+}
+
+.cButton{
+    position: absolute; 
+    top: 20px; 
+    right: 20px; 
+    cursor: pointer;
+} */
