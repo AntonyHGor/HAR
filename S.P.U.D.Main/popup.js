@@ -131,7 +131,7 @@ function removeWebsite(){
     }); 
 }
 
-document.getElementById('displaySites').addEventListener('click', displaySites);
+document.getElementById('goSites').addEventListener('click', displaySites);
 document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
 document.getElementById('close').addEventListener('click', closePopup);
@@ -312,4 +312,5 @@ function closePopup(){
 //         addDiv(key);
 //     }
 // });
+
 

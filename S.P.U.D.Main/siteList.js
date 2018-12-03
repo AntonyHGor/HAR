@@ -201,7 +201,7 @@ popList();
 getTimer();
 
 function goHome(){
-    window.location.href="popup.html";
+    window.location.href="popup2-0.html";
 }
 function closePopup(){
     window.close();
