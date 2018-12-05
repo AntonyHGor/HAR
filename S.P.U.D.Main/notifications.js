@@ -39,7 +39,8 @@ var list120=[
     note6={title: "Wow.", message: "I'm disapointed in you."},
     note7={title: "Listen.", message: "You've been here too long."},
     note8={title: "Listen", message: "You need to quit."},
-    note9={title: "Listen", message: "You have a problem"}   
+    note9={title: "Listen", message: "You have a problem"},  
+    note10={title: "Well", message: "You have evolved into a literal POTATO"}, 
 ]
 var list175=[
     note1={title: "(looks at watch)", message: "You're a bad person."},

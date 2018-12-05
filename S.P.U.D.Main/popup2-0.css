@@ -3,6 +3,7 @@ body {
     min-height: 500px;
     margin: auto;
     text-align: center; 
+    font-family: 'Amatic SC', cursive;
 }
 /* grayed line at bottom */
 /* h1:after {
@@ -30,7 +31,7 @@ body {
     font-size: 40px;
     font-family: 'Monoton',cursive;
     /* font-family: 'Orbitron-Medium'; */
-
+    font-family: 'Amatic SC', cursive;
     height: 60px;
     display: flex;
     position: relative;
@@ -54,6 +55,7 @@ body {
     color: rgb(218, 218, 218);
     font-size: 22px;
     margin-top: -6px;
+
 }
 
 h3{
@@ -77,6 +79,7 @@ h3{
 }
 div{
     text-align: center;
+    font-family: 'Amatic SC', cursive;
 }
 
 /* h2{
@@ -111,6 +114,7 @@ div{
     box-sizing: border-box;
     vertical-align: top;
     border-right: 1px solid rgb(225,225,225);
+    border-bottom: 3px solid orange; 
     
 }
 .sitesButton{
@@ -134,6 +138,8 @@ div{
 }
 .sitesButton:hover{
     cursor: pointer;
+    background: lightsalmon;
+    color: white;
 }
 .threeLines{
     display: flex;
@@ -176,19 +182,13 @@ div{
 .button1:hover {
     background-color:lightgreen;
     color: white;
-    box-shadow: 0px 5px 6px rgba(0,0,0,0.3);
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
 }
 
 .button2:hover {
     background-color: lightcoral;
     color: white;
-    box-shadow: 0px 5px 6px rgba(0,0,0,0.3);
-}
-
-.button3:hover {
-    background-color: lightskyblue;
-    color: white;
-    box-shadow: 0px 5px 6px rgba(0,0,0,0.3);
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
 }
 
 .button:active { /*Clicked and held*/
