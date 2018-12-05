@@ -1,44 +1,52 @@
+
 function popList(){
     chrome.storage.local.get(['urlList'], function(result) {
         for (var key in result.urlList) {
-            var siteIcon = key.favIcon;
-            var siteName = key.domain;
             addDiv(result.urlList[key]);
         }
     });
 }
 
-function getTimer(){
-    var siteBlock;
-    var timeBlock;
+var today = true;
+function switchTimeView(){
+    // chrome.storage.local.get(['urlList'], function(result) {
+    // var listContainer = document.getElementById("listContainer");
+    // for(var elem = 0; elem < listContainer.children.length; elem++){
+    //     var siteBlock = listContainer.children[elem]
+    //     // console.log(siteBlock);
+    //     var siteObj = result.urlList[siteBlock.children[1].children[0].textContent];
+    //     // console.log(siteObj);
 
-    var array = getDivChildren();
-    for(elem in array){
-    // siteBlock = document.getElementById('siteBlock');
-    var nameBlock = elem.getElementById('nameBlock');
-    var name = nameBlock.textContent;
-    chrome.storage.local.get(['urlList'], function(result) {
-        var urlList = result.urlList;
-        var s = urlList[name].intervalSeconds;
-        timeBlock = siteBlock.getElementById("timeBlock");
-        timeBlock.innerHTML = formatClock(s);
-    });
-    }
-}
-function getDivChildren() {
-
-    var div = document.getElementById('listContainer'),
-        subDiv = div.getElementsByTagName('div'),
-        myArray = [];
-
-    for(var i = 0; i < subDiv.length; i++) {
-        var elem = subDiv[i];
-        console.log(elem.id);
-        // if(elem.id('siteBlock') === 0) {
-        //     myArray.push(elem.id);
-        // }
-    }
-    return myArray;
+    //     if(today === true){
+    //         var timeBlock = document.createElement('div');
+    //         var s = siteObj.intervalSeconds;
+    //         // console.log("showing total")
+    //         var time = document.createElement('div');
+    //         time.innerHTML = formatClock(s);
+    //         time.classList.add("time");
+    //         timeBlock.setAttribute('id',"timeBlock");
+    //         timeBlock.classList.add("timeBlock");
+    //         siteBlock.children[2] = timeBlock;
+    //     }else if(today === false){
+    //         timeBlock = document.createElement('div');
+    //         var s = siteObj.totalSeconds;
+    //         // console.log("showing interval")
+    //         var time = document.createElement('div');
+    //         time.innerHTML = formatClock(s);
+    //         time.classList.add("time");
+    //         timeBlock.setAttribute('id',"timeBlock");
+    //         timeBlock.classList.add("timeBlock");
+    //         siteBlock.children[2] = timeBlock;
+    //     }
+    //     }
+        if(today===true){
+            document.getElementById("switch").innerText = 'All-time'
+            today = false;
+        }else if(today===false){
+            document.getElementById("switch").innerText = 'Today'
+            today = true;
+        }
+    // });
 }
 
 function addDiv(siteObj){
@@ -47,14 +55,15 @@ function addDiv(siteObj){
     var iconBlock;
     var nameBlock;
     var timeBlock;
-     
+      
     siteBlock = document.createElement('div');
     siteBlock.classList.add("siteBlock");
     siteBlock.setAttribute('id',"siteBlock")
 
     nameBlock = document.createElement('div');
     var name = document.createElement('div');
-    name.innerHTML = siteObj.domain;
+    name.innerText = siteObj.domain;
+    name.setAttribute('id',"name");
     name.classList.add("name");
     nameBlock.setAttribute('id',"nameBlock");
     nameBlock.classList.add("nameBlock");
@@ -76,12 +85,23 @@ function addDiv(siteObj){
     time.classList.add("time");
     timeBlock.setAttribute('id',"timeBlock");
     timeBlock.classList.add("timeBlock");
+
+    var remove = document.createElement('div');
+    remove.setAttribute('id',"remove");
+    remove.classList.add("remove");
+    remove.innerHTML = "x";
+    remove.onclick = e => {
+        removeSite(e.target);
+    } 
+    // remove.onclick = removeSite(this);
+
      
     containerBlock = document.getElementById( 'listContainer' );
     containerBlock.appendChild(siteBlock);
     siteBlock.appendChild(iconBlock);
     siteBlock.appendChild(nameBlock);
     siteBlock.appendChild(timeBlock);
+    siteBlock.appendChild(remove);
     iconBlock.appendChild(icon);
     nameBlock.appendChild(name);
     timeBlock.appendChild(time);
@@ -195,10 +215,6 @@ function addDiv(siteObj){
         return clock;
         
     }
-document.getElementById('goHome').addEventListener('click', goHome);
-document.getElementById('close').addEventListener('click', closePopup);
-popList();
-getTimer();
 
 function goHome(){
     window.location.href="popup2-0.html";
@@ -206,3 +222,80 @@ function goHome(){
 function closePopup(){
     window.close();
 }
+function removeSite(elem){
+    chrome.storage.local.get(['urlList'], function(result) {
+        var urlList = result.urlList;
+        var name = elem.parentElement.children[1].children[0].textContent; 
+        if(name in urlList){
+            swal({
+                title: 'Are you sure you want to remove this site?',
+                text: "Your procrastinating may go unchecked!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, remove it!'
+            }).then((result) => {
+                if (result.value) {
+                    delete urlList[name];
+                    chrome.storage.local.set({"urlList": urlList}, function() {});
+                    elem.parentElement.parentElement.removeChild(elem.parentElement);
+
+                    if(Object.keys(urlList).length == 0){ // this happens to remove today button on empty list
+                        displaySites();
+                    }
+                    
+                    swal({
+                        title: 'Tracking Disabled',
+                        text: "You're a potato.",
+                        imageUrl: './ezgif.com-video-to-gif.gif',
+                        imageWidth: 350,
+                        imageHeight: 200,
+                        imageAlt: 'Custom image',
+                    })
+                }
+            })
+        }
+            
+
+    });
+}
+function displaySites(){
+    window.location.href="siteList.html";
+}
+
+function showTodayButton(){
+    chrome.storage.local.get(['urlList'], function(result) {
+        if(Object.keys(result.urlList).length == 0){
+        document.getElementById('switch').style.display = "none";
+        }
+    });
+}
+function updateTimer(){
+    chrome.storage.local.get(['urlList'], function(result) {
+    for(var elem = 0; elem < listContainer.children.length; elem++){
+        var siteBlock = listContainer.children[elem]
+        // console.log(siteBlock);
+        var siteObj = result.urlList[siteBlock.children[1].children[0].textContent];
+        if(today === true){
+            var s = siteObj.intervalSeconds;
+            var time = formatClock(s);
+            siteBlock.children[2].children[0].innerHTML = time;
+        }else if(today === false){
+            var s = siteObj.totalSeconds;
+            var time = formatClock(s);
+            siteBlock.children[2].children[0].innerHTML = time;
+        }
+
+        // console.log(siteObj);
+    }
+});
+}
+
+document.getElementById('goHome').addEventListener('click', goHome);
+document.getElementById('close').addEventListener('click', closePopup);
+document.getElementById('switch').addEventListener('click', switchTimeView);
+
+popList();
+showTodayButton();
+setInterval(updateTimer,10);
