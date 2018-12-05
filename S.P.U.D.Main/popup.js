@@ -3,15 +3,12 @@ function changeImage(){
 }
 
 
-function formatUrl(url){
-
+function formatUrl(url){ // cleans urls to be stored 
     var finUrl = /:\/\/(www\.)?(.+?)\//;
     return url.match(finUrl)[2]; 
 }
 
 function updateList(){
-    // var attributeList = [0,0] // first element is timer count, second is vister count
-    
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
             function(tabs){
                 chrome.storage.local.get(['urlList'], function(result) {
@@ -83,7 +80,6 @@ function addWebsite() {
         title: 'Website Added',
         timer: 1000,
       })
-    //   document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
 }
 
 function removeWebsite(){
@@ -256,7 +252,6 @@ function drawSiteLabel(){
     });
 }
 
-
 function drawClock(){
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
@@ -279,21 +274,6 @@ function cleanClock(){
     clock1 = clock.fontcolor("lightgray")
     document.getElementById('clock').innerHTML = clock1;
 }
-// function addDiv(siteObj){
-// var block_to_insert ;
-// var container_block ;
- 
-// block_to_insert = document.createElement( 'div' );
-// block_to_insert.innerHTML = siteObj ;
- 
-// container_block = document.getElementById( 'listContainer' );
-// container_block.appendChild( block_to_insert );
-
-            
-// function displaySites(){
-//     window.location.href="siteList.html";
-// }
-
 
 cleanClock();
 drawSiteLabel();
@@ -304,13 +284,5 @@ function displaySites(){
 function closePopup(){
     window.close();
 }
-
-//   chrome.storage.local.get(['urlList'], function(result) {
-//     for (var key in result.urlList) {
-//         var siteIcon = key.favIcon;
-//         var siteName = key.domain;
-//         addDiv(key);
-//     }
-// });
 
 
