@@ -228,36 +228,34 @@ function removeSite(elem){
         var name = elem.parentElement.children[1].children[0].textContent; 
         if(name in urlList){
             swal({
-                title: 'Are you sure you want to remove this site?',
-                text: "Your procrastinating may go unchecked!",
+                title: 'Do you really want SPUD to stop watching?',
+                text: "You might become a potato",
                 type: 'warning',
                 showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, remove it!'
+                confirmButtonColor: 'lightcoral',
+                cancelButtonColor: 'lightgray',
+                confirmButtonText: 'Yes'
             }).then((result) => {
                 if (result.value) {
                     delete urlList[name];
                     chrome.storage.local.set({"urlList": urlList}, function() {});
-                    elem.parentElement.parentElement.removeChild(elem.parentElement);
-
-                    if(Object.keys(urlList).length == 0){ // this happens to remove today button on empty list
-                        displaySites();
-                    }
-                    
                     swal({
-                        title: 'Tracking Disabled',
+                        title: 'SPUD stopped monitoring ' + name,
                         text: "You're a potato.",
+                        confirmButtonColor: 'lightgreen',
                         imageUrl: './ezgif.com-video-to-gif.gif',
                         imageWidth: 350,
                         imageHeight: 200,
                         imageAlt: 'Custom image',
                     })
+                    elem.parentElement.parentElement.removeChild(elem.parentElement);
+                    
+                    if(Object.keys(urlList).length == 0){ // this happens to remove today button on empty list
+                        displaySites();
+                    }
                 }
             })
         }
-            
-
     });
 }
 function displaySites(){
