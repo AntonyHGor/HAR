@@ -1,7 +1,3 @@
-function changeImage(){
-    document.getElementById("x").src='ezgif.com-vieo-to-gif.gif'
-}
-
 
 function formatUrl(url){ // cleans urls to be stored 
     var finUrl = /:\/\/(www\.)?(.+?)\//;
@@ -31,7 +27,6 @@ function updateList(){
                 });
             });
 }
-
 
 function addWebsite() {
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
@@ -91,20 +86,21 @@ function removeWebsite(){
                 var urlList = result.urlList;
                 if(site in urlList){
                     swal({
-                        title: 'Are you sure you want to remove this site?',
-                        text: "Your procrastinating may go unchecked!",
+                        title: 'Do you really want SPUD to stop watching?',
+                        text: "You might become a potato",
                         type: 'warning',
                         showCancelButton: true,
-                        confirmButtonColor: '#3085d6',
-                        cancelButtonColor: '#d33',
-                        confirmButtonText: 'Yes, remove it!'
+                        confirmButtonColor: 'lightcoral',
+                        cancelButtonColor: 'lightgray',
+                        confirmButtonText: 'Yes'
                     }).then((result) => {
                         if (result.value) {
                             delete urlList[site];
                             chrome.storage.local.set({"urlList": urlList}, function() {});
                             swal({
-                                title: 'Tracking Disabled',
+                                title: 'SPUD stopped monitoring ' + site,
                                 text: "You're a potato.",
+                                confirmButtonColor: 'lightgreen',
                                 imageUrl: './ezgif.com-video-to-gif.gif',
                                 imageWidth: 350,
                                 imageHeight: 200,
@@ -245,7 +241,7 @@ function drawSiteLabel(){
     function(tabs){
         chrome.storage.local.get(['urlList'], function(result) {
             var website = formatUrl(tabs[0].url);
-            var site = "you are on: " + website;
+            var site = website;
             document.getElementById("site").innerHTML = site;
             
         });
@@ -285,4 +281,38 @@ function closePopup(){
     window.close();
 }
 
+function preLoad(){
+    chrome.storage.local.get(['urlList'], function(result) {
+        var urlList = result.urlList;
+            if(typeof result.urlList === 'undefined'){ // Initializes the dictionary and saves it if no sites are in list
+                var urlList = {};
+            }
+            urlList['youtube.com'] = siteAttributes = {
+                homeUrl: 'youtube.com',
+                domain: 'youtube.com',
+                favIcon: 'http://www.youtube.com/favicon.ico',
+                intervalSeconds: 0,
+                totalSeconds: 0,
+                visited: 0
+                }
+                urlList['facebook.com'] = siteAttributes = {
+                    homeUrl: 'facebook.com',
+                    domain: 'facebook.com',
+                    favIcon: 'http://facebook.com/favicon.ico',
+                    intervalSeconds: 0,
+                    totalSeconds: 0,
+                    visited: 0
+                    }
+                    urlList['netflix'] = siteAttributes = {
+                        homeUrl: 'netflix.com',
+                        domain: 'netflix.com',
+                        favIcon: 'http://netflix.com/favicon.ico',
+                        intervalSeconds: 0,
+                        totalSeconds: 0,
+                        visited: 0
+                        }
+            chrome.storage.local.set({"urlList": urlList}, function() {});
+    });
 
+}
+preLoad();
