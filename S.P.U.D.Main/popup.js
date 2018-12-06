@@ -280,39 +280,3 @@ function displaySites(){
 function closePopup(){
     window.close();
 }
-
-function preLoad(){
-    chrome.storage.local.get(['urlList'], function(result) {
-        var urlList = result.urlList;
-            if(typeof result.urlList === 'undefined'){ // Initializes the dictionary and saves it if no sites are in list
-                var urlList = {};
-            }
-            urlList['youtube.com'] = siteAttributes = {
-                homeUrl: 'youtube.com',
-                domain: 'youtube.com',
-                favIcon: 'http://www.youtube.com/favicon.ico',
-                intervalSeconds: 0,
-                totalSeconds: 0,
-                visited: 0
-                }
-                urlList['facebook.com'] = siteAttributes = {
-                    homeUrl: 'facebook.com',
-                    domain: 'facebook.com',
-                    favIcon: 'http://facebook.com/favicon.ico',
-                    intervalSeconds: 0,
-                    totalSeconds: 0,
-                    visited: 0
-                    }
-                    urlList['netflix'] = siteAttributes = {
-                        homeUrl: 'netflix.com',
-                        domain: 'netflix.com',
-                        favIcon: 'http://netflix.com/favicon.ico',
-                        intervalSeconds: 0,
-                        totalSeconds: 0,
-                        visited: 0
-                        }
-            chrome.storage.local.set({"urlList": urlList}, function() {});
-    });
-
-}
-preLoad();
