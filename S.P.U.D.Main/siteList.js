@@ -266,9 +266,12 @@ function displaySites(){
 
 function showTodayButton(){
     chrome.storage.local.get(['urlList'], function(result) {
-        if(Object.keys(result.urlList).length == 0){
+        if(typeof result.urlList === 'undefined'){
+            document.getElementById('switch').style.display = "none";
+        }else if(Object.keys(result.urlList).length == 0){
         document.getElementById('switch').style.display = "none";
         }
+        
     });
 }
 function updateTimer(){
