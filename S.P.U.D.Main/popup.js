@@ -100,7 +100,7 @@ function removeWebsite(){
                             swal({
                                 title: 'SPUD stopped monitoring ' + site,
                                 text: "You're a potato.",
-                                confirmButtonColor: 'lightgreen',
+                                confirmButtonColor: 'lightcoral',
                                 imageUrl: './ezgif.com-video-to-gif.gif',
                                 imageWidth: 350,
                                 imageHeight: 200,
