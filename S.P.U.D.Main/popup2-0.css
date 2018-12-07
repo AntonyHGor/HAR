@@ -122,6 +122,9 @@ p{
     border-bottom-right-radius: 4px;
     cursor: default;
 }
+.swal2-popup .swal2-styled:focus {
+    box-shadow: none !important;
+}
 .homeButton{
     width: calc(50%);
     height: 60px;
