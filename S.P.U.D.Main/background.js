@@ -152,18 +152,21 @@ function checkUrlInList(tabs, result) {
     }catch{}
 }
 
-// determines if chrome is the focused application
-function ifFocused(){
-        focus = true;  
-chrome.windows.onFocusChanged.addListener(function(window) {
-    if (window == -1) { // checks to see if there is no focused chrome window
-        focus = false;
-    } else {
-        focus = true;
+function checkFocused(){
+    chrome.windows.getCurrent(function(browser){
+        if(browser.focused==true){
+            focus=true;
+        }
+        else{
+            focus=false;
+        }
+    })
+    var views= chrome.extension.getViews({type: "popup"})
+    if(views.length==1){
+        focus=true;
     }
-});
+    
 }
-
 
 // Checks to see if the program should count, if yes, it counts, saves, and updates the count using linked functions
 function checkIfCount () {
@@ -182,6 +185,7 @@ function checkIfCount () {
             });
         }
     }
+
 
 // counts the number of seconds the user has been on an added site 
 function countSeconds(){
@@ -214,6 +218,6 @@ function countVisited() {
 countSeconds(); 
 countVisited(); 
 
-ifFocused();
+setInterval(checkFocused,100);
 getStartDay();
 checkInstall();
