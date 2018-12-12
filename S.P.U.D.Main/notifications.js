@@ -6,7 +6,7 @@ var list30=[
     note4={title: "So...", message: "What's up with this weather huh?."},
     note5={title: "So...", message: "I never know what to say in these situations."},
     note6={title: "Howdy.", message: "That was me, as a cowboy."},
-    note7={title: "What do you get when it rains potatoes?", message: "Spuddles."}, 
+    note7={title: "What is made when it rains potatoes?", message: "Spuddles."}, 
     note8={title: "Where are you?", message: "There you are."}
 ]
 
@@ -14,7 +14,6 @@ var list50=[
     note1={title: "Hi.", message: "You should stop."},
     note2={title: "(looks at watch)", message: "Been awhile now, yeah?"},
     note3={title: "Hey.", message: "Might be time for a break."},
-    note4={title: "Researchers say:", message: "Those who listen to S.P.U.D. are good people."},
     note5={title: "Hi.", message: "You should stop."},
     note6={title: "Hi.", message: "You should take a break."},
     note7={title: "And the Lord said:", message: "'Listen to S.P.U.D.'"},
@@ -24,6 +23,7 @@ var list50=[
 var list85=[
     note1={title: "Stop.", message: "STOP."},
     note2={title: "(looks at watch)", message: "Please stop."},
+    note4={title: "Researchers say:", message: "Those who listen to S.P.U.D. are good people."},
     note3={title: "Hey.", message: "It's time for a break."},
     note4={title: ":(", message: "You really hate to listen don't you."},
     note5={title: "Hm.", message: "You have trouble listening don't you?"},
@@ -93,6 +93,13 @@ function getList(num){
     }
 }
 
+function potatoDay(){
+    var month = new Date().getMonth();
+    var date = new Date().getDate();
+    if(month == 8 && date == 19){
+        notify(makeBasicNote("Happy National Potato Day!", "(pops streamer)"))
+    }
+}
 
 function chooseNotification(list){
     var randomNum=generateRandomNumber(list.length)
@@ -162,13 +169,6 @@ function chooseInterval(count,highNum, lowNum){
                     
                 }
         }
-    
-    
-    
-    // if(count == highNum){
-    //     var listName=getList(highNum)
-    //     chooseNotification(listName)
-    // }
 }
 
 

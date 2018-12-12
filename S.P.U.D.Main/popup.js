@@ -3,7 +3,19 @@ function formatUrl(url){ // cleans urls to be stored
     var finUrl = /:\/\/(www\.)?(.+?)\//;
     return url.match(finUrl)[2]; 
 }
-
+function generateRandomNumber(max){
+    return Math.floor(Math.random()*Math.floor(max)+1)
+}
+function showRealPotato(num){
+    var range = generateRandomNumber(num);
+    var potato = document.getElementById('potato image')
+    if (num == range){
+        potato.setAttribute("src", "realpotato.png");
+    }
+    else{
+        potato.setAttribute("src", "large.png")
+    }
+}
 function updateList(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
             function(tabs){
@@ -87,11 +99,14 @@ function removeWebsite(){
                 if(site in urlList){
                     swal({
                         title: 'Do you really want SPUD to stop watching?',
-                        text: "You might become a potato",
+                        text: "You might become a potato.",
                         type: 'warning',
+                        className: "swal-button",
+                        dangerMode: true,
                         showCancelButton: true,
                         confirmButtonColor: 'lightcoral',
                         cancelButtonColor: 'lightgray',
+                        focusCancel:true,
                         confirmButtonText: 'Yes'
                     }).then((result) => {
                         if (result.value) {
@@ -100,6 +115,7 @@ function removeWebsite(){
                             swal({
                                 title: 'SPUD stopped monitoring ' + site,
                                 text: "You're a potato.",
+                                className: "swal-button",
                                 confirmButtonColor: 'lightcoral',
                                 imageUrl: './ezgif.com-video-to-gif.gif',
                                 imageWidth: 350,
@@ -156,7 +172,7 @@ function formatClock(count){
     }
 
     if (count >= 60 && count < 3600) {
-        if(count<600){
+        if(count<600){ // 600 is 10 min
             if((sec%60)<10){
                 clock1 = String("00" + "h " + "0")
                 clock2 =String(min) + "m " + "0" + String(sec%60) + "s";
@@ -240,10 +256,11 @@ function drawSiteLabel(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
         chrome.storage.local.get(['urlList'], function(result) {
-            var website = formatUrl(tabs[0].url);
-            var site = website;
-            document.getElementById("site").innerHTML = site;
-            
+            try{
+                var website = formatUrl(tabs[0].url);
+                var site = website;
+                document.getElementById("site").innerHTML = site;
+            }catch{}
         });
     });
 }
@@ -252,15 +269,17 @@ function drawClock(){
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
     function(tabs){
         chrome.storage.local.get(['urlList'], function(result) {
-            var website = formatUrl(tabs[0].url);
-            var urlList = result.urlList;
-            if(typeof urlList[website] === 'undefined'){
-                cleanClock();
-            }else{
-                var s = urlList[website].intervalSeconds;
-                var clock = formatClock(s);
-                document.getElementById("clock").innerHTML = clock;
-            }
+            try{
+                var website = formatUrl(tabs[0].url);
+                var urlList = result.urlList;
+                if(typeof urlList[website] === 'undefined'){
+                    cleanClock();
+                }else{
+                    var s = urlList[website].intervalSeconds;
+                    var clock = formatClock(s);
+                    document.getElementById("clock").innerHTML = clock;
+                }
+            }catch{}
         });
     });  
 }
@@ -273,6 +292,7 @@ function cleanClock(){
 
 cleanClock();
 drawSiteLabel();
+showRealPotato(60);
       
 function displaySites(){
     window.location.href="siteList.html";
