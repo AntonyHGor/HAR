@@ -101,8 +101,6 @@ function removeWebsite(){
                         title: 'Do you really want SPUD to stop watching?',
                         text: "You might become a potato.",
                         type: 'warning',
-                        className: "swal-button",
-                        dangerMode: true,
                         showCancelButton: true,
                         confirmButtonColor: 'lightcoral',
                         cancelButtonColor: 'lightgray',
@@ -115,7 +113,6 @@ function removeWebsite(){
                             swal({
                                 title: 'SPUD stopped monitoring ' + site,
                                 text: "You're a potato.",
-                                className: "swal-button",
                                 confirmButtonColor: 'lightcoral',
                                 imageUrl: './ezgif.com-video-to-gif.gif',
                                 imageWidth: 350,

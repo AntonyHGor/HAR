@@ -231,8 +231,6 @@ function removeSite(elem){
                 title: 'Do you really want SPUD to stop watching?',
                 text: "You might become a potato.",
                 type: 'warning',
-                dangerMode: true,
-                className: "swal-button",
                 showCancelButton: true,
                 focusCancel:true,
                 confirmButtonColor: 'lightcoral',
@@ -245,7 +243,6 @@ function removeSite(elem){
                     swal({
                         title: 'SPUD stopped monitoring ' + name,
                         text: "You're a potato.",
-                        className: "swal-button",
                         confirmButtonColor: 'lightcoral',
                         imageUrl: './ezgif.com-video-to-gif.gif',
                         imageWidth: 350,
