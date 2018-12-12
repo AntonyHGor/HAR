@@ -216,6 +216,5 @@ function countVisited() {
 // --- MAIN ---
 countSeconds(); 
 countVisited(); 
-
 ifFocused();
 getStartDay();
