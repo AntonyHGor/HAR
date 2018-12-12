@@ -169,7 +169,7 @@ function formatClock(count){
     }
 
     if (count >= 60 && count < 3600) {
-        if(count<600){ // 600 is 10 min
+        if(count<600){
             if((sec%60)<10){
                 clock1 = String("00" + "h " + "0")
                 clock2 =String(min) + "m " + "0" + String(sec%60) + "s";
@@ -210,19 +210,19 @@ function formatClock(count){
 
         if((sec%60%60<10) && (min%60>=10)){
             clock1 = String("0")
-            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m "  + String(sec%60%60) + "s";
             clock1 = clock1.fontcolor("lightgray")
             clock = clock1+clock2;
         }
         if((sec%60%60>=10) && (min%60<10)){
             clock1 = String("0")
-            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock2 =String(hr)+ "h " + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
             clock1 = clock1.fontcolor("lightgray")
             clock = clock1+clock2;
         }
         if((sec%60%60>=10) && (min%60>=10)){
             clock1 = String("0")
-            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock2 =String(hr)+ "h " + String(min%60) + "m " + String(sec%60%60) + "s";
             clock1 = clock1.fontcolor("lightgray")
             clock = clock1+clock2;
         }
@@ -247,6 +247,7 @@ function formatClock(count){
 
     return clock;
     
+
 }
 
 function drawSiteLabel(){

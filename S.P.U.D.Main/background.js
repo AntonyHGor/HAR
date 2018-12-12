@@ -156,7 +156,7 @@ function checkUrlInList(tabs, result) {
 function ifFocused(){
         focus = true;  
 chrome.windows.onFocusChanged.addListener(function(window) {
-    if (window == chrome.windows.WINDOW_ID_NONE) { // checks to see if there is no focused chrome window
+    if (window == -1) { // checks to see if there is no focused chrome window
         focus = false;
     } else {
         focus = true;
@@ -168,8 +168,6 @@ chrome.windows.onFocusChanged.addListener(function(window) {
 // Checks to see if the program should count, if yes, it counts, saves, and updates the count using linked functions
 function checkIfCount () {
     if(focus == true){
-        chrome.idle.queryState(100000, function (state) {
-        if(state === 'active'){
                 chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
         function(tabs){
                 chrome.storage.local.get(['urlList'], function(result) {
@@ -183,10 +181,7 @@ function checkIfCount () {
                 });
             });
         }
-        
-    });
     }
-}
 
 // counts the number of seconds the user has been on an added site 
 function countSeconds(){
@@ -194,22 +189,23 @@ function countSeconds(){
 }
 
 function countVisited() {
-    try{chrome.history.onVisited.addListener(function(result) {
+     chrome.history.onVisited.addListener(function(result) {
         chrome.storage.local.get(['urlList'], function(callback){
             var site = formatUrl(result.url);
             var urlList = callback.urlList
-            if (site in urlList) {
-                if(result.url == urlList[site].homeUrl){
-                    var count = urlList[site].visited; // getting count
-                    urlList[site].visited = count + 1; //updates
-                    chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
-                    // checkVisited(urlList[site].visited, site);    
+            try{
+                if (site in urlList) {
+                    if(result.url == urlList[site].homeUrl){
+                        var count = urlList[site].visited; // getting count
+                        urlList[site].visited = count + 1; //updates
+                        chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
+                        // checkVisited(urlList[site].visited, site);    
+                    }
                 }
-            }
+            }catch{}
+            
         });
     });
-}catch{}
-  
 }
 
 // ---------------------- END OF FUNCTIONS ---------------------
