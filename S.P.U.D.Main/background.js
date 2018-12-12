@@ -8,44 +8,44 @@ function setBadge(str, color) {
     chrome.browserAction.setBadgeBackgroundColor({ 'color': color });
     chrome.browserAction.setBadgeText({'text': str});
 }
-function preLoad(){
-    chrome.storage.local.get(['urlList'], function(result) {
-        var urlList = result.urlList;
-            urlList['youtube.com'] = siteAttributes = {
-                homeUrl: 'youtube.com',
-                domain: 'youtube.com',
-                favIcon: 'http://www.youtube.com/favicon.ico',
-                intervalSeconds: 0,
-                totalSeconds: 0,
-                visited: 0
-                }
-                urlList['facebook.com'] = siteAttributes = {
-                    homeUrl: 'facebook.com',
-                    domain: 'facebook.com',
-                    favIcon: 'http://facebook.com/favicon.ico',
-                    intervalSeconds: 0,
-                    totalSeconds: 0,
-                    visited: 0
-                    }
-                    urlList['netflix'] = siteAttributes = {
-                        homeUrl: 'netflix.com',
-                        domain: 'netflix.com',
-                        favIcon: 'http://netflix.com/favicon.ico',
-                        intervalSeconds: 0,
-                        totalSeconds: 0,
-                        visited: 0
-                        }
-            chrome.storage.local.set({"urlList": urlList}, function() {});
-    });
+// function preLoad(){
+//     chrome.storage.local.get(['urlList'], function(result) {
+//         var urlList = result.urlList;
+//             urlList['youtube.com'] = siteAttributes = {
+//                 homeUrl: 'youtube.com',
+//                 domain: 'youtube.com',
+//                 favIcon: 'http://www.youtube.com/favicon.ico',
+//                 intervalSeconds: 0,
+//                 totalSeconds: 0,
+//                 visited: 0
+//                 }
+//                 urlList['facebook.com'] = siteAttributes = {
+//                     homeUrl: 'facebook.com',
+//                     domain: 'facebook.com',
+//                     favIcon: 'http://facebook.com/favicon.ico',
+//                     intervalSeconds: 0,
+//                     totalSeconds: 0,
+//                     visited: 0
+//                     }
+//                     urlList['netflix'] = siteAttributes = {
+//                         homeUrl: 'netflix.com',
+//                         domain: 'netflix.com',
+//                         favIcon: 'http://netflix.com/favicon.ico',
+//                         intervalSeconds: 0,
+//                         totalSeconds: 0,
+//                         visited: 0
+//                         }
+//             chrome.storage.local.set({"urlList": urlList}, function() {});
+//     });
 
-}
+// }
 function checkInstall(){
     chrome.runtime.onInstalled.addListener(function(details){
         if(details.reason == "install"){
             message = makeBasicNote("I'M ALIVE!", "You'll be hearing more from me ;)");
             notify(message);
             console.log("This is a first install!");
-            preLoad();
+            // preLoad();
         }else if(details.reason == "update"){
             message = makeBasicNote("Hey there!", "Thanks for brushing the dirt off me!");
             notify(message);
@@ -112,6 +112,7 @@ function checkReset(daysToReset) {
         var startDay = get.startDay;
         var currDay = new Date().getDay();
         if (currDay - startDay >= daysToReset) {
+            potatoDay();
             chrome.storage.local.get(['urlList'], function(result) {
             var urlList = result.urlList
             for (key in urlList) {
@@ -219,3 +220,4 @@ countVisited();
 
 ifFocused();
 getStartDay();
+checkInstall();

@@ -229,7 +229,7 @@ function removeSite(elem){
         if(name in urlList){
             swal({
                 title: 'Do you really want SPUD to stop watching?',
-                text: "You might become a potato",
+                text: "You might become a potato.",
                 type: 'warning',
                 dangerMode: true,
                 className: "swal-button",
