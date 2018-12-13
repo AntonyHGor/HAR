@@ -140,7 +140,6 @@ function checkUrlInList(tabs, result) {
 }
 
 function checkFocused(){
-    focus = true;
     chrome.windows.getCurrent(function(browser){
         if(browser.focused==true){
             focus=true;
