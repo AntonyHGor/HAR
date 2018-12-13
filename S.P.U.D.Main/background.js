@@ -39,19 +39,7 @@ function setBadge(str, color) {
 //     });
 
 // }
-function checkInstall(){
-    chrome.runtime.onInstalled.addListener(function(details){
-        if(details.reason == "install"){
-            message = makeBasicNote("I'M ALIVE!", "You'll be hearing more from me ;)");
-            notify(message);
-            console.log("This is a first install!");
-            // preLoad();
-        }else if(details.reason == "update"){
-            message = makeBasicNote("Hey there!", "Thanks for brushing the dirt off me!");
-            notify(message);
-        }
-    });
-}
+
 
 // formats timer
 function formatBadge(count){
@@ -102,7 +90,6 @@ function getStartDay(){
             var startDay = new Date().getDay();
             chrome.storage.local.set({"startDay": startDay}, function() {});
         }else{
-            // console.log(result.startDay)
         }
     });
 }
@@ -153,6 +140,7 @@ function checkUrlInList(tabs, result) {
 }
 
 function checkFocused(){
+    focus = true;
     chrome.windows.getCurrent(function(browser){
         if(browser.focused==true){
             focus=true;
@@ -162,14 +150,15 @@ function checkFocused(){
         }
     })
     var views= chrome.extension.getViews({type: "popup"})
+    console.log(views);
     if(views.length==1){
         focus=true;
     }
-    
+    console.log(focus);
 }
 
 // Checks to see if the program should count, if yes, it counts, saves, and updates the count using linked functions
-function checkIfCount () {
+function checkIfCount() {
     if(focus == true){
                 chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
         function(tabs){
@@ -215,9 +204,8 @@ function countVisited() {
 // ---------------------- END OF FUNCTIONS ---------------------
 
 // --- MAIN ---
+setInterval(checkFocused,100); // needs to be before other functions to keep timing correct
 countSeconds(); 
-countVisited(); 
+countVisited(); // something to implement later, some bugs left, will need to update manifest when added 
 
-setInterval(checkFocused,100);
 getStartDay();
-checkInstall();

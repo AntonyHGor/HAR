@@ -99,6 +99,19 @@ function potatoDay(){
         notify(makeBasicNote("Happy National Potato Day!", "(pops streamer)"))
     }
 }
+function checkInstall(){
+    chrome.runtime.onInstalled.addListener(function(details){
+        if(details.reason == "install"){
+            message = makeBasicNote("I'M ALIVE!", "You'll be hearing more from me ;)");
+            notify(message);
+            console.log("This is a first install!");
+            // preLoad();
+        }else if(details.reason == "update"){
+            message = makeBasicNote("Hey there!", "Thanks for brushing the dirt off me!");
+            notify(message);
+        }
+    });
+}
 
 function chooseNotification(list){
     var randomNum=generateRandomNumber(list.length)
@@ -140,8 +153,8 @@ function firstGreeting(count,site){
 }
 
 function afterFourHours(count){
-    if(count/60 == 240){
-                var listName=getList(240*1)
+    if(count/60 > 240){
+                var listName=getList(241*60)
                 chooseNotification(listName)
             }
             
@@ -184,6 +197,8 @@ function mainNotification(count,site){
     chooseInterval(count,240*min, 190*min);
     afterFourHours(count)
 }
+
+checkInstall();
 
 
 // 1 minute into with first site
