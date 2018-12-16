@@ -1,6 +1,6 @@
 {
   "name": "S.P.U.D",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Potato Battery that monitors your procrastination!",
   "manifest_version": 2,
   "web_accessible_resources": [
@@ -10,7 +10,7 @@
   "icons": {"128": "icon_128.png"},
   "browser_action": {
     "default_icon": "icon.png",
-    "default_popup": "popup2-0.html"
+    "default_popup": "popup.html"
   },
   "background": {
     "scripts": ["notifications.js","background.js"]
@@ -20,7 +20,6 @@
     "idle",
     "storage",
     "activeTab",
-    "history",
     "tabs",
     "notifications"
   ]

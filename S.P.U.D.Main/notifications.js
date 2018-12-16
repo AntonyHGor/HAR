@@ -16,6 +16,7 @@ var list50=[
     note5={title: "Hi.", message: "You should stop."},
     note6={title: "Hi.", message: "You should take a break."},
     note7={title: "And the Lord said:", message: "'Listen to S.P.U.D.'"},
+    note8={title: "Looks like you're on a roll", message: "Maybe roll into a full stop"},
      
 ]
 var list85=[
@@ -95,8 +96,22 @@ function potatoDay(){
     var month = new Date().getMonth();
     var date = new Date().getDate();
     if(month == 8 && date == 19){
-        notify(makeBasicNote("Happy National Potato Day!", "(pops streamer)"))
+        var message = makeBasicNote("Happy National Potato Day!", "(pops streamer)")
+        notify(message);
     }
+}
+function checkInstall(){
+    chrome.runtime.onInstalled.addListener(function(details){
+        if(details.reason == "install"){
+            message = makeBasicNote("I'M ALIVE!", "Thanks for installing me. :)");
+            notify(message);
+            console.log("This is a first install!");
+            // preLoad();
+        }else if(details.reason == "update"){
+            var message = makeBasicNote("Hey there!", "I am new and improved!");
+            notify(message);
+        }
+    });
 }
 
 function chooseNotification(list){
@@ -139,8 +154,8 @@ function firstGreeting(count,site){
 }
 
 function afterFourHours(count){
-    if(count/60 == 240){
-                var listName=getList(240*1)
+    if(count/60 > 240){
+                var listName=getList(241*60)
                 chooseNotification(listName)
             }
             
@@ -183,6 +198,8 @@ function mainNotification(count,site){
     chooseInterval(count,240*min, 190*min);
     afterFourHours(count)
 }
+
+checkInstall();
 
 
 // 1 minute into with first site

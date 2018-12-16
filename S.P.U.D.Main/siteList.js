@@ -9,36 +9,6 @@ function popList(){
 
 var today = true;
 function switchTimeView(){
-    // chrome.storage.local.get(['urlList'], function(result) {
-    // var listContainer = document.getElementById("listContainer");
-    // for(var elem = 0; elem < listContainer.children.length; elem++){
-    //     var siteBlock = listContainer.children[elem]
-    //     // console.log(siteBlock);
-    //     var siteObj = result.urlList[siteBlock.children[1].children[0].textContent];
-    //     // console.log(siteObj);
-
-    //     if(today === true){
-    //         var timeBlock = document.createElement('div');
-    //         var s = siteObj.intervalSeconds;
-    //         // console.log("showing total")
-    //         var time = document.createElement('div');
-    //         time.innerHTML = formatClock(s);
-    //         time.classList.add("time");
-    //         timeBlock.setAttribute('id',"timeBlock");
-    //         timeBlock.classList.add("timeBlock");
-    //         siteBlock.children[2] = timeBlock;
-    //     }else if(today === false){
-    //         timeBlock = document.createElement('div');
-    //         var s = siteObj.totalSeconds;
-    //         // console.log("showing interval")
-    //         var time = document.createElement('div');
-    //         time.innerHTML = formatClock(s);
-    //         time.classList.add("time");
-    //         timeBlock.setAttribute('id',"timeBlock");
-    //         timeBlock.classList.add("timeBlock");
-    //         siteBlock.children[2] = timeBlock;
-    //     }
-    //     }
         if(today===true){
             document.getElementById("switch").innerText = 'All-time'
             today = false;
@@ -46,7 +16,6 @@ function switchTimeView(){
             document.getElementById("switch").innerText = 'Today'
             today = true;
         }
-    // });
 }
 
 function addDiv(siteObj){
@@ -93,8 +62,6 @@ function addDiv(siteObj){
     remove.onclick = e => {
         removeSite(e.target);
     } 
-    // remove.onclick = removeSite(this);
-
      
     containerBlock = document.getElementById( 'listContainer' );
     containerBlock.appendChild(siteBlock);
@@ -177,19 +144,19 @@ function addDiv(siteObj){
     
             if((sec%60%60<10) && (min%60>=10)){
                 clock1 = String("0")
-                clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+                clock2 =String(hr)+ "h " + "0" + String(min%60) + "m "  + String(sec%60%60) + "s";
                 clock1 = clock1.fontcolor("lightgray")
                 clock = clock1+clock2;
             }
             if((sec%60%60>=10) && (min%60<10)){
                 clock1 = String("0")
-                clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+                clock2 =String(hr)+ "h " + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
                 clock1 = clock1.fontcolor("lightgray")
                 clock = clock1+clock2;
             }
             if((sec%60%60>=10) && (min%60>=10)){
                 clock1 = String("0")
-                clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+                clock2 =String(hr)+ "h " + String(min%60) + "m " + String(sec%60%60) + "s";
                 clock1 = clock1.fontcolor("lightgray")
                 clock = clock1+clock2;
             }
@@ -214,6 +181,7 @@ function addDiv(siteObj){
     
         return clock;
         
+
     }
 
 function goHome(){
@@ -231,8 +199,6 @@ function removeSite(elem){
                 title: 'Do you really want SPUD to stop watching?',
                 text: "You might become a potato.",
                 type: 'warning',
-                dangerMode: true,
-                className: "swal-button",
                 showCancelButton: true,
                 focusCancel:true,
                 confirmButtonColor: 'lightcoral',
@@ -245,7 +211,6 @@ function removeSite(elem){
                     swal({
                         title: 'SPUD stopped monitoring ' + name,
                         text: "You're a potato.",
-                        className: "swal-button",
                         confirmButtonColor: 'lightcoral',
                         imageUrl: './ezgif.com-video-to-gif.gif',
                         imageWidth: 350,
@@ -270,9 +235,12 @@ function showTodayButton(){
     chrome.storage.local.get(['urlList'], function(result) {
         if(typeof result.urlList === 'undefined'){
             document.getElementById('switch').style.display = "none";
+            document.getElementById('emptyList').style.display = 'block';
         }else if(Object.keys(result.urlList).length == 0){
         document.getElementById('switch').style.display = "none";
+        document.getElementById('emptyList').style.display = 'block';
         }
+        
         
     });
 }

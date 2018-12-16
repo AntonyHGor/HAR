@@ -39,26 +39,14 @@ function setBadge(str, color) {
 //     });
 
 // }
-function checkInstall(){
-    chrome.runtime.onInstalled.addListener(function(details){
-        if(details.reason == "install"){
-            message = makeBasicNote("I'M ALIVE!", "You'll be hearing more from me ;)");
-            notify(message);
-            console.log("This is a first install!");
-            // preLoad();
-        }else if(details.reason == "update"){
-            message = makeBasicNote("Hey there!", "Thanks for brushing the dirt off me!");
-            notify(message);
-        }
-    });
-}
+
 
 // formats timer
 function formatBadge(count){
     var sec = count;
     var min = Math.floor(count/60);
     var hr = Math.floor(count/60/60);
-    
+
     if (count < 60){
         setBadge(String(sec) + "s", grey);
     }
@@ -76,7 +64,7 @@ function formatBadge(count){
 
 function notify(message){
     chrome.notifications.create(null, message, null)
-    
+
 }
 //roasts user, int is the number of seconds on site before roasting them
 function roast(count, int, site){
@@ -102,7 +90,6 @@ function getStartDay(){
             var startDay = new Date().getDay();
             chrome.storage.local.set({"startDay": startDay}, function() {});
         }else{
-            // console.log(result.startDay)
         }
     });
 }
@@ -124,7 +111,7 @@ function checkReset(daysToReset) {
             chrome.storage.local.set({"startDay": startDay}, function() {});
             });
         }
-    });   
+    });
 }
 function updateSeconds(site, list){
     if (site in list) {
@@ -147,23 +134,10 @@ function checkUrlInList(tabs, result) {
         var url = tabs[0].url; // pulled url
         site = formatUrl(url); // removed https://
         var urlList = result.urlList; // list = saved list
-        updateSeconds(site, urlList);   
-        
+        updateSeconds(site, urlList);
+
     }catch{}
 }
-
-// determines if chrome is the focused application
-function ifFocused(){
-        focus = true;  
-chrome.windows.onFocusChanged.addListener(function(window) {
-    if (window == -1) { // checks to see if there is no focused chrome window
-        focus = false;
-    } else {
-        focus = true;
-    }
-});
-}
-
 
 function checkFocused(){
     chrome.windows.getCurrent(function(browser){
@@ -174,69 +148,62 @@ function checkFocused(){
             focus=false;
         }
     })
-
-    
-    var views= chrome.extension.getViews({type: "popup"})
+    var views= chrome.extension.getViews({type: "popup"});
     if(views.length==1){
         focus=true;
     }
-    
+    console.log(focus);
 }
 
-
-
-
 // Checks to see if the program should count, if yes, it counts, saves, and updates the count using linked functions
-function checkIfCount () {
-    if(focus==true){
+function checkIfCount() {
+    if(focus == true){
                 chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
         function(tabs){
                 chrome.storage.local.get(['urlList'], function(result) {
                     checkReset(1);  // checks and resets variables at each new day (a setting to change?)
                     checkUrlInList(tabs, result);
-                    //for checking storage persistence 
-                    chrome.storage.local.get(['urlList'], function (data) { 
+                    //for checking storage persistence
+                    chrome.storage.local.get(['urlList'], function (data) {
                         sites = data.urlList
                         console.log(sites) });
                     //----
                 });
             });
         }
-        
     }
-  
 
-// counts the number of seconds the user has been on an added site 
+
+// counts the number of seconds the user has been on an added site
 function countSeconds(){
     setInterval(checkIfCount, 1000); // update every 1 second
 }
 
 function countVisited() {
-    try{chrome.history.onVisited.addListener(function(result) {
+     chrome.history.onVisited.addListener(function(result) {
         chrome.storage.local.get(['urlList'], function(callback){
             var site = formatUrl(result.url);
             var urlList = callback.urlList
-            if (site in urlList) {
-                if(result.url == urlList[site].homeUrl){
-                    var count = urlList[site].visited; // getting count
-                    urlList[site].visited = count + 1; //updates
-                    chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
-                    // checkVisited(urlList[site].visited, site);    
+            try{
+                if (site in urlList) {
+                    if(result.url == urlList[site].homeUrl){
+                        var count = urlList[site].visited; // getting count
+                        urlList[site].visited = count + 1; //updates
+                        chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
+                        // checkVisited(urlList[site].visited, site);
+                    }
                 }
-            }
+            }catch{}
+
         });
     });
-}catch{}
-  
 }
 
 // ---------------------- END OF FUNCTIONS ---------------------
 
 // --- MAIN ---
-setInterval(checkFocused,100)
-countSeconds(); 
-countVisited(); 
+setInterval(checkFocused,100); // needs to be before other functions to keep timing correct
+countSeconds();
+// countVisited(); // something to implement later, some bugs left, will need to update manifest when added
 
-//ifFocused();
 getStartDay();
-checkInstall();

@@ -1,0 +1,367 @@
+/* --------------------------------------------------------------------
+Miscelanneous css tweeks
+-------------------------------------------------------------------- */
+/* format sweetAlert not to outline buttons */
+.swal2-popup .swal2-styled:focus {
+    box-shadow: none !important;
+}
+/* --------------------------------------------------------------------
+css for HTML tags
+-------------------------------------------------------------------- */
+/* format all divs */
+div{
+    text-align: center;
+    font-family: 'Amatic SC', cursive;
+}
+/* format printed text */
+p{
+    margin-top: 12px;
+    margin-bottom: 12px;
+}
+/* --------------------------------------------------------------------
+css for the whole popup for both html pages
+-------------------------------------------------------------------- */
+/* format the body of html page (home)*/
+body {
+    min-width: 360px;
+    min-height: 507px;
+    margin: auto;
+    text-align: center; 
+    font-family: 'Amatic SC', cursive;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+}
+/* format the body of html page (sites page) */
+.siteListBody {
+    margin:0px !important;
+    min-width: 360px;
+    min-height: 517px;
+    font-family: 'Amatic SC', cursive;
+    font-size: 20px;  
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+}
+/* --------------------------------------------------------------------
+css for the top of both html pages
+-------------------------------------------------------------------- */
+/* format the header of html page */
+.header {
+    font-size: 40px;
+    font-family: 'Amatic SC', cursive;
+    cursor: default;
+    height: 60px;
+    display: flex;
+    position: relative;
+    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.02);
+    align-items: center;
+    border-bottom: 1px solid #eeeeee;
+    vertical-align: middle;
+    justify-content: center;
+    background-color: #feffff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+/* format the location of the "x" */
+.closeButton{
+    position: absolute;
+    top: 35%;
+    right: 5%;
+    cursor: pointer;
+}
+/* format the "x" at top right corner of popup */
+.x{
+    font-family: 'Maven Pro', sans-serif;
+    color: rgb(218, 218, 218);
+    font-size: 22px;
+    margin-top: -6px;
+}
+/* --------------------------------------------------------------------
+css for the main body of home page
+-------------------------------------------------------------------- */
+/* format the potato image */
+.spud{
+    height: 129px;
+}
+/* format the body of text below potato image */
+.mainBody{
+    text-align: center; 
+    border-bottom:1px solid rgb(231,231,231);
+    padding-bottom:2px;
+    margin-bottom: 16px;
+    margin-top: 12px;
+    cursor: default;
+    font-size:17px;
+    font-weight: 600;
+}
+/* --------------------------------------------------------------------
+css for the main body of sites page
+-------------------------------------------------------------------- */
+/* format the list of sites */
+.list{
+    max-height: 396px;
+    overflow: scroll;
+}
+/* format when no websites added */
+.noneAdded{
+    position:relative;
+    z-index: 90;
+}
+/* format remove "x" on each site listing */
+.remove{
+    display: inline-block;
+    vertical-align: top;
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 15px;
+    padding-top: 32px;
+    padding-left: 11px;
+    color: lightgray;
+}
+/* format hover effects on remove "x" */
+.remove:hover{
+    cursor: pointer;
+    color: gray;
+}
+/* format today/all-time button  */
+.timeSwitcher{
+    top: 65px;
+    right: 73px;
+    position: absolute;
+    font-size: 89%;
+    color: dimgray;
+}
+/* format today/all-time button when hovered */
+.timeSwitcher:hover{
+    cursor: pointer;
+    color:black;
+}
+/* --------------------------------------------------------------------
+css for the buttons in home page
+-------------------------------------------------------------------- */
+/* format button container */
+.buttonContainer{
+    min-height: 198;
+    padding-bottom: -10px;
+
+}
+/* format add and remove buttons */
+.button {
+    font-family: 'Amatic SC', cursive;
+    display: block;
+    width:57%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: lightgray;
+    color: black;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+}
+/* format when button is focused (no outline) */
+.button:focus {outline:0;}
+/* format when add button is hovered */
+.button1:hover {
+    background-color:lightgreen;
+    color: white;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+}
+/* format when remove button is hovered */
+.button2:hover {
+    background-color: lightcoral;
+    color: white;
+    box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+}
+/*when buttons are clicked and held*/
+.button:active { 
+    box-shadow: 0px 0px 0px rgba(0,0,0,0.3);
+}
+/* --------------------------------------------------------------------
+css for the sites display on sites page
+-------------------------------------------------------------------- */
+/* format each site's block on the page */
+.siteBlock {
+    border-bottom: 1px solid #eeeeee;
+    height: 80px;
+    cursor: default;
+}
+/* format favIcon in the site block */
+.iconBlock {
+    display: inline-flex;
+    width: 80px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;  
+}
+/* format the time in the site block */
+.timeBlock {
+    display: inline-block;
+    width: 100px;
+    vertical-align: top;
+    padding: 29px 0px;
+}
+/* format the time display */
+.time{
+    text-align: center;
+}
+/* format the website name in the site bock */
+.nameBlock {
+    display: inline-block;
+    width: 140px;
+    vertical-align: top;
+    padding: 28px 0px; 
+}
+/* format the name  */
+.name {
+    text-align: center
+}
+/* format the block holding all websites */
+.block {
+    display: block;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    background-color: lightgray;
+    color: black;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+}
+/* --------------------------------------------------------------------
+css for the page navigator at bottom of home page
+-------------------------------------------------------------------- */
+/* format bottom navigation */
+.navBlock{
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    display: block;
+    bottom: 0px;
+    overflow: hidden;
+    border-top: 1px solid #eeeeee;
+    background-color: rgb(254, 255, 255);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    cursor: default;
+    background: linear-gradient(#eeeeee, #eeeeee) no-repeat center/1px 100%;
+}
+/* format home page button */
+.homeButton{
+    width: calc(50%);
+    height: 60px;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-sizing: border-box;
+    vertical-align: top;
+    border-bottom: 3px solid rgb(255, 217, 0);
+}
+/* format sites nav button (home) */
+.sitesButton{
+    font-size: 26px;
+    vertical-align: middle;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 179px;
+    height: 60px;
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 500;
+}
+/* format hover effects on sites nav button */
+.sitesButton:hover{
+    cursor: pointer;
+    background: rgb(255, 217, 0);
+    color: white;
+}
+/* --------------------------------------------------------------------
+css for the page navigator at the bottom of sites page
+-------------------------------------------------------------------- */
+/* format home nav button (site page) */
+.homeButtonSitesList{
+    width: calc(50%);
+    height: 60px;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+/* format home button when hovered */
+.homeButtonSitesList:hover{
+    cursor: pointer;
+    background: rgb(255, 217, 0);
+    color: white;
+}
+/* format sites nav button (sites page) */
+.sitesButtonSitesList{
+    font-size: 26px;
+    vertical-align: middle;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 179px;
+    height: 57px;
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 500;
+    border-bottom: 3px solid rgb(255, 217, 0)
+}
+/* --------------------------------------------------------------------
+css for the icons in the navigation bar
+-------------------------------------------------------------------- */
+/* format home icon */
+.houseIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: 56px;
+    box-sizing: border-box;
+    padding-top: 15px;
+}
+/* format sites page icon */
+.clipboardIcon{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: 56px;
+    box-sizing: border-box;
+    padding-top: 15px;
+}
+.emptyList{
+    border-bottom: 1px solid #eeeeee;
+    height: 80px;
+    cursor: default;
+    text-align: center;
+    line-height: 78px;
+
+}
