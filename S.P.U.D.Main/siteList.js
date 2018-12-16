@@ -235,9 +235,12 @@ function showTodayButton(){
     chrome.storage.local.get(['urlList'], function(result) {
         if(typeof result.urlList === 'undefined'){
             document.getElementById('switch').style.display = "none";
+            document.getElementById('emptyList').style.display = 'block';
         }else if(Object.keys(result.urlList).length == 0){
         document.getElementById('switch').style.display = "none";
+        document.getElementById('emptyList').style.display = 'block';
         }
+        
         
     });
 }

@@ -78,10 +78,7 @@ body{
 
 .header {
     cursor: default;
-    /* font-family: 'california'; */
     font-size: 40px;
-    /* font-family: 'Monoton',cursive; */
-    /* font-family: 'Orbitron-Medium'; */
     font-family: 'Amatic SC', cursive;
     height: 60px;
     display: flex;
@@ -91,7 +88,6 @@ body{
     border-bottom: 1px solid #eeeeee;
     vertical-align: middle;
     justify-content: center;
-    /* padding-left:13px; */
     background-color: #feffff;
     border-top-left-radius: 4px;
     border-top-right-radius: 4px;
@@ -104,7 +100,6 @@ body{
 }
 .x{
     color: rgb(218, 218, 218);
-    /* font-family: 'Maven Pro', sans-serif; */
     font-size: 22px;
     margin-top: -6px;
 }
@@ -216,13 +211,17 @@ body{
     cursor: pointer;
     color:black;
 }
+.emptyList{
+    border-bottom: 1px solid #eeeeee;
+    height: 80px;
+    cursor: default;
+    text-align: center;
+    line-height: 78px;
+
+}
 .swal2-popup .swal2-styled:focus {
     box-shadow: none !important;
 }
-/* .siteBlock ~ .timeSwitcher{
-   display:block;
-} */
-
 
 </style>
 <html>
@@ -239,6 +238,7 @@ body{
  </div>
 <div id="listContainer" class = "list"></div>
 <div id = 'switch' class = timeSwitcher style="display: block;">Today</div>
+<div id = 'emptyList' class = emptyList style="display: none;">Add sites to see them here!</div>
 
 <!-- <div class = noneAdded></div> -->
 

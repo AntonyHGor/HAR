@@ -148,8 +148,7 @@ function checkFocused(){
             focus=false;
         }
     })
-    var views= chrome.extension.getViews({type: "popup"})
-    console.log(views);
+    var views= chrome.extension.getViews({type: "popup"});
     if(views.length==1){
         focus=true;
     }
@@ -205,6 +204,6 @@ function countVisited() {
 // --- MAIN ---
 setInterval(checkFocused,100); // needs to be before other functions to keep timing correct
 countSeconds(); 
-countVisited(); // something to implement later, some bugs left, will need to update manifest when added 
+// countVisited(); // something to implement later, some bugs left, will need to update manifest when added 
 
 getStartDay();
