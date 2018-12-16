@@ -183,15 +183,12 @@ function checkFocused(){
     
 }
 
-setInterval(checkFocused,100)
 
 
 
 // Checks to see if the program should count, if yes, it counts, saves, and updates the count using linked functions
 function checkIfCount () {
     if(focus==true){
-        chrome.idle.queryState(100000, function (state) {
-        if(state === 'active'){
                 chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
         function(tabs){
                 chrome.storage.local.get(['urlList'], function(result) {
@@ -206,10 +203,8 @@ function checkIfCount () {
             });
         }
         
-    });
     }
-}
-
+  
 
 // counts the number of seconds the user has been on an added site 
 function countSeconds(){
@@ -238,6 +233,7 @@ function countVisited() {
 // ---------------------- END OF FUNCTIONS ---------------------
 
 // --- MAIN ---
+setInterval(checkFocused,100)
 countSeconds(); 
 countVisited(); 
 

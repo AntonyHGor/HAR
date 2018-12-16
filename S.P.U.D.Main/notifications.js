@@ -1,4 +1,3 @@
-
 var list30=[
     note1={title: "Hello", message: "Just wanted to say hi."},
     note2={title: "Hi.", message: "Just checking in."},
