@@ -17,6 +17,7 @@ var list50=[
     note5={title: "Hi.", message: "You should stop."},
     note6={title: "Hi.", message: "You should take a break."},
     note7={title: "And the Lord said:", message: "'Listen to S.P.U.D.'"},
+    note8={title: "Looks like you're on a roll", message: "Maybe roll into a full stop"},
      
 ]
 var list85=[

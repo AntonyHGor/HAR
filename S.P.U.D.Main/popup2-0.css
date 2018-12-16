@@ -60,7 +60,7 @@ body {
     cursor: pointer;
 }
 .x{
-    /* font-family: 'Maven Pro', sans-serif; */
+    font-family: 'Maven Pro', sans-serif;
     color: rgb(218, 218, 218);
     font-size: 22px;
     margin-top: -6px;
@@ -126,7 +126,7 @@ p{
     background-position: center center;
     box-sizing: border-box;
     vertical-align: top;
-    border-bottom: 3px solid orange;
+    border-bottom: 3px solid rgb(255, 217, 0);
 }
 .sitesButton{
     font-size: 26px;
@@ -152,7 +152,7 @@ p{
 }
 .sitesButton:hover{
     cursor: pointer;
-    background: orange;
+    background: rgb(255, 217, 0);
     color: white;
 }
 .threeLines{
@@ -182,9 +182,9 @@ p{
     margin-right: auto;
     background-color: lightgray;
     color: black;
-    padding: 14px 28px;
+    padding: 10px 24px;
     border-radius: 8px;
-    font-size: 16px;
+    font-size: 20px;
     font-weight: 500;
     cursor: pointer;
     text-align: center;
@@ -223,12 +223,13 @@ p{
     text-align: center;
     padding: 0px; 
     margin: 0px; 
+    overflow: auto;
 }
 
 .nav ul li{
     list-style-type: none; 
     display: inline-block; 
-    margin-left: -5px; 
+    margin-left: 0px; 
     color: black;
     font-size: 26px; 
     width: 56px; 
@@ -242,4 +243,228 @@ p{
     cursor: pointer;
     background: orange;
     color: white;
+}
+
+
+
+body{
+    margin:0px !important;
+    min-width: 360px;
+    min-height: 517px;
+    font-family: 'Amatic SC', cursive;
+    font-size: 20px;  
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; 
+}
+
+.siteBlock {
+    border-bottom: 1px solid #eeeeee;
+    height: 80px;
+    cursor: default;
+}
+
+.iconBlock {
+    display: inline-flex;
+    width: 80px;
+    justify-content: center;
+    align-items: center;
+    height: 100%;  
+}
+
+.timeBlock {
+    display: inline-block;
+    width: 100px;
+    vertical-align: top;
+    padding: 29px 0px;
+}
+
+.time{
+    text-align: center;
+}
+
+.nameBlock {
+    display: inline-block;
+    width: 140px;
+    vertical-align: top;
+    padding: 28px 0px; 
+}
+
+.name {
+    text-align: center
+}
+
+.block {
+    display: block;
+    width: 96%;
+    margin-left: auto;
+    margin-right: auto;
+    border: none;
+    background-color: lightgray;
+    color: black;
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.block:focus {outline:0;}
+
+.block1:hover {
+    background-color: rgb(105, 218, 114);
+    color: white;
+}
+.block2:hover {
+    background-color: red;
+    color: white;
+}
+
+.header {
+    cursor: default;
+    /* font-family: 'california'; */
+    font-size: 40px;
+    /* font-family: 'Monoton',cursive; */
+    /* font-family: 'Orbitron-Medium'; */
+    font-family: 'Amatic SC', cursive;
+    height: 60px;
+    display: flex;
+    position: relative;
+    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.02);
+    align-items: center;
+    border-bottom: 1px solid #eeeeee;
+    vertical-align: middle;
+    justify-content: center;
+    /* padding-left:13px; */
+    background-color: #feffff;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.closeButton{
+    position: absolute;
+    top: 35%;
+    right: 5%;
+    cursor: pointer;
+}
+.x{
+    color: rgb(218, 218, 218);
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 22px;
+    margin-top: -6px;
+}
+.navBlock{
+    cursor: default;
+    width: 100%;
+    height: 60px;
+    position: absolute;
+    display: block;
+    bottom: 0px;
+    overflow: hidden;
+    border-top: 1px solid #eeeeee;
+    background-color: rgb(254, 255, 255);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background: linear-gradient(#eeeeee, #eeeeee) no-repeat center/1px 100%;
+}
+.homeButton{
+    width: calc(50%);
+    height: 60px;
+    position: fixed;
+    left: 0px;
+    bottom: 0px;
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 500;
+    font-size: 26px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+.homeButton:hover{
+    cursor: pointer;
+    background: rgb(255, 217, 0);
+    color: white;
+}
+
+.sitesButton{
+    font-size: 26px;
+    vertical-align: middle;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    width: 179px;
+    height: 57px;
+    display: inline-flex;
+    justify-content: center;
+    font-weight: 500;
+    border-bottom: 3px solid rgb(255, 217, 0)
+}
+.smallPotato{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: 56px;
+    box-sizing: border-box;
+    padding-top: 15px;
+}
+.threeLines{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: 56px;
+    box-sizing: border-box;
+    padding-top: 15px;
+}
+.Sites{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: fit-content;
+    width: 56px;
+    box-sizing: border-box;
+    padding-top: 15px;
+}
+.list{
+    max-height: 396px;
+    overflow: scroll;
+}
+.noneAdded{
+    position:relative;
+    z-index: 90;
+}
+.remove{
+    display: inline-block;
+    vertical-align: top;
+    font-family: 'Maven Pro', sans-serif;
+    font-size: 15px;
+    padding-top: 32px;
+    padding-left: 11px;
+    color: lightgray;
+}
+.remove:hover{
+    cursor: pointer;
+    color: gray;
+}
+.timeSwitcher{
+    top: 65px;
+    right: 73px;
+    position: absolute;
+    font-size: 89%;
+    color: dimgray;
+}
+.timeSwitcher:hover{
+    cursor: pointer;
+    color:black;
+}
+.swal2-popup .swal2-styled:focus {
+    box-shadow: none !important;
+} 
+.siteBlock ~ .timeSwitcher{
+   display:block;
 }
