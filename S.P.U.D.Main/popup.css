@@ -357,3 +357,11 @@ css for the icons in the navigation bar
     box-sizing: border-box;
     padding-top: 15px;
 }
+.emptyList{
+    border-bottom: 1px solid #eeeeee;
+    height: 80px;
+    cursor: default;
+    text-align: center;
+    line-height: 78px;
+
+}
