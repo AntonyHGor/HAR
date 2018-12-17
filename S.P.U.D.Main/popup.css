@@ -241,6 +241,15 @@ css for the sites display on sites page
     text-align: center;
     margin-bottom: 10px;
 }
+/* display instructions when list is empty */
+.emptyList{
+    border-bottom: 1px solid #eeeeee;
+    height: 80px;
+    cursor: default;
+    text-align: center;
+    line-height: 78px;
+
+}
 /* --------------------------------------------------------------------
 css for the page navigator at bottom of home page
 -------------------------------------------------------------------- */
@@ -356,12 +365,4 @@ css for the icons in the navigation bar
     width: 56px;
     box-sizing: border-box;
     padding-top: 15px;
-}
-.emptyList{
-    border-bottom: 1px solid #eeeeee;
-    height: 80px;
-    cursor: default;
-    text-align: center;
-    line-height: 78px;
-
 }
