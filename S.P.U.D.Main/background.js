@@ -46,7 +46,7 @@ function formatBadge(count){
     var sec = count;
     var min = Math.floor(count/60);
     var hr = Math.floor(count/60/60);
-    
+
     if (count < 60){
         setBadge(String(sec) + "s", grey);
     }
@@ -64,7 +64,7 @@ function formatBadge(count){
 
 function notify(message){
     chrome.notifications.create(null, message, null)
-    
+
 }
 //roasts user, int is the number of seconds on site before roasting them
 function roast(count, int, site){
@@ -111,7 +111,7 @@ function checkReset(daysToReset) {
             chrome.storage.local.set({"startDay": startDay}, function() {});
             });
         }
-    });   
+    });
 }
 function updateSeconds(site, list){
     if (site in list) {
@@ -134,8 +134,8 @@ function checkUrlInList(tabs, result) {
         var url = tabs[0].url; // pulled url
         site = formatUrl(url); // removed https://
         var urlList = result.urlList; // list = saved list
-        updateSeconds(site, urlList);   
-        
+        updateSeconds(site, urlList);
+
     }catch{}
 }
 
@@ -163,8 +163,8 @@ function checkIfCount() {
                 chrome.storage.local.get(['urlList'], function(result) {
                     checkReset(1);  // checks and resets variables at each new day (a setting to change?)
                     checkUrlInList(tabs, result);
-                    //for checking storage persistence 
-                    chrome.storage.local.get(['urlList'], function (data) { 
+                    //for checking storage persistence
+                    chrome.storage.local.get(['urlList'], function (data) {
                         sites = data.urlList
                         console.log(sites) });
                     //----
@@ -174,7 +174,7 @@ function checkIfCount() {
     }
 
 
-// counts the number of seconds the user has been on an added site 
+// counts the number of seconds the user has been on an added site
 function countSeconds(){
     setInterval(checkIfCount, 1000); // update every 1 second
 }
@@ -190,11 +190,11 @@ function countVisited() {
                         var count = urlList[site].visited; // getting count
                         urlList[site].visited = count + 1; //updates
                         chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
-                        // checkVisited(urlList[site].visited, site);    
+                        // checkVisited(urlList[site].visited, site);
                     }
                 }
             }catch{}
-            
+
         });
     });
 }
@@ -203,7 +203,7 @@ function countVisited() {
 
 // --- MAIN ---
 setInterval(checkFocused,100); // needs to be before other functions to keep timing correct
-countSeconds(); 
-// countVisited(); // something to implement later, some bugs left, will need to update manifest when added 
+countSeconds();
+// countVisited(); // something to implement later, some bugs left, will need to update manifest when added
 
 getStartDay();

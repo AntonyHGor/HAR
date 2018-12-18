@@ -1,3 +1,7 @@
+//=================================================================================================
+
+/* Lists of time intervals and the respective notifications for each list.*/
+
 
 var list30=[
     note1={title: "Hello", message: "Just wanted to say hi."},
@@ -68,6 +72,12 @@ var listAfterFour=[
 ]
 
 
+//=================================================================================================
+
+
+/* It takes in the number of minutes and based on that number it dictates the list that it
+   should return. */
+
 function getList(num){
     var min = 60;
     if(num==30*min){
@@ -93,6 +103,10 @@ function getList(num){
     }
 }
 
+
+
+/* Fun function which shows the following notification on national potato day. */
+
 function potatoDay(){
     var month = new Date().getMonth();
     var date = new Date().getDate();
@@ -101,6 +115,13 @@ function potatoDay(){
         notify(message);
     }
 }
+
+
+
+
+/* This function checks for the first time the user installed the extension or when they
+   update the extension and returns the following notifications. */
+
 function checkInstall(){
     chrome.runtime.onInstalled.addListener(function(details){
         if(details.reason == "install"){
@@ -115,6 +136,10 @@ function checkInstall(){
     });
 }
 
+
+/* This function chooses a random notification from a specific list and then
+   notifies the user. */
+
 function chooseNotification(list){
     var randomNum=generateRandomNumber(list.length)
     var randomKey=list[randomNum]
@@ -124,14 +149,23 @@ function chooseNotification(list){
     notify(notification)
 }
 
+
+/* This function creates a notification which will be displayed to the user. */
+
 function notify(message){
     chrome.notifications.create(null, message, null)
 }
 
-// Generates random number
+
+
+/* This function generates and returns a random number. */
+
 function generateRandomNumber(max){
     return Math.floor(Math.random()*Math.floor(max)+1)
 }
+
+
+/* This function creates a notification with a title and a message and then returns it. */
 
 function makeBasicNote(title, message){
     var note = {
@@ -142,6 +176,10 @@ function makeBasicNote(title, message){
     }
     return note
 }
+
+
+/* This function runs when the user add the first website and it returns adn notifies the 
+   note that follows. */
 
 function firstGreeting(count,site){
     chrome.storage.local.get(['urlList'], function(result) {
@@ -154,6 +192,10 @@ function firstGreeting(count,site){
     });
 }
 
+
+/* This function takes care of the notifications that the user will reveice after
+   the threshhold of four hours. */
+
 function afterFourHours(count){
     if(count/60 > 240){
                 var listName=getList(241*60)
@@ -162,29 +204,35 @@ function afterFourHours(count){
             
         }
   
-var notified = false;
+
+/* This is the algorithm which chooses the interval and generates a number based on how many minutes that 
+are in the interval and return and notifies the user with a random notification. */
+
+var notified = false; //this is initialized as false because the user in not yet notified.
+
 function chooseInterval(count,highNum, lowNum){
     if(count === lowNum){
         notified = false;
     }
         if (notified == false){
+
             if(count<=highNum && count>=lowNum){
-                var inter = highNum-count;
-                var randomNum=generateRandomNumber(inter);
-                console.log(randomNum);
+                var inter = highNum-count; //this variable is equal to the minutes in the time interval
+                var randomNum=generateRandomNumber(inter);//random number is generated based on the inter variable
+
                     if(randomNum==inter){
                         var listName=getList(highNum)
                         chooseNotification(listName)
-                        notified = true;
+                        notified = true; //if the user is notified this  variable becomes true and the algorithm does not run in this time interval anymore
                     }else{
-                        inter -= 1;
-                        //console.log(inter);
+                        inter -= 1; //if the user is not notified then each minute the probabality of getting a notification increases
                     }
                     
                 }
         }
 }
 
+/* This is the main notification function which takes cares of the calls for each specific interval*/
 
 function mainNotification(count,site){
     var min= 60
@@ -201,30 +249,3 @@ function mainNotification(count,site){
 }
 
 checkInstall();
-
-
-// 1 minute into with first site
-// 15 - 45 goofs and jokes with some reminders 1 in the 30 period 
-// 60-85 minor roasts and reminders .75
-// 95-120 medium roasts .75 
-// 130 - 175 heavier roast more frequent, 2 in hour
-// 190 - 240 heavy roasts, 3 in hour
-// 240 - infinity, 1 every 15 minutes 
-
-/* A simple MVP times visited algorithm would be easy to implement
-asumming we track it
-If its the first time nothing
-second time: Again? Back to __ again are we?
-third time: Wow. Just can't shake it huh?
-fourth time: Come on now. You've been to __ __ times today. 
-fifth time: Really? __ __ times today. You're going places. 
-fifth time: Stop. Just stop.
-sixth time: AHHHHH. AHHHHHHHHH. 
-seven time: OK. I've given up. 
-eighth time: ... You're doing this to me on purpose aren't you?
-nineth time: Yeah. Your kids respect you. 
-
-Could be breaks in between where nothing pops up or its randomized to not always show that time's message. 
-
-Even better is sytem where it doesn't always notify you, but goes in that order. 
-*/ 
