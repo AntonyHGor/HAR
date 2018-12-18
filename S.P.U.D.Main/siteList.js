@@ -1,4 +1,7 @@
+// Controls the functions for the siteList.html
 
+
+// For each added site, makes a block in the html
 function popList(){
     chrome.storage.local.get(['urlList'], function(result) {
         for (var key in result.urlList) {
@@ -6,7 +9,7 @@ function popList(){
         }
     });
 }
-
+// determines if the today view or the all-time view should be shown 
 var today = true;
 function switchTimeView(){
         if(today===true){
@@ -17,7 +20,7 @@ function switchTimeView(){
             today = true;
         }
 }
-
+// creates the necassaary html to organize the data for the site list
 function addDiv(siteObj){
     var siteBlock;
     var containerBlock;
@@ -25,10 +28,12 @@ function addDiv(siteObj){
     var nameBlock;
     var timeBlock;
       
+    // creates container
     siteBlock = document.createElement('div');
     siteBlock.classList.add("siteBlock");
     siteBlock.setAttribute('id',"siteBlock")
 
+    // creates name
     nameBlock = document.createElement('div');
     var name = document.createElement('div');
     name.innerText = siteObj.domain;
@@ -37,6 +42,7 @@ function addDiv(siteObj){
     nameBlock.setAttribute('id',"nameBlock");
     nameBlock.classList.add("nameBlock");
 
+    // creates icon
     iconBlock = document.createElement('div');
     var favIconUrl = siteObj.favIcon;
     var icon = document.createElement('IMG');
@@ -46,7 +52,7 @@ function addDiv(siteObj){
     icon.setAttribute("height", "25");
     iconBlock.classList.add("iconBlock");
 
-    
+    // creates timer
     timeBlock = document.createElement('div');
     var s = siteObj.intervalSeconds;
     var time = document.createElement('div');
@@ -55,14 +61,16 @@ function addDiv(siteObj){
     timeBlock.setAttribute('id',"timeBlock");
     timeBlock.classList.add("timeBlock");
 
+    //removes the block when the x is pressed
     var remove = document.createElement('div');
     remove.setAttribute('id',"remove");
     remove.classList.add("remove");
     remove.innerHTML = "x";
     remove.onclick = e => {
-        removeSite(e.target);
+    removeSite(e.target);
     } 
-     
+    
+    //creates the entire list and adds the site to it
     containerBlock = document.getElementById( 'listContainer' );
     containerBlock.appendChild(siteBlock);
     siteBlock.appendChild(iconBlock);
@@ -75,7 +83,7 @@ function addDiv(siteObj){
     
     
     }
-
+// formats the timer
     function formatClock(count){
         var clock;
         var clock1;
@@ -183,18 +191,20 @@ function addDiv(siteObj){
         
 
     }
-
+// sends the user to the home page
 function goHome(){
-    window.location.href="popup2-0.html";
+    window.location.href="popup.html";
 }
+// closes the popup
 function closePopup(){
     window.close();
 }
+//removes the site from the storage (needs to be copied from popup.js because there are slight syntax differences that are neccasary)
 function removeSite(elem){
     chrome.storage.local.get(['urlList'], function(result) {
         var urlList = result.urlList;
         var name = elem.parentElement.children[1].children[0].textContent; 
-        if(name in urlList){
+        if(name in urlList){ // if name is in list 
             swal({
                 title: 'Do you really want SPUD to stop watching?',
                 text: "You might become a potato.",
@@ -205,9 +215,9 @@ function removeSite(elem){
                 cancelButtonColor: 'lightgray',
                 confirmButtonText: 'Yes'
             }).then((result) => {
-                if (result.value) {
-                    delete urlList[name];
-                    chrome.storage.local.set({"urlList": urlList}, function() {});
+                if (result.value) { // if confirmed
+                    delete urlList[name]; // delete site from storage
+                    chrome.storage.local.set({"urlList": urlList}, function() {}); // resave
                     swal({
                         title: 'SPUD stopped monitoring ' + name,
                         text: "You're a potato.",
@@ -217,7 +227,7 @@ function removeSite(elem){
                         imageHeight: 200,
                         imageAlt: 'Custom image',
                     })
-                    elem.parentElement.parentElement.removeChild(elem.parentElement);
+                    elem.parentElement.parentElement.removeChild(elem.parentElement); // remove block from page
                     
                     if(Object.keys(urlList).length == 0){ // this happens to remove today button on empty list
                         displaySites();
@@ -227,16 +237,17 @@ function removeSite(elem){
         }
     });
 }
+//sends the user to the siteList
 function displaySites(){
     window.location.href="siteList.html";
 }
-
+// displays the today/all-time button
 function showTodayButton(){
     chrome.storage.local.get(['urlList'], function(result) {
-        if(typeof result.urlList === 'undefined'){
-            document.getElementById('switch').style.display = "none";
+        if(typeof result.urlList === 'undefined'){ // if urlList has not been created
+            document.getElementById('switch').style.display = "none"; 
             document.getElementById('emptyList').style.display = 'block';
-        }else if(Object.keys(result.urlList).length == 0){
+        }else if(Object.keys(result.urlList).length == 0){ // if all sites have been removed from list
         document.getElementById('switch').style.display = "none";
         document.getElementById('emptyList').style.display = 'block';
         }
@@ -244,6 +255,7 @@ function showTodayButton(){
         
     });
 }
+// updates the timers for the data list
 function updateTimer(){
     chrome.storage.local.get(['urlList'], function(result) {
     for(var elem = 0; elem < listContainer.children.length; elem++){
@@ -259,16 +271,16 @@ function updateTimer(){
             var time = formatClock(s);
             siteBlock.children[2].children[0].innerHTML = time;
         }
-
-        // console.log(siteObj);
     }
 });
 }
 
+//creates button listeners that run the apporpriate functions when clicked
 document.getElementById('goHome').addEventListener('click', goHome);
 document.getElementById('close').addEventListener('click', closePopup);
 document.getElementById('switch').addEventListener('click', switchTimeView);
 
+// Main //
 popList();
 showTodayButton();
 setInterval(updateTimer,10);

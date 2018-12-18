@@ -8,40 +8,8 @@ function setBadge(str, color) {
     chrome.browserAction.setBadgeBackgroundColor({ 'color': color });
     chrome.browserAction.setBadgeText({'text': str});
 }
-// function preLoad(){
-//     chrome.storage.local.get(['urlList'], function(result) {
-//         var urlList = result.urlList;
-//             urlList['youtube.com'] = siteAttributes = {
-//                 homeUrl: 'youtube.com',
-//                 domain: 'youtube.com',
-//                 favIcon: 'http://www.youtube.com/favicon.ico',
-//                 intervalSeconds: 0,
-//                 totalSeconds: 0,
-//                 visited: 0
-//                 }
-//                 urlList['facebook.com'] = siteAttributes = {
-//                     homeUrl: 'facebook.com',
-//                     domain: 'facebook.com',
-//                     favIcon: 'http://facebook.com/favicon.ico',
-//                     intervalSeconds: 0,
-//                     totalSeconds: 0,
-//                     visited: 0
-//                     }
-//                     urlList['netflix'] = siteAttributes = {
-//                         homeUrl: 'netflix.com',
-//                         domain: 'netflix.com',
-//                         favIcon: 'http://netflix.com/favicon.ico',
-//                         intervalSeconds: 0,
-//                         totalSeconds: 0,
-//                         visited: 0
-//                         }
-//             chrome.storage.local.set({"urlList": urlList}, function() {});
-//     });
 
-// }
-
-
-// formats timer
+// formats timer for badge
 function formatBadge(count){
     var sec = count;
     var min = Math.floor(count/60);
@@ -58,32 +26,18 @@ function formatBadge(count){
     }
 }
 
-
-// Creates notification settings, in future we could have a random generator that points to
-// title/message combination ie. num[0] = title and num[0[0]] = message or something like that
-
+// sends notification of message
 function notify(message){
     chrome.notifications.create(null, message, null)
 
 }
-//roasts user, int is the number of seconds on site before roasting them
-function roast(count, int, site){
-    if (count == int){
-        var defaultTimeNote = {
-            type: "basic",
-            title: "Wow. ",
-            message: "You've spent " + count +  " seconds on " + site + ". Your grandma would be proud.",
-            iconUrl: "icon_128.png"
-          }
-        notify(defaultTimeNote);
-    }
-}
-
+// formats the url of the website to inculde only the domain
 function formatUrl(url){
     var finUrl = /:\/\/(www\.)?(.+?)\//;
     return url.match(finUrl)[2];
 }
 
+// gets the start of each day and saves it to storage
 function getStartDay(){
     chrome.storage.local.get(['startDay'], function(result) {
         if(typeof result.startDay === 'undefined'){
@@ -94,6 +48,7 @@ function getStartDay(){
     });
 }
 
+// checks to see if the start day is the same, if not, resets the interval seconds for all added sites
 function checkReset(daysToReset) {
     chrome.storage.local.get(['startDay'], function(get) {
         var startDay = get.startDay;
@@ -113,6 +68,7 @@ function checkReset(daysToReset) {
         }
     });
 }
+// increments the count for the site currently on, will run notification algorithm and set the badge
 function updateSeconds(site, list){
     if (site in list) {
         count = list[site].intervalSeconds; // getting count
@@ -121,7 +77,6 @@ function updateSeconds(site, list){
         list[site].totalSeconds = totalCount +1;
         chrome.storage.local.set({"urlList": list}, function() {}); //overwriting the list
         formatBadge(list[site].intervalSeconds); // formats and displays badge
-        //roast(urlList[site], 3600, site); // checks number of seconds on site = 30
         mainNotification(count, site); // runs roast time algorithm
     }else {
         setBadge("", grey);
@@ -138,7 +93,7 @@ function checkUrlInList(tabs, result) {
 
     }catch{}
 }
-
+// determines if the chrome browser is focused, if not, set focus to false
 function checkFocused(){
     chrome.windows.getCurrent(function(browser){
         if(browser.focused==true){
@@ -148,26 +103,20 @@ function checkFocused(){
             focus=false;
         }
     })
-    var views= chrome.extension.getViews({type: "popup"});
+    var views= chrome.extension.getViews({type: "popup"}); //continue timing when popup is open (for windows OS)
     if(views.length==1){
         focus=true;
     }
-    console.log(focus);
 }
 
 // Checks to see if the program should count, if yes, it counts, saves, and updates the count using linked functions
 function checkIfCount() {
-    if(focus == true){
+    if(focus == true){ // Is Chrome focused?
                 chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
         function(tabs){
                 chrome.storage.local.get(['urlList'], function(result) {
-                    checkReset(1);  // checks and resets variables at each new day (a setting to change?)
+                    checkReset(1);  // checks and resets variables at each new day
                     checkUrlInList(tabs, result);
-                    //for checking storage persistence
-                    chrome.storage.local.get(['urlList'], function (data) {
-                        sites = data.urlList
-                        console.log(sites) });
-                    //----
                 });
             });
         }
@@ -178,7 +127,7 @@ function checkIfCount() {
 function countSeconds(){
     setInterval(checkIfCount, 1000); // update every 1 second
 }
-
+//counts the number of times the user has visited the site (not currently implemented)
 function countVisited() {
      chrome.history.onVisited.addListener(function(result) {
         chrome.storage.local.get(['urlList'], function(callback){
@@ -190,7 +139,6 @@ function countVisited() {
                         var count = urlList[site].visited; // getting count
                         urlList[site].visited = count + 1; //updates
                         chrome.storage.local.set({"urlList": urlList}, function() {}); //overwriting the list
-                        // checkVisited(urlList[site].visited, site);
                     }
                 }
             }catch{}
@@ -202,8 +150,9 @@ function countVisited() {
 // ---------------------- END OF FUNCTIONS ---------------------
 
 // --- MAIN ---
+//checks focus every .1 seconds
 setInterval(checkFocused,100); // needs to be before other functions to keep timing correct
 countSeconds();
-// countVisited(); // something to implement later, some bugs left, will need to update manifest when added
+// countVisited(); // something to implement later
 
-getStartDay();
+getStartDay(); // checks if day has past

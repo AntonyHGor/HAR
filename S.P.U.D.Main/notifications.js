@@ -128,7 +128,6 @@ function checkInstall(){
             message = makeBasicNote("I'M ALIVE!", "Thanks for installing me. :)");
             notify(message);
             console.log("This is a first install!");
-            // preLoad();
         }else if(details.reason == "update"){
             var message = makeBasicNote("Hey there!", "I am new and improved!");
             notify(message);
@@ -158,7 +157,7 @@ function notify(message){
 
 
 
-/* This function generates and returns a random number. */
+/* This function generates and returns a random number from 0 to the max number input. */
 
 function generateRandomNumber(max){
     return Math.floor(Math.random()*Math.floor(max)+1)
@@ -178,7 +177,7 @@ function makeBasicNote(title, message){
 }
 
 
-/* This function runs when the user add the first website and it returns adn notifies the 
+/* This function runs when the user add the first website and it returns and notifies the 
    note that follows. */
 
 function firstGreeting(count,site){

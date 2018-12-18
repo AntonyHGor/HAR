@@ -63,23 +63,11 @@ function addWebsite() {
                         timer: 2000,
                         showConfirmButton: false // There won't be any confirm button
                       })
-                }else{
-                    
-                       
-                    swal({
-                        position: 'top-end',
-                        type: 'success',
-                        title: 'Website Added',
-                        timer: 1000,
-                        showConfirmButton: false // There won't be any confirm button
-                      })
-                }
+                }else{}
             }
           
          });
     });
-    
-
     swal({
         position: 'top-end',
         showConfirmButton: false, // There won't be any confirm button

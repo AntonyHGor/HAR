@@ -1,11 +1,10 @@
 {
   "name": "S.P.U.D",
-  "version": "1.0.6",
+  "version": "1.1.0",
   "description": "Potato Battery that monitors your procrastination!",
   "manifest_version": 2,
   "web_accessible_resources": [
-    "icon_128.png",
-    "California.ttf"
+    "icon_128.png"
   ],
   "icons": {"128": "icon_128.png"},
   "browser_action": {
