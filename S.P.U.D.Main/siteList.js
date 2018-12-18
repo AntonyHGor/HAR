@@ -76,113 +76,127 @@ function addDiv(siteObj){
     
     }
 
-    function formatClock(count){
-        var clock;
-        var clock1;
-        var clock2;
-        var sec = count;
-        var min = Math.floor(count/60);
-        var hr = Math.floor(count/60/60);
-        
-        if (count < 60){
-            if(count<10){
-                clock1 = String("00" + "h " + "00" + "m " + "0");
-                clock2 = String(sec) + "s";
-                clock1 = clock1.fontcolor("lightgray")
-                clock = clock1+clock2;
-                
-            }
-            else{
-                clock1 = String("00" + "h " + "00" + "m ");
-                clock2 = String(sec) + "s";
-                clock1 = clock1.fontcolor("lightgray")
-                clock = clock1+clock2;
-            }
+    
+/* This function takes care of the formating of the clock inside the popup. */
+
+function formatClock(count){
+    var clock;
+    var clock1;
+    var clock2;
+    var sec = count;
+    var min = Math.floor(count/60);
+    var hr = Math.floor(count/60/60);
+    
+    if (count < 60){ // if there are less than 60 seconds
+       
+        if(count<10){                                       // if there are less than 10 seconds
+            clock1 = String("00" + "h " + "00" + "m " + "0");
+            clock2 = String(sec) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
             
-    
         }
-    
-        if (count >= 60 && count < 3600) {
-            if(count<600){
-                if((sec%60)<10){
-                    clock1 = String("00" + "h " + "0")
-                    clock2 =String(min) + "m " + "0" + String(sec%60) + "s";
-                    clock1 = clock1.fontcolor("lightgray")
-                    clock = clock1+clock2;
-                }
-                else{
-                    clock1 = String("00" + "h " + "0")
-                    clock2 =String(min) + "m " + String(sec%60) + "s";
-                    clock1 = clock1.fontcolor("lightgray")
-                    clock = clock1+clock2;
-                }
-            }else{
-                if((sec%60)<10){
-                    clock1 = String("00" + "h ")
-                    clock2 =String(min) + "m " + "0" + String(sec%60) + "s";
-                    clock1 = clock1.fontcolor("lightgray")
-                    clock = clock1+clock2;
-                }
-                else{
-                    clock1 = String("00" + "h ")
-                    clock2 =String(min) + "m " + String(sec%60) + "s";
-                    clock1 = clock1.fontcolor("lightgray")
-                    clock = clock1+clock2;
-                }
-            }
+        else{                                               // if there are more or equal to 10 seconds
+            clock1 = String("00" + "h " + "00" + "m ");
+            clock2 = String(sec) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
         }
-    
-            
-        if (count >= 3600 && count< 36000) {
-    
-            if((sec%60%60<10) && (min%60<10)){
-                clock1 = String("0")
-                clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
-                clock1 = clock1.fontcolor("lightgray")
-                clock = clock1+clock2;
-            }
-    
-            if((sec%60%60<10) && (min%60>=10)){
-                clock1 = String("0")
-                clock2 =String(hr)+ "h " + "0" + String(min%60) + "m "  + String(sec%60%60) + "s";
-                clock1 = clock1.fontcolor("lightgray")
-                clock = clock1+clock2;
-            }
-            if((sec%60%60>=10) && (min%60<10)){
-                clock1 = String("0")
-                clock2 =String(hr)+ "h " + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
-                clock1 = clock1.fontcolor("lightgray")
-                clock = clock1+clock2;
-            }
-            if((sec%60%60>=10) && (min%60>=10)){
-                clock1 = String("0")
-                clock2 =String(hr)+ "h " + String(min%60) + "m " + String(sec%60%60) + "s";
-                clock1 = clock1.fontcolor("lightgray")
-                clock = clock1+clock2;
-            }
-    
-        }
-    
-        if (count >= 36000){
-    
-            if((sec%60%60<10) && (min%60<10)){
-                clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
-            if((sec%60%60<10) && (min%60>=10)){
-                clock = String ( String(hr)+ "h " + String(min%60) + "m " + "0" + String(sec%60%60) + "s");
-            }
-            if((sec%60%60>=10) && (min%60<10)){
-                clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " +  String(sec%60%60) + "s");
-            }
-            if((sec%60%60>=10) && (min%60>=10)){
-                clock = String ( String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
-            }
-    
-        }
-    
-        return clock;
         
 
     }
+
+    if (count >= 60 && count < 3600) { // if time is between 1 minute and 1 hour
+       
+        if(count<600){ // if there are less than 10 minutes
+
+            if((sec%60)<10){                                            // if there are less than 10 seconds
+                clock1 = String("00" + "h " + "0")
+                clock2 =String(min) + "m " + "0" + String(sec%60) + "s";
+                clock1 = clock1.fontcolor("lightgray")
+                clock = clock1+clock2;
+            }
+            else{                                                      // if there are more or equal to 10 seconds
+                clock1 = String("00" + "h " + "0")
+                clock2 =String(min) + "m " + String(sec%60) + "s";
+                clock1 = clock1.fontcolor("lightgray")
+                clock = clock1+clock2;
+            }
+
+
+        }else{  // if there are more or equal to 10 minutes
+            
+            if((sec%60)<10){                                            // if there are less than 10 seconds
+                clock1 = String("00" + "h ")
+                clock2 =String(min) + "m " + "0" + String(sec%60) + "s";
+                clock1 = clock1.fontcolor("lightgray")
+                clock = clock1+clock2;
+            }
+            else{                                                       // if there are more or equal to 10 seconds
+                clock1 = String("00" + "h ")
+                clock2 =String(min) + "m " + String(sec%60) + "s";
+                clock1 = clock1.fontcolor("lightgray")
+                clock = clock1+clock2;
+            }
+        }
+    }
+
+        
+    if (count >= 3600 && count< 36000) { // if time is between 1 hour and 10 hours
+
+        if((sec%60%60<10) && (min%60<10)){ // if there are less than 10 seconds and less than 10 minutes
+            clock1 = String("0")
+            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+        }
+
+        if((sec%60%60<10) && (min%60>=10)){ // if there are less than 10 seconds and more or equal to 10 minutes
+            clock1 = String("0")
+            clock2 =String(hr)+ "h " + "0" + String(min%60) + "m "  + String(sec%60%60) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+        }
+        if((sec%60%60>=10) && (min%60<10)){ // if there are more or equal to 10 seconds and less than 10 minutes
+            clock1 = String("0")
+            clock2 =String(hr)+ "h " + String(min%60) + "m " + "0" + String(sec%60%60) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+        }
+        if((sec%60%60>=10) && (min%60>=10)){ // if there are more or equal to 10 seconds and more or equal to 10 minutes
+            clock1 = String("0")
+            clock2 =String(hr)+ "h " + String(min%60) + "m " + String(sec%60%60) + "s";
+            clock1 = clock1.fontcolor("lightgray")
+            clock = clock1+clock2;
+        }
+
+    }
+
+    if (count >= 36000){ // if time is more than 10 hours
+
+        if((sec%60%60<10) && (min%60<10)){ // if there are less than 10 seconds and less than 10 minutes
+
+            clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " + "0" + String(sec%60%60) + "s");}
+
+        if((sec%60%60<10) && (min%60>=10)){ // if there are less than 10 seconds and more or equal to 10 minutes
+
+            clock = String ( String(hr)+ "h " + String(min%60) + "m " + "0" + String(sec%60%60) + "s");
+        }
+        if((sec%60%60>=10) && (min%60<10)){ // if there are more or equal to 10 seconds and less than 10 minutes
+
+            clock = String ( String(hr)+ "h " + "0" + String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+        if((sec%60%60>=10) && (min%60>=10)){ // if there are more or equal to 10 seconds and more or equal to 10 minutes
+
+            clock = String ( String(hr)+ "h " +  String(min%60) + "m " +  String(sec%60%60) + "s");
+        }
+
+    }
+
+    return clock;
+    
+
+}
 
 function goHome(){
     window.location.href="popup2-0.html";

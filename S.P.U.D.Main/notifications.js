@@ -2,6 +2,7 @@
 
 /* Lists of time intervals and the respective notifications for each list.*/
 
+/* List of the notifications for the time interval between 10 to 30 minutes.*/
 
 var list30=[
     note1={title: "Hello", message: "Just wanted to say hi."},
@@ -14,6 +15,9 @@ var list30=[
     note8={title: "Where are you?", message: "There you are."}
 ]
 
+
+/* List of the notifications for the time interval between 35 to 50 minutes.*/
+
 var list50=[
     note1={title: "Hi.", message: "You should stop."},
     note2={title: "(looks at watch)", message: "Been awhile now, yeah?"},
@@ -24,6 +28,10 @@ var list50=[
     note8={title: "Looks like you're on a roll", message: "Maybe roll into a full stop"},
      
 ]
+
+
+/* List of the notifications for the time interval between 1 hour to 1 hour and 25 minutes.*/
+
 var list85=[
     note1={title: "Stop.", message: "STOP."},
     note2={title: "(looks at watch)", message: "Please stop."},
@@ -35,6 +43,10 @@ var list85=[
     note7={title: "And the Lord said:", message: "'Listen to S.P.U.D.'"},
      
 ]
+
+
+/* List of the notifications for the time interval between 1 hour and 35 minutes to 2 hours.*/
+
 var list120=[
     note1={title: "Do me a favor?", message: "Knock it off."},
     note2={title: "HEY!", message: "STOP!"},
@@ -47,6 +59,10 @@ var list120=[
     note9={title: "Listen", message: "You have a problem"},  
     note10={title: "Well", message: "You have evolved into a literal POTATO"}, 
 ]
+
+
+/* List of the notifications for the time interval between 2 hours and 10 minutes to 2 hours and 55 minutes.*/
+
 var list175=[
     note1={title: "(looks at watch)", message: "You're a bad person."},
     note2={title: "Trust me.", message: "You will pay for this."},
@@ -55,6 +71,10 @@ var list175=[
     note5={title: "Oh yeah.", message: "You're really going places huh?"},
     
 ]
+
+
+/* List of the notifications for the time interval between 3 hours and 10 minutes to 4 hours.*/
+
 var list240=[
     note1={title: "S.P.U.D.", message: "I will never forget this."},
     note2={title: "AHHHHHH.", message: "AHHHHHHHHHHHH!"},
@@ -63,6 +83,10 @@ var list240=[
     note5={title: "(maniacal laughter)", message: "(coughing) You're killing me."},
     note6={title: "*The S.P.U.D. system is rebooting:*", message: "You suck."}  
 ]
+
+
+/* List of the notifications for the time interval after 4 hours.*/
+
 var listAfterFour=[
     note1={title: "Stop.", message: "Stop."},
     note2={title: "Stop.", message: "Stop."},
@@ -178,26 +202,14 @@ function makeBasicNote(title, message){
 }
 
 
-/* This function runs when the user add the first website and it returns adn notifies the 
-   note that follows. */
-
-function firstGreeting(count,site){
-    chrome.storage.local.get(['urlList'], function(result) {
-        if( result.urlList.length == 1){
-            if(count==4){
-                     var notification=makeBasicNote("This is a notification.", "This is how I will talk to you!")
-                    notify(notification)
-            }
-        }
-    });
-}
 
 
 /* This function takes care of the notifications that the user will reveice after
-   the threshhold of four hours. */
+   the threshhold of four hours. After four hours every 15 minutes the user will 
+   receive a notification. */
 
 function afterFourHours(count){
-    if(count/60 > 240){
+    if(count/60 > 240 && (count/60)%15==0){
                 var listName=getList(241*60)
                 chooseNotification(listName)
             }
@@ -205,8 +217,8 @@ function afterFourHours(count){
         }
   
 
-/* This is the algorithm which chooses the interval and generates a number based on how many minutes that 
-are in the interval and return and notifies the user with a random notification. */
+/* This is the algorithm which chooses the interval and generates a number based on how many seconds that 
+are in the interval and returns and notifies the user with a random notification. */
 
 var notified = false; //this is initialized as false because the user in not yet notified.
 
@@ -226,6 +238,7 @@ function chooseInterval(count,highNum, lowNum){
                         notified = true; //if the user is notified this  variable becomes true and the algorithm does not run in this time interval anymore
                     }else{
                         inter -= 1; //if the user is not notified then each minute the probabality of getting a notification increases
+                        
                     }
                     
                 }
@@ -234,11 +247,9 @@ function chooseInterval(count,highNum, lowNum){
 
 /* This is the main notification function which takes cares of the calls for each specific interval*/
 
-function mainNotification(count,site){
+function mainNotification(count){
     var min= 60
-    var hour=3600
 
-    // firstGreeting(count,site);
     chooseInterval(count,30*min, 10*min);
     chooseInterval(count,50*min, 35*min);
     chooseInterval(count,85*min, 60*min);
