@@ -31,19 +31,19 @@ function showRealPotato(num){
 }
 
 
-/* This function updates the dictionary which holds all the webiste that the extension times */
+/* This function updates the dictionary which holds all the website that the extension times */
 
 function updateList(){
-    chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
+    chrome.tabs.query({'active': true, 'lastFocusedWindow': true}, // getting current tab 
             function(tabs){
-                chrome.storage.local.get(['urlList'], function(result) {
-                    var url = tabs[0].url;
-                    var site = formatUrl(url);
-                    var favIcon = tabs[0].favIconUrl;
-                    var urlList = result.urlList;
+                chrome.storage.local.get(['urlList'], function(result) { // getting saved data
+                    var url = tabs[0].url; // url of current tab
+                    var site = formatUrl(url);  // formatted 
+                    var favIcon = tabs[0].favIconUrl; // favIcon for url
+                    var urlList = result.urlList; 
                     if(site in urlList){
-                    }else{
-                        urlList[site] = siteAttributes = {
+                    }else{ // if this site is not in the list
+                        urlList[site] = siteAttributes = { // create entry with the following attributes
                             homeUrl: url,
                             domain: site,
                             favIcon: favIcon,
@@ -51,7 +51,7 @@ function updateList(){
                             totalSeconds: 0,
                             visited: 0
                             }
-                        chrome.storage.local.set({"urlList": urlList}, function() {});
+                        chrome.storage.local.set({"urlList": urlList}, function() {}); // save to local storage
                     }
                 });
             });
@@ -153,9 +153,6 @@ function removeWebsite(){
     }); 
 }
 
-
-
-
 /* Creates button listeners for the popup. */
 
 document.getElementById('goSites').addEventListener('click', displaySites);
@@ -163,12 +160,7 @@ document.getElementById('add').addEventListener('click', addWebsite);
 document.getElementById('remove').addEventListener('click', removeWebsite);
 document.getElementById('close').addEventListener('click', closePopup);
 
-
 setInterval(drawClock, 10); // update timer every ten milliseconds
-
-
-
-
 
 /* This function takes care of the formating of the clock inside the popup. */
 
@@ -234,7 +226,6 @@ function formatClock(count){
         }
     }
 
-        
     if (count >= 3600 && count< 36000) { // if time is between 1 hour and 10 hours
 
         if((sec%60%60<10) && (min%60<10)){ // if there are less than 10 seconds and less than 10 minutes
@@ -291,10 +282,7 @@ function formatClock(count){
 
 }
 
-
-
-
-/* This function takes care of inputing the current site name on the on the popup. */
+/* This function takes care of inputing the current site name on the popup. */
 
 function drawSiteLabel(){
     chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
@@ -309,11 +297,7 @@ function drawSiteLabel(){
     });
 }
 
-
-
-
-
-/* This function takes care of drawing the clock on the popup. */
+/* This function takes care of drawing the clock on the popup. This is run every 10 milliseconds */
 
 function drawClock(){
         chrome.tabs.query({'active': true, 'lastFocusedWindow': true},
@@ -325,17 +309,14 @@ function drawClock(){
                 if(typeof urlList[website] === 'undefined'){
                     cleanClock();
                 }else{
-                    var s = urlList[website].intervalSeconds;
+                    var s = urlList[website].intervalSeconds; //gets the interval seconds for the current site in storage
                     var clock = formatClock(s);
-                    document.getElementById("clock").innerHTML = clock;
+                    document.getElementById("clock").innerHTML = clock; // presents it
                 }
             }catch{}
         });
     });  
 }
-
-
-
 
 /* This function takes care of reseting the clock. */
 
@@ -344,9 +325,6 @@ function cleanClock(){
     clock1 = clock.fontcolor("lightgray")
     document.getElementById('clock').innerHTML = clock1;
 }
-
-
-
 
 //=================================================================================================
 
@@ -358,13 +336,11 @@ showRealPotato(60);
 
 //=================================================================================================
       
-
 /* This function sends the user to the site lists if clicked. */
 
 function displaySites(){
     window.location.href="siteList.html";
 }
-
 
 /* This function closes the popup. */
 
